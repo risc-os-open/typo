@@ -1,0 +1,46 @@
+/* Modified Lightbox CSS file. Taken originally from:
+ * http://www.huddletogether.com/projects/lightbox/
+ */
+
+#lightbox
+{
+  background-color:#eee;
+  padding: 10px;
+}
+
+#lightbox A,
+#lightbox A:hover,
+.lightboxplugin A,
+.lightboxplugin A:hover
+{
+  border: none;
+  background: inherit;
+}
+
+#lightboxDetails
+{
+  font-size: 100%;
+  padding-top: 0.4em;
+}
+
+#lightboxDetails KBD
+{
+  font-size: 150%;
+}
+
+#lightboxCaption { float: left; margin-top: 5px }
+#keyboardMsg     { float: right; }
+#closeButton     { top: 0px; right: 0px; }
+
+#lightbox IMG { border: none; clear: both;}
+#overlay  IMG { border: none; }
+
+#overlay { background-image: url("/images/risc_os_open/lightbox/overlay.png"); }
+
+* HTML #overlay
+{
+  background-color: #333;
+  back\ground-color: transparent;
+  background-image: url("/images/utilities/blank.gif");
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/images/risc_$
+}
