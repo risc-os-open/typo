@@ -1,4 +1,4 @@
-class MoveFeedbackToNewStateMachine < ActiveRecord::Migration
+class MoveFeedbackToNewStateMachine < ActiveRecord::Migration[7.1]
   class Content < ActiveRecord::Base
     include BareMigration
   end

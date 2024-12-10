@@ -2,7 +2,7 @@ class Bare29User < ActiveRecord::Base
   include BareMigration
 end
 
-class AddUserNotification < ActiveRecord::Migration
+class AddUserNotification < ActiveRecord::Migration[7.1]
   def self.up
     modify_tables_and_update([:add_column, Bare29User, :notify_via_email,         :boolean],
                              [:add_column, Bare29User, :notify_on_new_articles,   :boolean],

@@ -1,4 +1,4 @@
-class UpgradeSidebarObjects < ActiveRecord::Migration
+class UpgradeSidebarObjects < ActiveRecord::Migration[7.1]
   class Sidebar < ActiveRecord::Base
     include BareMigration
   end

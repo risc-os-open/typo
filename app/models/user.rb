@@ -9,7 +9,9 @@ class User < CachedModel
 
   has_many :articles, :order => 'created_at DESC' do
     def published
-      find_published(:all, :order => 'created_at DESC')
+      Article
+        .order(created_at: :desc)
+        .where(published: true)
     end
   end
 
@@ -23,8 +25,7 @@ class User < CachedModel
   #   @user = User.authenticate('bob', 'bobpass')
   #
   def self.authenticate(login, pass)
-    find(:first,
-         :conditions => ["login = ? AND password = ?", login, sha1(pass)])
+    User.find_by(login: login, password: sha1(pass))
   end
 
   def self.authenticate?(login, pass)
@@ -36,12 +37,12 @@ class User < CachedModel
   end
 
   def self.find_by_permalink(permalink)
-    self.find_by_login(permalink)
+    self.find_by(login: permalink)
   end
 
   # Let's be lazy, no need to fetch the counters, rails will handle it.
   def self.find_all_with_article_counters(ignored_arg)
-    find(:all)
+    self.all
   end
 
   def self.to_prefix

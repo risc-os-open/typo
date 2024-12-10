@@ -1,4 +1,4 @@
-class Sidebar < ActiveRecord::Base
+class Sidebar < ApplicationRecord
   serialize :config
   belongs_to :blog
 

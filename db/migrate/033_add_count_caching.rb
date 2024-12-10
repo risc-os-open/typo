@@ -14,7 +14,7 @@ class Bare33Content < ActiveRecord::Base
 end
 
 
-class AddCountCaching < ActiveRecord::Migration
+class AddCountCaching < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Adding comments_count, trackbacks_count"
     modify_tables_and_update([:add_column, Bare33Content, :comments_count, :integer],

@@ -1,6 +1,6 @@
 require 'rexml/document'
 
-class Ping < ActiveRecord::Base
+class Ping < ApplicationRecord
   belongs_to :article
 
   class Pinger
@@ -11,11 +11,9 @@ class Ping < ActiveRecord::Base
       begin
         @response = Net::HTTP.get_response(URI.parse(ping.url))
         send_pingback or send_trackback
-      rescue Timeout::Error => err
-        return
-      rescue => err
-        raise err
+      rescue Timeout::Error
         # Ignore
+        return
       end
     end
 

@@ -1,7 +1,7 @@
 require 'observer'
 require 'set'
 
-class Content < ActiveRecord::Base
+class Content < ApplicationRecord
   include Observable
 
   belongs_to :text_filter
@@ -93,26 +93,15 @@ class Content < ActiveRecord::Base
       end
     end
 
-    def find_published(what = :all, options = {})
-      with_scope(:find => {:order => default_order, :conditions => {:published => true}}) do
-        find what, options
-      end
-    end
-
     def default_order
       'published_at DESC'
     end
 
-    def find_already_published(what = :all, at = nil, options = { })
-      if what.respond_to?(:has_key?)
-        what, options = :all, what
-      elsif at.respond_to?(:has_key?)
-        options, at = at, nil
-      end
-      at ||= options.delete(:at) || Time.now
-      with_scope(:find => { :conditions => ['published_at < ?', at]}) do
-        find_published(what, options)
-      end
+    def find_already_published
+      self
+        .order(default_order)
+        .where(published: true)
+        .where('published_at < ?', Time.now)
     end
   end
 
@@ -288,7 +277,7 @@ end
 
 class Object
   def to_text_filter
-    TextFilter.find_by_name(self.to_s) || TextFilter.find_by_name('none')
+    TextFilter.find_by(name: self.to_s) || TextFilter.find_by(name: 'none')
   end
 end
 

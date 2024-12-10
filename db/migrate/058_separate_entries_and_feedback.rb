@@ -1,4 +1,4 @@
-class SeparateEntriesAndFeedback < ActiveRecord::Migration
+class SeparateEntriesAndFeedback < ActiveRecord::Migration[7.1]
   class Content < ActiveRecord::Base
   end
 

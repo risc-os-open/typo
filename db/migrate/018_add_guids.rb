@@ -1,4 +1,4 @@
-class AddGuids < ActiveRecord::Migration
+class AddGuids < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Adding GUIDs to Comments and Trackbacks"
 

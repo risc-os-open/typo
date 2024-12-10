@@ -2,7 +2,7 @@ class Bare34Content < ActiveRecord::Base
   include BareMigration
 end
 
-class BoolifyPublished < ActiveRecord::Migration
+class BoolifyPublished < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Boolifying contents.published"
     modify_tables_and_update([:rename_column, Bare34Content, :published, :old_pub],

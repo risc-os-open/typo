@@ -1,4 +1,4 @@
-class IndexSessions < ActiveRecord::Migration
+class IndexSessions < ActiveRecord::Migration[7.1]
   def self.up
     add_index :sessions, :sessid
   end

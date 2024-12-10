@@ -2,7 +2,7 @@ class Bare11Resource < ActiveRecord::Base
   include BareMigration
 end
 
-class AddArticleId < ActiveRecord::Migration
+class AddArticleId < ActiveRecord::Migration[7.1]
   def self.up
     Dir.mkdir("#{RAILS_ROOT}/public/files") unless File.directory?("#{RAILS_ROOT}/public/files")
     add_column :resources, :article_id, :integer

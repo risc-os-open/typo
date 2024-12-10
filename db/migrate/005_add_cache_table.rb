@@ -1,6 +1,6 @@
 require 'fileutils'
 
-class AddCacheTable < ActiveRecord::Migration
+class AddCacheTable < ActiveRecord::Migration[7.1]
   def self.up
     FileUtils.rm_rf("public/articles")
     FileUtils.rm_rf("public/xml")

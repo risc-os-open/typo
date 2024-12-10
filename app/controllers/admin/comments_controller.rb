@@ -1,6 +1,6 @@
 class Admin::CommentsController < Admin::BaseController
 
-  before_filter :get_article
+  before_action :get_article
 
   def index
     list
@@ -8,7 +8,7 @@ class Admin::CommentsController < Admin::BaseController
   end
 
   def list
-    @comments = @article.comments.find(:all, :order => "id DESC")
+    @comments = @article.comments.all(order: 'id DESC')
   end
 
   def show

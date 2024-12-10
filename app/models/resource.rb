@@ -1,4 +1,4 @@
-class Resource < ActiveRecord::Base
+class Resource < ApplicationRecord
   validates_uniqueness_of :filename
   after_destroy :delete_filename_on_disk
   before_validation_on_create :uniq_filename_on_disk

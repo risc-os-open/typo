@@ -2,18 +2,6 @@
 require 'digest/sha1'
 
 module ApplicationHelper
-  # Override the default ActionController#url_for.
-  def url_for(options = { })
-    # this_blog.url_for doesn't do relative URLs.
-#    if options.kind_of? Hash
-#      unless options[:controller]
-#        options[:controller] = params[:controller]
-#      end
-#    end
-
-#    this_blog.url_for(options)
-    super(options)
-  end
 
   # Basic english pluralizer.
   # Axe?
@@ -28,7 +16,7 @@ module ApplicationHelper
   # Produce a link to the permalink_url of 'item'.
   def link_to_permalink(item, title, anchor=nil)
     anchor = "##{anchor}" if anchor
-    "<a href=\"#{item.permalink_url}#{anchor}\">#{title}</a>"
+    link_to(title, "#{item.permalink_url}#{anchor}")
   end
 
   # The '5 comments' link from the bottom of articles
@@ -47,19 +35,19 @@ module ApplicationHelper
 
   def js_distance_of_time_in_words_to_now(date)
     if date
-      time = date.utc.strftime("%a, %d %b %Y %H:%M:%S GMT") 
+      time = date.utc.strftime("%a, %d %b %Y %H:%M:%S GMT")
     else
       time = Time.now
     end
-      "<span class=\"typo_date\" title=\"#{time}\">#{time}</span>" 
+      "<span class=\"typo_date\" title=\"#{time}\">#{time}</span>"
   end
 
   def meta_tag(name, value)
-    tag :meta, :name => name, :content => value unless value.blank?
+    tag.meta(name: name, content: value) unless value.blank?
   end
 
   def date(date)
-    "<span class=\"typo_date\">#{date.utc.strftime("%d. %b")}</span>"
+    tag.span(date.utc.strftime("%d. %b"), class: 'typo_date')
   end
 
   def render_theme(options)
@@ -73,7 +61,15 @@ module ApplicationHelper
 
   def markup_help_popup(markup, text)
     if markup and markup.commenthelp.size > 1
-      "<a href=\"#{url_for :controller => '/articles', :action => 'markup_help', :id => markup.id}\" onclick=\"return popup(this, 'Typo Markup Help')\">#{text}</a>"
+      link_to(
+        text,
+        url_for(
+          controller: 'articles',
+          action:     'markup_help',
+          id:         markup.id,
+          onclick:    '"return popup(this, "Typo Markup Help")'
+        )
+      )
     else
       ''
     end

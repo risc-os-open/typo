@@ -1,4 +1,4 @@
-class AddPermalink < ActiveRecord::Migration
+class AddPermalink < ActiveRecord::Migration[7.1]
   class BareArticle < ActiveRecord::Base
     include BareMigration
 

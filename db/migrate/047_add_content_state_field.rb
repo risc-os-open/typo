@@ -1,4 +1,4 @@
-class AddContentStateField < ActiveRecord::Migration
+class AddContentStateField < ActiveRecord::Migration[7.1]
   class Content < ActiveRecord::Base
     include BareMigration
   end

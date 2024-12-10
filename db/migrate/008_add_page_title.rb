@@ -1,4 +1,4 @@
-class AddPageTitle < ActiveRecord::Migration
+class AddPageTitle < ActiveRecord::Migration[7.1]
   def self.up
     add_column :pages, :title, :string
   end

@@ -1,4 +1,4 @@
-class AddStatusConfirmedFieldToContent < ActiveRecord::Migration
+class AddStatusConfirmedFieldToContent < ActiveRecord::Migration[7.1]
   class Content < ActiveRecord::Base
     include BareMigration
   end

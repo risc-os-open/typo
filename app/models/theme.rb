@@ -16,9 +16,9 @@ class Theme
     File.read("#{path}/about.markdown") rescue "### #{name}"
   end
 
-  # Find a theme, given the theme name
-  def self.find(name)
-    self.new(name,theme_path(name))
+  # Obtain a theme, given the theme name
+  def self.retrieve(name)
+    self.new(name, theme_path(name))
   end
 
   def self.themes_root
@@ -34,7 +34,7 @@ class Theme
     self.new(name, path)
   end
 
-  def self.find_all
+  def self.retrieve_all
     installed_themes.inject([]) do |array, path|
       array << theme_from_path(path)
     end

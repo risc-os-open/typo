@@ -1,7 +1,7 @@
 class Admin::ThemesController < Admin::BaseController
 
   def index
-    @themes = Theme.find_all
+    @themes = Theme.all
     @themes.each do |theme|
       theme.description_html = TextFilter.filter_text(this_blog, theme.description, nil, [:markdown,:smartypants])
     end

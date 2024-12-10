@@ -9,17 +9,23 @@ class Admin::ContentController < Admin::BaseController
   def list
     now = Time.now
     count = this_blog.articles.count
+
     @articles_pages = Paginator.new(self, count, 15, params[:id])
-    @articles = this_blog.articles.find(:all, :limit => 15, :order => 'id DESC',
-                                        :offset => @articles_pages.current.offset)
-    setup_categories
+    @articles = this_blog
+      .articles
+      .all
+      .offset(@articles_pages.current.offset)
+      .limit(15)
+      .order('id DESC')
+
+    setup_categories()
     @article = this_blog.articles.build(params[:article])
   end
 
   def show
     @article = this_blog.articles.find(params[:id])
-    setup_categories
-    @resources = Resource.find(:all, :order => 'created_at DESC')
+    setup_categories()
+    @resources = Resource.all(order: 'created_at DESC')
   end
 
   def new; new_or_edit; end
@@ -40,15 +46,15 @@ class Admin::ContentController < Admin::BaseController
   def category_remove
     @article  = this_blog.articles.find(params[:id])
     @category = @article.categories.find(params['category_id'])
-    setup_categories
-    @article.categorizations.delete(@article.categorizations.find_by_category_id(params['category_id']))
+    setup_categories()
+    @article.categorizations.delete(@article.categorizations.find_by(category_id: params['category_id']))
     @article.save
     render :partial => 'show_categories'
   end
 
   def preview
     headers["Content-Type"] = "text/html; charset=utf-8"
-    @article = this_blog.articles.build 
+    @article = this_blog.articles.build
     @article.attributes = params[:article]
     set_article_author
     data = render_to_string(:layout => "minimal")
@@ -98,7 +104,7 @@ class Admin::ContentController < Admin::BaseController
     params[:article] ||= {}
 
     @article.attributes = params[:article]
-    setup_categories
+    setup_categories()
     @selected = @article.categories.collect { |c| c.id }
     if request.post?
       set_article_author
@@ -162,10 +168,10 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def setup_categories
-    @categories = Category.find(:all, :order => 'UPPER(name)')
+    @categories = Category.all(order: 'UPPER(name) ASC')
   end
 
   def setup_resources
-    @resources = Resource.find(:all, :order => 'created_at DESC')
+    @resources = Resource.all(order: 'created_at DESC')
   end
 end

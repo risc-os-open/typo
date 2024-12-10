@@ -55,7 +55,7 @@ class TextFilter < CachedModel
   end
 
   def self.filter_text_by_name(blog, text, filtername)
-    f = TextFilter.find_by_name(filtername)
+    f = TextFilter.find_by(name: filtername)
     f.filter_text_for_content blog, text, nil
   end
 

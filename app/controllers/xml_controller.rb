@@ -45,8 +45,12 @@ class XmlController < ContentController
 
   def itunes
     @feed_title = "#{this_blog.blog_name} Podcast"
-    @items = Resource.find(:all, :order => 'created_at DESC',
-      :conditions => ['itunes_metadata = ?', true], :limit => this_blog.limit_rss_display)
+
+    @items = Resource
+      .where('itunes_metadata = ?', true)
+      .limit(this_blog.limit_rss_display)
+      .order('created_at DESC'),
+
     render :action => "itunes_feed"
   end
 
@@ -70,8 +74,15 @@ class XmlController < ContentController
     if association.instance_of?(Symbol)
       association = this_blog.send(association)
     end
+
     limit ||= this_blog.limit_rss_display
-    @items += association.find_already_published(:all, :limit => limit, :order => order)
+
+    @items += association
+      .find_already_published
+      .all
+      .limit(limit)
+      .order(order)
+      .to_a
   end
 
   def prep_feed
@@ -104,7 +115,7 @@ class XmlController < ContentController
   end
 
   def prep_tag
-    tag = Tag.find_by_name(params[:id])
+    tag = Tag.retrieve_or_instantiate(name: params[:id])
     fetch_items(tag.articles)
     @feed_title << ": Tag #{tag.display_name}"
     @link = tag.permalink_url

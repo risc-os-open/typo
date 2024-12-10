@@ -3,6 +3,7 @@ require 'net/http'
 
 class Article < Content
   include TypoGuid
+  include
 
   content_fields :body, :extended
 
@@ -21,6 +22,8 @@ class Article < Content
   belongs_to :user
   has_many :triggers, :as => :pending_item
 
+  after_save :send_pings
+  after_save :send_notifications
   after_destroy :fix_resources
 
   def stripped_title
@@ -101,27 +104,37 @@ class Article < Content
   end
 
   def next
-    blog.articles.find(:first, :conditions => ['published_at > ?', published_at],
-                       :order => 'published_at asc')
+    blog
+      .articles
+      .where('published_at > ?', published_at)
+      .order(published_at: :asc)
+      .first
   end
 
   def previous
-    blog.articles.find(:first, :conditions => ['published_at < ?', published_at],
-                       :order => 'published_at desc')
+    blog
+      .articles
+      .where('published_at < ?', published_at)
+      .order(published_at: :desc)
+      .first
   end
 
   # Count articles on a certain date
   def self.count_by_date(year, month = nil, day = nil, limit = nil)
     from, to = self.time_delta(year, month, day)
-    Article.count(["published_at BETWEEN ? AND ? AND published = ?",
-                   from, to, true])
+
+    Article
+      .where(published: true, published_at: from..to)
+      .count
   end
 
   # Find all articles on a certain date
   def self.find_all_by_date(year, month = nil, day = nil)
     from, to = self.time_delta(year, month, day)
-    Article.find_published(:all, :conditions => ["published_at BETWEEN ? AND ?",
-                                                 from, to])
+
+    Article
+      .order(default_order)
+      .where(published: true, published_at: from..to)
   end
 
   # Find one article on a certain date
@@ -133,20 +146,26 @@ class Article < Content
   # Finds one article which was posted on a certain date and matches the supplied dashed-title
   def self.find_by_permalink(year, month, day, title)
     from, to = self.time_delta(year, month, day)
-    find_published(:first,
-                   :conditions => ['permalink = ? AND ' +
-                                   'published_at BETWEEN ? AND ?',
-                                   title, from, to ])
+
+    Article
+      .order(default_order)
+      .where(published: true, published_at: from..to, permalink: title)
   end
 
   # Fulltext searches the body of published articles
   def self.search(query)
     if !query.to_s.strip.empty?
       tokens = query.split.collect {|c| "%#{c.downcase}%"}
-      find_published(:all,
-                     :conditions => [(["(LOWER(body) LIKE ? OR LOWER(extended) LIKE ? OR LOWER(title) LIKE ?)"] * tokens.size).join(" AND "), *tokens.collect { |token| [token] * 3 }.flatten])
+
+      Article
+        .order(default_order)
+        .where(published: true)
+        .where(
+          (["(LOWER(body) LIKE ? OR LOWER(extended) LIKE ? OR LOWER(title) LIKE ?)"] * tokens.size).join(" AND "),
+          *tokens.collect { |token| [token] * 3 }.flatten
+        )
     else
-      []
+      Article.none
     end
   end
 
@@ -162,7 +181,7 @@ class Article < Content
   end
 
   def interested_users
-    User.find_boolean(:all, :notify_on_new_articles)
+    User.where(notify_on_new_articles: true)
   end
 
   def notify_user_via_email(user)
@@ -268,9 +287,13 @@ class Article < Content
   end
 
   def add_notifications
-    self.notify_users = User.find_boolean(:all, :notify_on_new_articles)
-    self.notify_users << self.user if (self.user.notify_watch_my_articles? rescue false)
-    self.notify_users.uniq!
+    self.notify_users = User.where(notify_on_new_articles: true)
+
+    if self.user.present? && self.user.notify_watch_my_articles == true && self.user.notify_on_new_articles == false
+      self.notify_users = self.notify_users.or(User.where(id: self.user.id))
+    end
+
+    return self.notify_users
   end
 
   def self.time_delta(year, month = nil, day = nil)
@@ -283,19 +306,16 @@ class Article < Content
     return [from, to]
   end
 
-  def find_published(what = :all, options = {})
-    super(what, options)
-  end
-
   validates_uniqueness_of :guid
   validates_presence_of :title
 
   private
 
-  def fix_resources
-    Resource.find(:all, :conditions => "article_id = #{id}").each do |fu|
-      fu.article_id = nil
-      fu.save
+    def fix_resources
+      Resource.where(article_id: self.id).find_each do |fu|
+        fu.article_id = nil
+        fu.save
+      end
     end
-  end
+
 end

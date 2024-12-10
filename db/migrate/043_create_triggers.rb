@@ -1,4 +1,4 @@
-class CreateTriggers < ActiveRecord::Migration
+class CreateTriggers < ActiveRecord::Migration[7.1]
   def self.up
     create_table :triggers do |t|
       t.column :pending_item_id, :integer

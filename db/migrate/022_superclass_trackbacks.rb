@@ -1,4 +1,4 @@
-class SuperclassTrackbacks < ActiveRecord::Migration
+class SuperclassTrackbacks < ActiveRecord::Migration[7.1]
   class BareContent < ActiveRecord::Base
     include BareMigration
     set_inheritance_column :bogustype     # see migration #20 for why

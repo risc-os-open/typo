@@ -1,4 +1,4 @@
-class ConvertTitlePrefixSetting < ActiveRecord::Migration
+class ConvertTitlePrefixSetting < ActiveRecord::Migration[7.1]
   class BareBlog < ActiveRecord::Base
     include BareMigration
     

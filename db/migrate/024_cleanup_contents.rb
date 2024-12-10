@@ -34,7 +34,7 @@ class Bare24Tag < ActiveRecord::Base
       :join_table => 'articles_tags', :association_foreign_key => 'articles_id'
 end
 
-class CleanupContents < ActiveRecord::Migration
+class CleanupContents < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Updating all articles"
     # This is needed when migrating from 2.5.x, because we skip GUID

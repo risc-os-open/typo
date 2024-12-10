@@ -3,7 +3,7 @@ class Bare27Content < ActiveRecord::Base
   # See #24 for a description of how we have to manually handle STI
 end
 
-class SetCommentPublishedFlag < ActiveRecord::Migration
+class SetCommentPublishedFlag < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Setting published flag on each comment"
     Bare27Content.transaction do

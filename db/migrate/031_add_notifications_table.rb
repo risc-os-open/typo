@@ -1,4 +1,4 @@
-class AddNotificationsTable < ActiveRecord::Migration
+class AddNotificationsTable < ActiveRecord::Migration[7.1]
   def self.up
     create_table :notifications, :id => false do |t|
       t.column :notify_user_id, :integer

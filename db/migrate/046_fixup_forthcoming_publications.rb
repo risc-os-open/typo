@@ -1,5 +1,5 @@
 require 'bare_migration'
-class FixupForthcomingPublications < ActiveRecord::Migration
+class FixupForthcomingPublications < ActiveRecord::Migration[7.1]
   class Trigger < ActiveRecord::Base
     belongs_to :pending_item, :polymorphic => true
   end

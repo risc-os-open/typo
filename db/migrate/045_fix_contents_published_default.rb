@@ -1,4 +1,4 @@
-class FixContentsPublishedDefault < ActiveRecord::Migration
+class FixContentsPublishedDefault < ActiveRecord::Migration[7.1]
   def self.up
     change_column :contents, :published, :boolean, :default => false
   end

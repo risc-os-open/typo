@@ -2,30 +2,38 @@ module ArticlesHelper
   include SidebarHelper
 
   def admin_tools_for(model)
-    type = model.class.to_s.downcase
-    tag = []
-    tag << content_tag("div",
-      link_to_remote('nuke', {
-          :url => { :action => "nuke_#{type}", :id => model },
-          :complete => visual_effect(:puff, "#{type}-I#{model.id}", :duration => 0.6),
-          :confirm => "Are you sure you want to delete this #{type}?"
-        }, :class => "admintools") <<
-      link_to('edit', {
-        :controller => "admin/#{type.pluralize}",
-        :article_id => model.article.id,
-        :action => "edit", :id => model
-        }, :class => "admintools"),
-      :id => "admin_#{type}_#{model.id}", :style => "display: none")
-    tag.join(" | ")
+    type             = model.class.to_s.downcase
+    url_for_delete   = url_for(action: "nuke_#{type}", id: model.id)
+    visual_effect_id = "#{type}-I#{model.id}"
+    javascript       = "if (confirm('Are you sure you want to delete this comment?')) { new Ajax.Request('#{url_for_delete}', {asynchronous:true, evalScripts:true, onComplete:function(request){new Effect.Puff("#{visual_effect_id}",{duration:0.6});}}); }; return false;"
+
+    tag.div(id: "admin_#{type}_#{model.id}", style: 'display: none') do
+      link_to(
+        'nuke',
+        class:   'admintools',
+        onclick: javascript
+      ) << link_to(
+        'edit',
+        {
+          controller: "admin/#{type.pluralize}",
+          action:     'edit',
+          id:         model.id,
+          article_id: model.article.id
+        },
+        {
+          class: 'admintools'
+        }
+      )
+    end
   end
 
-  def onhover_show_admin_tools(type, id = nil) 
-    tag = [] 
-    tag << %{ onmouseover="if (getCookie('typoapp_is_admin') == 'yes') { Element.show('admin_#{[type, id].compact.join('_')}'); }" } 
-    tag << %{ onmouseout="Element.hide('admin_#{[type, id].compact.join('_')}');" } 
-    tag 
+  def onhover_show_admin_tools(type, id = nil)
+    tag = []
+    tag << %{ onmouseover="if (getCookie('typoapp_is_admin') == 'yes') { Element.show('admin_#{[type, id].compact.join('_')}'); }" }
+    tag << %{ onmouseout="Element.hide('admin_#{[type, id].compact.join('_')}');" }
+    tag
   end
-  
+
   def render_errors(obj)
     return "" unless obj
     tag = String.new

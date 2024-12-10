@@ -7,7 +7,7 @@ class Bare23Page < ActiveRecord::Base
   include BareMigration
 end
 
-class SuperclassPages < ActiveRecord::Migration
+class SuperclassPages < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Merging Pages into Content table"
     modify_tables_and_update(:add_column, Bare23Content, :name, :string) do

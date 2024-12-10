@@ -1,6 +1,6 @@
 class Admin::TrackbacksController < Admin::BaseController
 
-  before_filter :get_article
+  before_action :get_article
 
   def index
     list
@@ -8,7 +8,7 @@ class Admin::TrackbacksController < Admin::BaseController
   end
 
   def list
-    @trackbacks = @article.trackbacks.find(:all, :order => "id DESC")
+    @trackbacks = @article.trackbacks.all(order: "id DESC")
   end
 
   def show

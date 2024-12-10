@@ -7,7 +7,7 @@ class Admin::PagesController < Admin::BaseController
   end
 
   def list
-    @pages = Page.find(:all, :order => "id DESC")
+    @pages = Page.all(order: "id DESC")
     @page = Page.new(params[:page])
     @page.text_filter ||= this_blog.text_filter
   end

@@ -1,4 +1,4 @@
-class AddPublishedAtToContent < ActiveRecord::Migration
+class AddPublishedAtToContent < ActiveRecord::Migration[7.1]
   class Content < ActiveRecord::Base
     include BareMigration
   end

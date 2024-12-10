@@ -1,4 +1,4 @@
-class AddArticleUserId < ActiveRecord::Migration
+class AddArticleUserId < ActiveRecord::Migration[7.1]
   class BareArticle < ActiveRecord::Base
     include BareMigration
   end

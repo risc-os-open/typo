@@ -6,7 +6,7 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def list
-    @categories = Category.find(:all, :order => :position)
+    @categories = Category.all(order: 'position ASC')
   end
 
   def show
@@ -53,12 +53,12 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def category_container
-    @categories = Category.find(:all, :order => :position)
+    @categories = Category.all(order: 'position ASC')
     render :partial => "categories"
   end
 
   def reorder
-    @categories = Category.find(:all, :order => :position)
+    @categories = Category.all(order: 'position ASC')
     render :layout => false
   end
 end

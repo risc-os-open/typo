@@ -1,4 +1,4 @@
-class CleanupFeedbackTable < ActiveRecord::Migration
+class CleanupFeedbackTable < ActiveRecord::Migration[7.1]
   def self.up
     remove_column :feedback, :extended
     remove_column :feedback, :keywords

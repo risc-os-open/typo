@@ -1,4 +1,4 @@
-class SerializeBlogAttributes < ActiveRecord::Migration
+class SerializeBlogAttributes < ActiveRecord::Migration[7.1]
   class BareSetting < ActiveRecord::Base
     include BareMigration
     belongs_to :blog, :class_name => "SerializeBlogAttributes::BareBlog"

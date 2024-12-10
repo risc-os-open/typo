@@ -1,4 +1,4 @@
-class AddPages < ActiveRecord::Migration
+class AddPages < ActiveRecord::Migration[7.1]
   def self.up
     create_table :pages do |t|
       t.column :name, :string

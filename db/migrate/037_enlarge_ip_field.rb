@@ -1,4 +1,4 @@
-class EnlargeIpField < ActiveRecord::Migration
+class EnlargeIpField < ActiveRecord::Migration[7.1]
   def self.up
     change_column :contents, :ip, :string, :limit => 40
   end

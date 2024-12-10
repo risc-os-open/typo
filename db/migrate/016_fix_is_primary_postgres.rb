@@ -3,7 +3,7 @@
 # articles_categories.is_primary.  More modenen schemas all have is_primary.
 # This will break Postgres upgrades from 2.0.6, and apparently it bit #375.
 
-class FixIsPrimaryPostgres < ActiveRecord::Migration
+class FixIsPrimaryPostgres < ActiveRecord::Migration[7.1]
   def self.up
     config = ActiveRecord::Base.configurations
     if not $schema_generator and config[RAILS_ENV]['adapter'] == 'postgres'

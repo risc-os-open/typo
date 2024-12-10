@@ -1,4 +1,4 @@
-class RemoveSidebarStagedConfig < ActiveRecord::Migration
+class RemoveSidebarStagedConfig < ActiveRecord::Migration[7.1]
   class BareSidebar < ActiveRecord::Base
     include BareMigration
     serialize :active_config

@@ -1,4 +1,4 @@
-class SuperclassComments < ActiveRecord::Migration
+class SuperclassComments < ActiveRecord::Migration[7.1]
   class BareComment < ActiveRecord::Base
     include BareMigration
   end

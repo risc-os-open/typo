@@ -1,4 +1,4 @@
-class AddCommentUserId < ActiveRecord::Migration
+class AddCommentUserId < ActiveRecord::Migration[7.1]
   class BareComment < ActiveRecord::Base
     include BareMigration
   end

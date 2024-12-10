@@ -6,7 +6,7 @@ class Bare38Setting < ActiveRecord::Base
   include BareMigration
 end
 
-class AddBlogObject < ActiveRecord::Migration
+class AddBlogObject < ActiveRecord::Migration[7.1]
   def self.up
     begin
       STDERR.puts "Adding a blogs table"

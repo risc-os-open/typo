@@ -17,7 +17,7 @@ class Bare20Content < ActiveRecord::Base
   set_primary_key :boguskey
 end
 
-class SuperclassArticles < ActiveRecord::Migration
+class SuperclassArticles < ActiveRecord::Migration[7.1]
   def self.config
     ActiveRecord::Base.configurations
   end

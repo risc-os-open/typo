@@ -1,4 +1,4 @@
-class CreateNotifications < ActiveRecord::Migration
+class CreateNotifications < ActiveRecord::Migration[7.1]
   class OldNotification < ActiveRecord::Base
   end
 

@@ -1,4 +1,4 @@
-class RenameRedirectTo < ActiveRecord::Migration
+class RenameRedirectTo < ActiveRecord::Migration[7.1]
   def self.up
     # The original version of the redirects table used 'to' as a column name
     # Postgres is okay with that, but not mysql.

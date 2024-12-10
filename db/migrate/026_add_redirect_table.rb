@@ -1,4 +1,4 @@
-class AddRedirectTable < ActiveRecord::Migration
+class AddRedirectTable < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Adding Redirect Table"
     create_table :redirects do |t|

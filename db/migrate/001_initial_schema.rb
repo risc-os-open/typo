@@ -1,4 +1,4 @@
-class InitialSchema < ActiveRecord::Migration
+class InitialSchema < ActiveRecord::Migration[7.1]
   def self.up
     ActiveRecord::Base.transaction do
       create_table :users do |t|

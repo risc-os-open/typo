@@ -1,4 +1,4 @@
-class AddCategorizationModel < ActiveRecord::Migration
+class AddCategorizationModel < ActiveRecord::Migration[7.1]
   class ArticlesCategory < ActiveRecord::Base
     include BareMigration
   end

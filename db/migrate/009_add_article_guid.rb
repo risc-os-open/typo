@@ -1,4 +1,4 @@
-class AddArticleGuid < ActiveRecord::Migration
+class AddArticleGuid < ActiveRecord::Migration[7.1]
   def self.up
     # the guid itself will be added later in the migration
     add_column :articles, :guid, :string

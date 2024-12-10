@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
 
-  before_filter :verify_users, :only => [:login]
+  before_action :verify_users, :only => [:login]
 
   def login
     case request.method

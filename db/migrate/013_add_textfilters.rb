@@ -2,7 +2,7 @@ class Bare13TextFilter < ActiveRecord::Base
   include BareMigration
 end
 
-class AddTextfilters < ActiveRecord::Migration
+class AddTextfilters < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Adding TextFilters table"
     Bare13TextFilter.transaction do

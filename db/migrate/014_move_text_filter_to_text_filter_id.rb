@@ -1,4 +1,4 @@
-class MoveTextFilterToTextFilterId < ActiveRecord::Migration
+class MoveTextFilterToTextFilterId < ActiveRecord::Migration[7.1]
   class BareArticle < ActiveRecord::Base
     include BareMigration
   end

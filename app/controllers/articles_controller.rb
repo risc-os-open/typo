@@ -1,5 +1,5 @@
 class ArticlesController < ContentController
-  before_filter :verify_config
+  before_action :verify_config
 
   layout :theme_layout, :except => [:comment_preview, :trackback]
 
@@ -33,10 +33,12 @@ class ArticlesController < ContentController
     count = this_blog.articles.count(:conditions => ['published = ? AND contents.published_at < ?',
                                                      true, now])
     @pages = Paginator.new self, count, this_blog.limit_article_display, params[:page]
-    @articles = this_blog.published_articles.find( :all,
-                                                   :offset => @pages.current.offset,
-                                                   :limit => @pages.items_per_page,
-                                                   :conditions => ['contents.published_at < ?', now] )
+
+    @articles = this_blog
+      .published_articles
+      .where('contents.published_at < ?', now)
+      .offset(@pages.current.offset)
+      .limit(@pages.items_per_page)
   end
 
   def search
@@ -167,7 +169,7 @@ class ArticlesController < ContentController
   end
 
   def view_page
-    if(@page = Page.find_by_name(params[:name].to_a.join('/')))
+    if(@page = Page.find_by(name: params[:name].to_a.join('/')))
       @page_title = @page.title
     else
       render :nothing => true, :status => 404

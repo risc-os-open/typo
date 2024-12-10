@@ -5,7 +5,7 @@ class Admin::TextfiltersController < Admin::BaseController
   end
 
   def list
-    @textfilters = TextFilter.find(:all, :order => "id DESC")
+    @textfilters = TextFilter.all(order: "id DESC")
     @textfilter_map = TextFilter.filters_map
     @macros = TextFilter.available_filters.select { |filter| TextFilterPlugin::Macro > filter }
   end

@@ -1,4 +1,4 @@
-class AttachContentToBlog < ActiveRecord::Migration
+class AttachContentToBlog < ActiveRecord::Migration[7.1]
   class BareContent < ActiveRecord::Base
     include BareMigration
   end

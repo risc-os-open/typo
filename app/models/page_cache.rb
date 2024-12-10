@@ -1,4 +1,4 @@
-class PageCache < ActiveRecord::Base
+class PageCache < ApplicationRecord
   cattr_accessor :public_path
   @@public_path = ActionController::Base.page_cache_directory
 

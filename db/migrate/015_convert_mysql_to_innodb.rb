@@ -1,4 +1,4 @@
-class ConvertMysqlToInnodb < ActiveRecord::Migration
+class ConvertMysqlToInnodb < ActiveRecord::Migration[7.1]
   def self.up
     config = ActiveRecord::Base.configurations
     begin

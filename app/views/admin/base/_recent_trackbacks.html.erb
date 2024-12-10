@@ -1,0 +1,10 @@
+<h2><%=_("Recent trackbacks")%></h2>
+<ul class="recent">
+<% Trackback.order(id: :desc).limit(5).to_a.each do | trackback | %>
+  <li>
+    <%= link_to truncate(trackback.excerpt, 20), :controller => "/admin/trackbacks", :action => "show", :id => trackback.id, :article_id => trackback.article_id %><br />
+    by <%= truncate(trackback.blog_name, 20) %><br />
+    <%= time_ago_in_words(trackback.created_at) %> ago
+  </li>
+<% end %>
+</ul>

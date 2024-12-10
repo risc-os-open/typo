@@ -7,10 +7,12 @@ class ContentController < ApplicationController
     end
 
     def after(controller)
-       future_article =
-         Article.find(:first,
-                      :conditions => ['published = ? AND published_at > ?', true, @request_time],
-                      :order =>  "published_at ASC" )
+       future_article = Article
+         .where(published: true)
+         .where('published_at > ?', @request_time)
+         .order(published_at: :asc)
+         .first
+
        if future_article
          delta = future_article.published_at - Time.now
          controller.response.lifetime = (delta <= 0) ? 0 : delta
@@ -21,7 +23,7 @@ class ContentController < ApplicationController
   include LoginSystem
 #  model :user
   helper :theme
-  before_filter :auto_discovery_defaults
+  before_action :auto_discovery_defaults
 
   def self.caches_action_with_params(*actions)
     super
@@ -41,7 +43,7 @@ class ContentController < ApplicationController
   end
 
   def self.expire_page(path)
-    if cache = PageCache.find(:first, :conditions => ['name = ?', path])
+    if cache = PageCache.find_by(name: path)
       cache.destroy
     end
   end

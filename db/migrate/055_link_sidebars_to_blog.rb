@@ -1,4 +1,4 @@
-class LinkSidebarsToBlog < ActiveRecord::Migration
+class LinkSidebarsToBlog < ActiveRecord::Migration[7.1]
   class Sidebar < ActiveRecord::Base
     include BareMigration
   end

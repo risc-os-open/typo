@@ -1,4 +1,4 @@
-class FixCanonicalServerUrl < ActiveRecord::Migration
+class FixCanonicalServerUrl < ActiveRecord::Migration[7.1]
   class Blog < ActiveRecord::Base
     include BareMigration
     serialize :settings, Hash

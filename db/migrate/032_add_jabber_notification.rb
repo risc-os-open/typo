@@ -1,4 +1,4 @@
-class AddJabberNotification < ActiveRecord::Migration
+class AddJabberNotification < ActiveRecord::Migration[7.1]
   def self.up
     add_column :users, :notify_via_jabber, :boolean
     add_column :users, :jabber, :string

@@ -1,15 +1,3 @@
-# BlogRequest is a fake Request object, created so blog.url_for will work.
-class BlogRequest
-
-  attr_accessor :protocol, :host_with_port, :path, :symbolized_path_parameters, :relative_url_root
-
-  def initialize(root)
-    @protocol = @host_with_port = @path = ''
-    @symbolized_path_parameters = {}
-    @relative_url_root = root.gsub(%r{/^},'')
-  end
-end
-
 # The Blog class represents one blog.  It stores most configuration settings
 # and is linked to most of the assorted content classes via has_many.
 #
@@ -97,12 +85,12 @@ class Blog < CachedModel
   # that matches, then grab the default blog.  If *that* fails, then create a new
   # Blog.  The last case should only be used when Typo is first installed.
   def self.find_blog(base_url)
-    (Blog.find_by_base_url(base_url) rescue nil)|| Blog.default || Blog.new
+    (Blog.find_by(base_url: base_url) rescue nil)|| Blog.default || Blog.new
   end
 
   # The default Blog.  This is the lowest-numbered blog, almost always id==1.
   def self.default
-    find(:first, :order => 'id')
+    self.order('id ASC').first
   end
 
   def ping_article!(settings)
@@ -119,7 +107,7 @@ class Blog < CachedModel
 
   # The +Theme+ object for the current theme.
   def current_theme
-    @cached_theme ||= Theme.find(theme)
+    @cached_theme ||= Theme.retrieve(theme)
   end
 
   # Generate a URL based on the +base_url+.  This allows us to generate URLs
@@ -135,6 +123,7 @@ class Blog < CachedModel
       unless RouteCache[options]
         options.reverse_merge!(:only_path => true, :controller => '/articles',
                                :action => 'permalink')
+
         # Remove internal semi-hack that valiantly attempts to isolate
         # code from needing a Controller but does so at the expense of
         # assuming protocol and port, based on the admin-set blog base

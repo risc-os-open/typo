@@ -1,4 +1,4 @@
-class CleanupContentsTable < ActiveRecord::Migration
+class CleanupContentsTable < ActiveRecord::Migration[7.1]
   def self.up
     remove_index(:contents, :article_id) rescue nil
 

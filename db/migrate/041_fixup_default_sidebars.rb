@@ -1,4 +1,4 @@
-class FixupDefaultSidebars < ActiveRecord::Migration
+class FixupDefaultSidebars < ActiveRecord::Migration[7.1]
   class BareSidebar < ActiveRecord::Base
     include BareMigration
   end

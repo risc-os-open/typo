@@ -66,7 +66,7 @@ module Admin::BaseHelper
   end
 
   def text_filter_options
-    TextFilter.find(:all).collect do |filter|
+    TextFilter.all.to_a.collect do |filter|
       [ filter.description, filter ]
     end
   end

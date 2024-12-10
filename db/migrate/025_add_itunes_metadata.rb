@@ -2,7 +2,7 @@ class Bare25Resource < ActiveRecord::Base
   include BareMigration
 end
 
-class AddItunesMetadata < ActiveRecord::Migration
+class AddItunesMetadata < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Adding podcast metadata fields"
     modify_tables_and_update([:add_column, :resources, :itunes_metadata, :boolean],

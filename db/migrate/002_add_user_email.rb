@@ -1,4 +1,4 @@
-class AddUserEmail < ActiveRecord::Migration
+class AddUserEmail < ActiveRecord::Migration[7.1]
   class BareUser < ActiveRecord::Base
     include BareMigration
   end

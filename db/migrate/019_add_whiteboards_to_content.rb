@@ -1,4 +1,4 @@
-class AddWhiteboardsToContent < ActiveRecord::Migration
+class AddWhiteboardsToContent < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Adding whiteboard to articles, comments and pages"
     modify_tables_and_update([:add_column, :articles, :whiteboard, :text],

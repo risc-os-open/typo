@@ -1,4 +1,4 @@
-class RemoveCachedHtml < ActiveRecord::Migration
+class RemoveCachedHtml < ActiveRecord::Migration[7.1]
   def self.up
     remove_column :contents, :body_html
     remove_column :contents, :extended_html

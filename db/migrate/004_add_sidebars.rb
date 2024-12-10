@@ -7,7 +7,7 @@ class Bare4Sidebar < ActiveRecord::Base
   serialize :staged_config
 end
 
-class AddSidebars < ActiveRecord::Migration
+class AddSidebars < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Creating sidebars"
     Bare4Sidebar.transaction do

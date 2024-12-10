@@ -1,4 +1,4 @@
-class EnlargeSettings < ActiveRecord::Migration
+class EnlargeSettings < ActiveRecord::Migration[7.1]
   def self.up
     change_column :settings, :name, :string, :limit => 255
     change_column :settings, :value, :string, :limit => 255

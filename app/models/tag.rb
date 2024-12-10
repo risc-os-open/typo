@@ -1,4 +1,4 @@
-class Tag < ActiveRecord::Base
+class Tag < ApplicationRecord
   has_and_belongs_to_many :articles, :order => 'created_at DESC'
   validates_uniqueness_of :name
 
@@ -13,12 +13,13 @@ class Tag < ActiveRecord::Base
   end
 
   def self.find_by_name_or_display_name(tagname, name)
-    self.find(:first, :conditions => [%{name = ? OR display_name = ? OR display_name = ?}, tagname, tagname, name])
+    self
+      .where('name = ? OR display_name = ? OR display_name = ?', tagname, tagname, name)
+      .first
   end
 
   def self.find_by_name(name, *args)
-    self.send(:method_missing, :find_by_name, name, *args) ||
-      self.new(:name => name)
+    self.find_or_initialize_by(name: *args)
   end
 
   def ensure_naming_conventions
@@ -46,7 +47,7 @@ class Tag < ActiveRecord::Base
   end
 
   def self.find_by_permalink(*args)
-    self.find_by_name(*args)
+    self.retrieve_or_instantiate(*args)
   end
 
   def self.to_prefix
@@ -60,15 +61,15 @@ class Tag < ActiveRecord::Base
   def permalink
     self.name
   end
-  
+
   def permalink_url(anchor=nil, only_path=true)
     blog = Blog.find(1) # remove me...
-    
+
     blog.url_for(
-      :controller => '/articles',
-      :action => 'tag',
-      :id => permalink
+      controller: '/articles',
+      action:     'tag',
+      id:         permalink
     )
   end
-  
+
 end

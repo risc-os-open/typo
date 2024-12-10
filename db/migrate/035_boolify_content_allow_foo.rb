@@ -2,7 +2,7 @@ class Bare35Content < ActiveRecord::Base
   include BareMigration
 end
 
-class BoolifyContentAllowFoo < ActiveRecord::Migration
+class BoolifyContentAllowFoo < ActiveRecord::Migration[7.1]
   def self.up
     STDERR.puts "Boolifying contents.allow_(comments|pings)"
 

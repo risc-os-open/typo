@@ -1,4 +1,4 @@
-class BlacklistPattern < ActiveRecord::Base
+class BlacklistPattern < ApplicationRecord
 end
 
 class RegexPattern < BlacklistPattern

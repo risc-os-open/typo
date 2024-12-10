@@ -1,4 +1,4 @@
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
   acts_as_list
   has_many :categorizations
   has_many :articles, :through => :categorizations,

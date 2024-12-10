@@ -12,6 +12,8 @@ class Comment < Feedback
   attr_accessor :referrer
   attr_accessor :permalink
 
+  after_save :send_notifications
+
   def notify_user_via_email(user)
     if user.notify_via_email?
       EmailNotify.send_comment(self, user)
@@ -20,13 +22,13 @@ class Comment < Feedback
 
   def notify_user_via_jabber(user)
     if user.notify_via_jabber?
-      JabberNotify.send_message(user, "New comment", "A new comment was posted to '#{article.title}' on #{blog.blog_name} by #{author}: 
-        #{body} (#{controller.url_for :anchor => 'comments', :action => 'read', :id => article.id})", self.body_html) 
+      JabberNotify.send_message(user, "New comment", "A new comment was posted to '#{article.title}' on #{blog.blog_name} by #{author}:
+        #{body} (#{controller.url_for :anchor => 'comments', :action => 'read', :id => article.id})", self.body_html)
     end
   end
 
   def interested_users
-    users = User.find_boolean(:all, :notify_on_comments)
+    users = User.where(notify_on_comments: true)
     self.notify_users = users
     users
   end
