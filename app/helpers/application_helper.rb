@@ -86,11 +86,6 @@ module ApplicationHelper
     this_blog.send(name)
   end
 
-  def config
-    typo_deprecated "Use this_blog.configname instead of config[:configname]"
-    raise "Unimplemented"
-  end
-
   def item_link(title, item, anchor=nil)
     typo_deprecated "Use link_to_permalink instead of item_link"
     link_to_permalink(item, title, anchor)
