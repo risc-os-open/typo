@@ -31,35 +31,46 @@ class Admin::TextfiltersController < Admin::BaseController
     @textfilter.filters ||= []
     @textfilter.params ||= {}
 
-    setup_defaults
+    self.setup_defaults()
+  end
 
-    if request.post?
-      @textfilter.attributes = params[:textfilter]
-      if params.has_key?(:filter)
-        @textfilter.filters = params[:filter].keys.collect {|k| k.to_sym }
-      end
-      if request.post? and @textfilter.save
-        flash[:notice] = 'TextFilter was successfully updated.'
-        redirect_to :action => 'show', :id => @textfilter.id
-      end
+  def create
+    self.new() # Initialise @textfilter
+
+    @textfilter.attributes = params[:textfilter]
+    if params.has_key?(:filter)
+      @textfilter.filters = params[:filter].keys.collect {|k| k.to_sym }
+    end
+
+    if @textfilter.save
+      flash[:notice] = 'TextFilter was successfully updated.'
+      redirect_to :action => 'show', :id => @textfilter.id
+    else
+      render :new
     end
   end
 
   def edit
     @textfilter = TextFilter.find(params[:id])
 
-    setup_defaults
+    self.setup_defaults()
+  end
 
-    if request.post?
-      @textfilter.attributes = params[:textfilter]
-      if params.has_key?(:filter)
-        @textfilter.filters = params[:filter].keys.collect {|k| k.to_sym }
-      end
-      @textfilter.params = params[:params]
-      if request.post? and @textfilter.save
-        flash[:notice] = 'TextFilter was successfully updated.'
-        redirect_to :action => 'show', :id => @textfilter.id
-      end
+  def update
+    self.edit() # Initialise @textfilter
+
+    @textfilter.attributes = params[:textfilter]
+    if params.has_key?(:filter)
+      @textfilter.filters = params[:filter].keys.collect {|k| k.to_sym }
+    end
+
+    @textfilter.params = params[:params]
+
+    if @textfilter.save
+      flash[:notice] = 'TextFilter was successfully updated.'
+      redirect_to :action => 'show', :id => @textfilter.id
+    else
+      render :edit
     end
   end
 
@@ -72,35 +83,35 @@ class Admin::TextfiltersController < Admin::BaseController
   end
 
   def preview
-    headers["Content-Type"] = "text/html; charset=utf-8"
     @textfilter = params[:textfilter]
     render :layout => false
   end
 
   private
 
-  def setup_defaults
-    types=TextFilter.available_filter_types
+    def setup_defaults
+      types=TextFilter.available_filter_types
 
-    @markup_options = types['markup'].collect {|f| [f.short_name, f.display_name]}.sort_by{|f| f[0]}
-    @postprocess_options = types['postprocess'].collect do |f|
-      [f.short_name, f.display_name, f.description, @textfilter.filters.include?(f.short_name.to_sym)]
-    end.sort_by {|f| f[0]}
+      @markup_options = types['markup'].collect {|f| [f.short_name, f.display_name]}.sort_by{|f| f[0]}
+      @postprocess_options = types['postprocess'].collect do |f|
+        [f.short_name, f.display_name, f.description, @textfilter.filters.include?(f.short_name.to_sym)]
+      end.sort_by {|f| f[0]}
 
-    @filterparams = Hash.new
-    @filterdescriptions = Hash.new
-    @filterhelp = Hash.new
-    @filteroptions = Hash.new
+      @filterparams = Hash.new
+      @filterdescriptions = Hash.new
+      @filterhelp = Hash.new
+      @filteroptions = Hash.new
 
-    (types['macropre']+types['macropost']+types['postprocess']).each do |f|
-      f.default_config.each do |key,value|
-        @filterparams[key] = value[:default]
-        @filterdescriptions[key] = value[:description]
-        @filterhelp[key] = value[:help]
-        @filteroptions[key] = value[:options]
+      (types['macropre']+types['macropost']+types['postprocess']).each do |f|
+        f.default_config.each do |key,value|
+          @filterparams[key] = value[:default]
+          @filterdescriptions[key] = value[:description]
+          @filterhelp[key] = value[:help]
+          @filteroptions[key] = value[:options]
+        end
       end
+
+      @filterparams.update(@textfilter.params)
     end
 
-    @filterparams.update(@textfilter.params)
-  end
 end

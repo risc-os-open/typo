@@ -3,11 +3,11 @@ class PageCache < ApplicationRecord
   @@public_path = ActionController::Base.page_cache_directory
 
   def self.sweep(pattern)
-    destroy_all("name like '#{pattern}'")
+    self.where('name LIKE ?', pattern).destroy_all()
   end
 
   def self.sweep_all
-    destroy_all
+    self.destroy_all()
   end
 
   private

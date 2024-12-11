@@ -4,7 +4,7 @@
 </style>
 <% content_for('tasks') do %>
 	<%= task_overview %>
-<% end %> 
+<% end %>
 
 <% @page_heading = _('Upload a File to your Site') %>
 <%= form_tag_with_upload_progress({:action => 'upload'}, { :begin => "new Effect.Appear('status')", :finish => "$('message').innertHTML = arguments[0]" }) %>

@@ -11,10 +11,8 @@ class Content < ApplicationRecord
   composed_of :state, :class_name => 'ContentState::Factory',
     :mapping => %w{ state memento }
 
-  has_many :notifications, :foreign_key => 'content_id'
-  has_many :notify_users, :through => :notifications,
-    :source => 'notify_user',
-    :uniq => true
+  has_many :notifications, foreign_key: 'content_id'
+  has_many :notify_users, through: :notifications, source: 'notify_user'
 
   def notify_users=(collection)
     return notify_users.clear if collection.empty?

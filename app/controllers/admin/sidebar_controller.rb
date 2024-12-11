@@ -56,8 +56,11 @@ class Admin::SidebarController < Admin::BaseController
           sb_attribs[field.key] = field.canonicalize(sb_attribs[field.key])
         end
 
-        sidebar.update_attributes(:config => sb_attribs,
-                                  :active_position => position)
+        sidebar.update!(
+          config:          sb_attribs,
+          active_position: position
+        )
+
         position += 1
       end
       Sidebar.delete_all(['blog_id = ? and active_position is null',
@@ -67,12 +70,14 @@ class Admin::SidebarController < Admin::BaseController
   end
 
   protected
-  def show_available
-    render :partial => 'availables', :object => available
-  end
 
-  def available
-    ::Sidebar.available_sidebars
-  end
-  helper_method :available
+    def show_available
+      render :partial => 'availables', :object => available
+    end
+
+    def available
+      ::Sidebar.available_sidebars
+    end
+    helper_method :available
+
 end

@@ -10,8 +10,7 @@ class ApplicationController < ActionController::Base
   # Standard Typo gubbins follows, including its own admin login system.
 
   include LoginSystem
-  before_action :reset_local_cache, :fire_triggers
-  after_action :reset_local_cache
+  before_action :fire_triggers
 
   # Extra filter to prime URL writing so that it doesn't make invalid
   # assumptions about protocol or port
@@ -26,11 +25,6 @@ class ApplicationController < ActionController::Base
 
   def fire_triggers
     Trigger.fire
-  end
-
-  def reset_local_cache
-    CachedModel.cache_reset
-    session[:user].reload if session[:user]
   end
 
   # Axe?

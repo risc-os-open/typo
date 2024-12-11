@@ -3,18 +3,20 @@
 #
 # Typo decides which Blog object to use by searching for a Blog base_url that
 # matches the base_url computed for each request.
-class Blog < CachedModel
+class Blog < ApplicationRecord
   include ConfigManager
 
   has_many :contents
   has_many :trackbacks
   has_many :articles
   has_many :comments
-  has_many :pages, :order => "id DESC"
-  has_many(:published_articles, :class_name => "Article",
-           :conditions => {:published => true},
-           :include => [:categories, :tags],
-           :order => "contents.published_at DESC") do
+  has_many :pages, -> { order(id: :desc) }
+  has_many(
+    :published_articles,
+    -> { where(published: true).order('contents.published_at DESC') },
+    class_name: 'Article',
+    include:    [:categories, :tags]
+  ) do
     def before(date = Time.now)
       find(:all, :conditions => ["contents.created_at < ?", date])
     end
@@ -22,7 +24,7 @@ class Blog < CachedModel
 
   has_many :pages
   has_many :comments
-  has_many :sidebars, :order => 'active_position ASC'
+  has_many :sidebars, -> { order(active_position: :asc) }
 
   serialize :settings, Hash
 

@@ -9,7 +9,7 @@ class Trigger < ApplicationRecord
     end
 
     def fire
-      destroy_all ['due_at <= ?', Time.now]
+      self.where('due_at <= ?', Time.now).destroy_all()
       true
     end
 

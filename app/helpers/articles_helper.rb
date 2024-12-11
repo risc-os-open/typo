@@ -72,19 +72,16 @@ module ArticlesHelper
       end
     end.flatten.uniq
     (
-    <<-HTML
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  #{ meta_tag 'ICBM', this_blog.geourl_location unless this_blog.geourl_location.empty? }
-  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="#{ url_for :controller => 'xml', :action => 'rsd' }" />
-  <link rel="alternate" type="application/atom+xml" title="Atom" href="#{ @auto_discovery_url_atom }" />
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="#{ @auto_discovery_url_rss }" />
-  #{ javascript_include_tag "cookies" }
-  #{ javascript_include_tag "prototype" }
-  #{ javascript_include_tag "effects" }
-  #{ javascript_include_tag "typo" }
-#{ page_header_includes.join("\n") }
-  <script type="text/javascript">#{ @content_for_script }</script>
-    HTML
+      <<~HTML
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        #{ meta_tag 'ICBM', this_blog.geourl_location unless this_blog.geourl_location.empty? }
+        <link rel="EditURI" type="application/rsd+xml" title="RSD" href="#{ url_for :controller => 'xml', :action => 'rsd' }" />
+        <link rel="alternate" type="application/atom+xml" title="Atom" href="#{ @auto_discovery_url_atom }" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="#{ @auto_discovery_url_rss }" />
+        #{ javascript_include_tag "application" }
+        #{ page_header_includes.join("\n") }
+        <script type="text/javascript">#{ content_for('script') }</script>
+      HTML
     ).chomp
   end
 

@@ -17,22 +17,34 @@ class Admin::CommentsController < Admin::BaseController
 
   def new
     @comment = @article.comments.build(params[:comment])
+  end
 
-    if request.post? and @comment.save
+  def create
+    self.new() # Initialise @comment
+
+    if @comment.save
       # We should probably wave a spam filter over this, but for now, just mark it as published.
       @comment.mark_as_ham!
       flash[:notice] = 'Comment was successfully created.'
       redirect_to :action => 'show', :id => @comment.id
+    else
+      render :new
     end
   end
 
   def edit
     @comment = @article.comments.find(params[:id])
     @comment.attributes = params[:comment]
+  end
 
-    if request.post? and @comment.save
+  def update
+    self.edit() # Initialise @comment
+
+    if @comment.save
       flash[:notice] = 'Comment was successfully updated.'
       redirect_to :action => 'show', :id => @comment.id
+    else
+      render :edit
     end
   end
 
@@ -48,10 +60,7 @@ class Admin::CommentsController < Admin::BaseController
 
     def get_article
       @article = Article.find(params[:article_id])
-
-      if @article.nil?
-        redirect_to '/admin'
-      end
+      redirect_to(admin_root_path()) if @article.nil?
     end
 
 end

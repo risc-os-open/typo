@@ -20,6 +20,11 @@ gem "bootsnap", require: false
 #
 gem 'tzinfo-data'
 
+# Use SCSS for stylesheets via a robust preprocessing step:
+# https://rubygems.org/gems/cssbundling-rails/
+#
+gem 'cssbundling-rails' # ...using whatever version Rails wants
+
 # Use a robust preprocessing step for JavaScript, too; this lets us manage any
 # components available in NPM that have both JS and CSS components using the
 # same mechanism (Yarn):
@@ -48,6 +53,10 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   #
   gem 'web-console'
+
+  # Be able to run 'bin/dev'
+  gem "foreman"
+
 end
 
 group :test do

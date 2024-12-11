@@ -1,6 +1,6 @@
 require 'net/http'
 
-class TextFilter < CachedModel
+class TextFilter < ApplicationRecord
   serialize :filters
   serialize :params
 

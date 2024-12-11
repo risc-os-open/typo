@@ -1,7 +1,4 @@
 class XmlController < ContentController
-  caches_action_with_params :feed
-  session :off
-
   NORMALIZED_FORMAT_FOR = {'atom' => 'atom10', 'rss' => 'rss20',
     'atom10' => 'atom10', 'rss20' => 'rss20',
     'googlesitemap' => 'googlesitemap' }

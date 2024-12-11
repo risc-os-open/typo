@@ -16,18 +16,32 @@ class Admin::UsersController < Admin::BaseController
 
   def new
     @user = User.new(params[:user])
-    if request.post? and @user.save
+  end
+
+  def create
+    self.new() # Initialise @user
+
+    if @user.save
       flash[:notice] = 'User was successfully created.'
       redirect_to :action => 'list'
+    else
+      render :new
     end
   end
 
   def edit
     @user = User.find(params[:id])
     @user.attributes = params[:user]
-    if request.post? and @user.save
+  end
+
+  def update
+    self.edit() # Initialise @user
+
+    if @user.save
       flash[:notice] = 'User was successfully updated.'
       redirect_to :action => 'show', :id => @user.id
+    else
+      render :edit
     end
   end
 

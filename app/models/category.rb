@@ -1,8 +1,15 @@
 class Category < ApplicationRecord
   acts_as_list
   has_many :categorizations
-  has_many :articles, :through => :categorizations,
-    :order => "published_at DESC, created_at DESC"
+  has_many(
+    :articles,
+    -> { order('published_at DESC, created_at DESC') },
+    through: :categorizations
+  )
+
+  default_scope do
+    self.order(position: :asc)
+  end
 
   def self.find_all_with_article_counters(maxcount=nil)
     self.find_by_sql([%{
@@ -15,12 +22,6 @@ class Category < ApplicationRecord
       GROUP BY categories.id, categories.name, categories.position, categories.permalink
       ORDER BY position
       }, true]).each {|item| item.article_counter = item.article_counter.to_i }
-  end
-
-  def self.find(*args)
-    with_scope :find => {:order => 'position ASC'} do
-      super
-    end
   end
 
   def self.find_by_permalink(*args)
@@ -38,13 +39,13 @@ class Category < ApplicationRecord
   def self.reorder(serialized_list)
     self.transaction do
       serialized_list.each_with_index do |cid,index|
-        find(cid).update_attribute "position", index
+        find(cid).update!(position: index)
       end
     end
   end
 
   def self.reorder_alpha
-    reorder find(:all, :order => 'UPPER(name)').collect { |c| c.id }
+    reorder(self.all.order('UPPER(name)').pluck(:id))
   end
 
   def published_articles

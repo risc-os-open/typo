@@ -123,15 +123,15 @@ class Sidebar < ApplicationRecord
     attr_accessor :view_root
 
     def find_all_visible
-      find :all, :conditions => 'active_position is not null', :order => 'active_position'
+      self.where.not(active_position: nil).order(active_position: :asc)
     end
 
     def find_all_staged
-      find :all, :conditions => 'staged_position is not null', :order => 'staged_position'
+      self.where.not(staged_position: nil).order(staged_position: :asc)
     end
 
     def purge
-      delete_all('active_position is null and staged_position is null')
+      sef.where(active_position: nil, staged_position: nil).delete_all()
     end
 
     def setting(key, default=nil, options = { })
@@ -196,7 +196,6 @@ class Sidebar < ApplicationRecord
       end
     end
   end
-
 
   def publish
     self.active_position=self.staged_position

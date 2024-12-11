@@ -23,19 +23,32 @@ class Admin::BlacklistController < Admin::BaseController
     end rescue nil
 
     @blacklist_pattern.attributes = params[:blacklist_pattern]
+  end
 
-    if request.post? and @blacklist_pattern.save
+  def create
+    self.new() # Initialise @blacklist_pattern
+
+    if @blacklist_pattern.save
       flash[:notice] = 'BlacklistPattern was successfully created.'
       redirect_to :action => 'list'
+    else
+      render :new
     end
   end
 
   def edit
     @blacklist_pattern = BlacklistPattern.find(params[:id])
     @blacklist_pattern.attributes = params[:blacklist_pattern]
-    if request.post? and @blacklist_pattern.save
+  end
+
+  def update
+    self.edit() # Initialise @blacklist_pattern
+
+    if @blacklist_pattern.save
       flash[:notice] = 'BlacklistPattern was successfully updated.'
       redirect_to :action => 'list'
+    else
+      render :edit
     end
   end
 

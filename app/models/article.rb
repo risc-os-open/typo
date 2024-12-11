@@ -7,20 +7,24 @@ class Article < Content
 
   content_fields :body, :extended
 
-  has_many :pings,      :dependent => :destroy, :order => "created_at ASC"
-  has_many :comments,   :dependent => :destroy, :order => "created_at ASC"
-  has_many :trackbacks, :dependent => :destroy, :order => "created_at ASC"
-  has_many :resources, :order => "created_at DESC",
-           :class_name => "Resource", :foreign_key => 'article_id'
+  has_many :pings,      -> { order(created_at: :asc) }, dependent: :destroy
+  has_many :comments,   -> { order(created_at: :asc) }, dependent: :destroy
+  has_many :trackbacks, -> { order(created_at: :asc) }, dependent: :destroy
+  has_many :resources,
+           -> { order(created_at: :desc) },
+           class_name:  'Resource',
+           foreign_key: 'article_id'
+
   has_many :categorizations
-  has_many :categories, :through => :categorizations, :uniq => true do
+  has_many :categories, through: :categorizations, uniq: true do
     def push_with_attributes(cat, join_attrs = { :is_primary => false })
       Categorization.with_scope(:create => join_attrs) { self << cat }
     end
   end
-  has_and_belongs_to_many :tags, :foreign_key => 'article_id'
+
+  has_and_belongs_to_many :tags, foreign_key: 'article_id'
   belongs_to :user
-  has_many :triggers, :as => :pending_item
+  has_many :triggers, as: :pending_item
 
   after_save :send_pings
   after_save :send_notifications

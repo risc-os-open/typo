@@ -3,24 +3,20 @@ class ArticlesController < ContentController
 
   layout :theme_layout, :except => [:comment_preview, :trackback]
 
-  cache_sweeper :blog_sweeper
+  before_action only: [:nuke_comment, :nuke_trackback] do
+    if request.post? && session.key?(:user)
+      render text: 'Forbidden', status: 403
+    end
+  end
 
-  cached_pages = [:index, :read, :permalink, :category, :find_by_date, :archives, :view_page, :tag, :author]
-  # If you're really memory-constrained, then consider replacing
-  # caches_action_with_params with caches_page
-  caches_action_with_params *cached_pages
-  session :new_session => false
+  HUBSSOLIB_PERMISSIONS = HubSsoLib::Permissions.new(
+    {
+      read_and_comment: [ :admin, :webmaster, :privileged, :normal ]
+    }
+  )
 
-  verify(:only => [:nuke_comment, :nuke_trackback],
-         :session => :user, :method => :post,
-         :render => { :text => 'Forbidden', :status => 403 })
-
-  @@hubssolib_permissions = HubSsoLib::Permissions.new({
-                              :read_and_comment  => [ :admin, :webmaster, :privileged, :normal ]
-                            })
-
-  def ArticlesController.hubssolib_permissions
-    @@hubssolib_permissions
+  def self.hubssolib_permissions
+    HUBSSOLIB_PERMISSIONS
   end
 
   def index

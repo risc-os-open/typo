@@ -20,18 +20,32 @@ class Admin::PagesController < Admin::BaseController
     @page = Page.new(params[:page])
     @page.user_id = session[:user].id
     @page.text_filter ||= this_blog.text_filter
-    if request.post? and @page.save
+  end
+
+  def create
+    self.new() # Initialise @page
+
+    if @page.save
       flash[:notice] = 'Page was successfully created.'
       redirect_to :action => 'show', :id => @page.id
+    else
+      render :new
     end
   end
 
   def edit
     @page = Page.find(params[:id])
     @page.attributes = params[:page]
-    if request.post? and @page.save
+  end
+
+  def update
+    self.edit() # Initialise @page
+
+    if @page.save
       flash[:notice] = 'Page was successfully updated.'
       redirect_to :action => 'show', :id => @page.id
+    else
+      render :edit
     end
   end
 

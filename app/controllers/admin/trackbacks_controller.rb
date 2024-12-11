@@ -8,7 +8,7 @@ class Admin::TrackbacksController < Admin::BaseController
   end
 
   def list
-    @trackbacks = @article.trackbacks.all(order: "id DESC")
+    @trackbacks = @article.trackbacks.order(id: :desc)
   end
 
   def show
@@ -17,19 +17,32 @@ class Admin::TrackbacksController < Admin::BaseController
 
   def new
     @trackback = @article.trackbacks.build(params[:trackback])
+  end
 
-    if request.post? and @trackback.save
+  def create
+    self.new() # Initialise @trackback
+
+    if @trackback.save
       flash[:notice] = 'Trackback was successfully created.'
       redirect_to :action => 'show', :id => @trackback.id
+    else
+      render :new
     end
   end
 
   def edit
     @trackback = @article.trackbacks.find(params[:id])
     @trackback.attributes = params[:trackback]
-    if request.post? and @trackback.save
+  end
+
+  def update
+    self.edit() # Initialise @trackback
+
+    if @trackback.save
       flash[:notice] = 'Trackback was successfully updated.'
       redirect_to :action => 'show', :id => @trackback.id
+    else
+      render :edit
     end
   end
 
@@ -45,10 +58,7 @@ class Admin::TrackbacksController < Admin::BaseController
 
     def get_article
       @article = Article.find(params[:article_id])
-
-      if @article.nil?
-        redirect_to '/admin'
-      end
+      redirect_to(admin_root_path()) if @article.nil?
     end
 
 end
