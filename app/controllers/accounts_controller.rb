@@ -3,18 +3,15 @@ class AccountsController < ApplicationController
   before_action :verify_users, :only => [:login]
 
   def login
-    case request.method
-      when :post
-        if session[:user] = User.authenticate(params[:user_login], params[:user_password])
-
-          flash[:notice]  = "Login successful"
-          cookies[:typoapp_is_admin] = "yes"
-          redirect_back_or_default :controller => "admin/content", :action => "index"
-        else
-          flash.now[:notice]  = "Login unsuccessful"
-
-          @login = params[:user_login]
-        end
+    if request.post?
+      if session[:user] = User.authenticate(params[:user_login], params[:user_password])
+        flash[:notice]  = "Login successful"
+        cookies[:typoapp_is_admin] = "yes"
+        redirect_back_or_default :controller => "admin/content", :action => "index"
+      else
+        flash.now[:notice]  = "Login unsuccessful"
+        @login = params[:user_login]
+      end
     end
   end
 

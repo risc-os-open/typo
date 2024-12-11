@@ -155,11 +155,11 @@ class Admin::ContentController < Admin::BaseController
   def get_or_build_article
     @article = case params[:action]
                when 'new'
-                 returning(this_blog.articles.build) do |art|
-                   art.allow_comments = this_blog.default_allow_comments
-                   art.allow_pings    = this_blog.default_allow_pings
-                   art.published      = true
-                 end
+                 this_blog.articles.build(
+                   allow_comments: this_blog.default_allow_comments,
+                   allow_pings:    this_blog.default_allow_pings,
+                   published:      true
+                 )
                when 'edit'
                  this_blog.articles.find(params[:id])
                else

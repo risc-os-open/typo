@@ -30,7 +30,7 @@ class Content < ApplicationRecord
   before_save :state_before_save
   after_save :post_trigger, :state_after_save
 
-  serialize :whiteboard
+  serialize :whiteboard, coder: YAML, type: Hash
 
   @@content_fields = Hash.new
   @@html_map       = Hash.new

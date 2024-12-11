@@ -25,7 +25,7 @@ class Blog < ApplicationRecord
   has_many :comments
   has_many :sidebars, -> { order(active_position: :asc) }
 
-  serialize :settings, Hash
+  serialize :settings, coder: YAML, type: Hash
 
   # Description
   setting :blog_name,                  :string, 'My Shiny Weblog!'
