@@ -2,9 +2,6 @@ class AccountsController < ApplicationController
 
   before_action :verify_users, :only => [:login]
 
-
-#  skip_before_action :login_required, only: [:login, :signup]
-
   def login
     case request.method
       when :post

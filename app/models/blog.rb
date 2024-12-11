@@ -13,9 +13,8 @@ class Blog < ApplicationRecord
   has_many :pages, -> { order(id: :desc) }
   has_many(
     :published_articles,
-    -> { where(published: true).order('contents.published_at DESC') },
-    class_name: 'Article',
-    include:    [:categories, :tags]
+    -> { where(published: true).includes(:categories, :tags).order('contents.published_at DESC') },
+    class_name: 'Article'
   ) do
     def before(date = Time.now)
       find(:all, :conditions => ["contents.created_at < ?", date])
