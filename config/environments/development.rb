@@ -8,8 +8,9 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.enable_reloading = true
 
-  # Do not eager load code on boot.
-  config.eager_load = false
+  # Eager-load always, since not only is STI used, but it's multi-level.
+  # https://guides.rubyonrails.org/autoloading_and_reloading_constants.html#option-1-enable-eager-loading
+  config.eager_load = true
 
   # Show full error reports.
   config.consider_all_requests_local = true

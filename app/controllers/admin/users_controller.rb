@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::BaseController
 
   def index
     list
-    render_action 'list'
+    render action: 'list'
   end
 
   def list
@@ -23,7 +23,7 @@ class Admin::UsersController < Admin::BaseController
 
     if @user.save
       flash[:notice] = 'User was successfully created.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     else
       render :new
     end
@@ -49,7 +49,7 @@ class Admin::UsersController < Admin::BaseController
     @user = User.find(params[:id])
     if request.post?
       @user.destroy if User.count > 1
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 

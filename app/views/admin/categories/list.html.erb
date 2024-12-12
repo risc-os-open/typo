@@ -4,9 +4,9 @@
     <%= task_quickpost(_('Create new category')) -%>
     <li><%= link_to_remote(_('Reorder'), :update => 'category_container', :url => { :action => 'reorder' }) %></li>
     <li><%= link_to_remote(_('Sort alphabetically'), :update => 'category_container', :url => { :action => 'asort' }) -%></li>
-    <%= tab _("Manage Articles"), :controller=>"content", :action=>"list"%>
-	<%= tab _("Manage Pages"), :controller=>"pages", :action=>"list" %>
-	<%= tab _("Manage Resources"), :controller=>"resources", :action=>"list" %>
+    <%= tab _("Manage Articles"), :controller=>"content", :action=>"index"%>
+	<%= tab _("Manage Pages"), :controller=>"pages", :action=>"index" %>
+	<%= tab _("Manage Resources"), :controller=>"resources", :action=>"index" %>
   <% end -%> 
 
   <div id="quick-post" style="display:none;position:absolute;">

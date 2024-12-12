@@ -1,4 +1,4 @@
-class Typo
+module Typo
   class Textfilter
     class Htmlfilter < TextFilterPlugin
       plugin_display_name "HTML Filter"

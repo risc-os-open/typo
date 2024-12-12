@@ -1,4 +1,4 @@
-class Typo
+module Typo
   class Textfilter
     class Markdown < TextFilterPlugin::Markup
       plugin_display_name "Markdown"

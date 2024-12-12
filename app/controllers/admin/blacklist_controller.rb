@@ -1,7 +1,7 @@
 class Admin::BlacklistController < Admin::BaseController
   def index
     list
-    render_action 'list'
+    render action: 'list'
   end
 
   def list
@@ -30,7 +30,7 @@ class Admin::BlacklistController < Admin::BaseController
 
     if @blacklist_pattern.save
       flash[:notice] = 'BlacklistPattern was successfully created.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     else
       render :new
     end
@@ -46,7 +46,7 @@ class Admin::BlacklistController < Admin::BaseController
 
     if @blacklist_pattern.save
       flash[:notice] = 'BlacklistPattern was successfully updated.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     else
       render :edit
     end
@@ -56,7 +56,7 @@ class Admin::BlacklistController < Admin::BaseController
     @blacklist_pattern = BlacklistPattern.find(params[:id])
     if request.post?
       @blacklist_pattern.destroy
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 

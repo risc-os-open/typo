@@ -1,4 +1,6 @@
-class XmlSidebar < Sidebar
+require_relative '../../app/models/sidebar'
+
+class XmlSidebar::XmlSidebar < Sidebar
   display_name "XML Syndication"
   description "RSS and Atom feeds"
 
@@ -9,3 +11,5 @@ class XmlSidebar < Sidebar
   setting :format, 'rss20', :input_type => :radio,
           :choices => [["rss20",  "RSS 2.0"], ["atom10", "Atom 1.0"]]
 end
+
+XmlSidebar::XmlSidebar.view_root = File.dirname(__FILE__) + '/views'

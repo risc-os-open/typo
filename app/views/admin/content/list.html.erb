@@ -1,9 +1,9 @@
   <% @page_heading = _('Manage Articles') %>
 
   <% content_for('tasks') do %>
-	<%= tab _("Manage Pages"), :controller=>"pages", :action=>"list" %>
+	<%= tab _("Manage Pages"), :controller=>"pages", :action=>"index" %>
 	<%= tab _("Manage Categories"), :controller=>"categories", :action=>"index"%>
-	<%= tab _("Manage Resources"), :controller=>"resources", :action=>"list" %>
+	<%= tab _("Manage Resources"), :controller=>"resources", :action=>"index" %>
   <% end %> 
   <div id="quick-navigate" style="display:none;position:absolute;">
     <%= render :partial => 'admin/content/pages', :object => @articles_pages -%>

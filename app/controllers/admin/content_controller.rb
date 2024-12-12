@@ -3,29 +3,25 @@ require 'base64'
 class Admin::ContentController < Admin::BaseController
   def index
     list
-    render_action 'list'
+    render action: 'list'
   end
 
   def list
-    now = Time.now
-    count = this_blog.articles.count
+    setup_categories()
 
-    @articles_pages = Paginator.new(self, count, 15, params[:id])
-    @articles = this_blog
+    scope = this_blog
       .articles
       .all
-      .offset(@articles_pages.current.offset)
-      .limit(15)
       .order('id DESC')
 
-    setup_categories()
+    @articles_pages, @articles = pagy(scope)
     @article = this_blog.articles.build(params[:article])
   end
 
   def show
     @article = this_blog.articles.find(params[:id])
     setup_categories()
-    @resources = Resource.all(order: 'created_at DESC')
+    @resources = Resource.order(created_at: :desc)
   end
 
   def new; new_or_edit; end
@@ -35,7 +31,7 @@ class Admin::ContentController < Admin::BaseController
     @article = this_blog.articles.find(params[:id])
     if request.post?
       @article.destroy
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 
@@ -168,10 +164,10 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def setup_categories
-    @categories = Category.all(order: 'UPPER(name) ASC')
+    @categories = Category.order('UPPER(name) ASC')
   end
 
   def setup_resources
-    @resources = Resource.all(order: 'created_at DESC')
+    @resources = Resource.order(created_at: :desc)
   end
 end

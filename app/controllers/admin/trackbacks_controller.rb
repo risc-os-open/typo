@@ -4,7 +4,7 @@ class Admin::TrackbacksController < Admin::BaseController
 
   def index
     list
-    render_action 'list'
+    render action: 'list'
   end
 
   def list
@@ -50,7 +50,7 @@ class Admin::TrackbacksController < Admin::BaseController
     @trackback = @article.trackbacks.find(params[:id])
     if request.post?
       @trackback.destroy
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 

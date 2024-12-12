@@ -4,11 +4,11 @@ class Admin::CommentsController < Admin::BaseController
 
   def index
     list
-    render_action 'list'
+    render action: 'list'
   end
 
   def list
-    @comments = @article.comments.all(order: 'id DESC')
+    @comments = @article.comments.order(id: :desc)
   end
 
   def show

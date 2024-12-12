@@ -61,12 +61,17 @@ class Content < ApplicationRecord
       @@html_map[self] = nil
       attribs.each do | field |
         define_method("#{field}=") do | newval |
-          if self[field] != newval
+          if self.read_attribute(field) != newval
             changed
-            self[field] = newval
+            self.write_attribute(field, newval)
           end
-          self[field]
+
+          # Always return the cast value by re-reading, since this may differ
+          # from the type of 'newval' - e.g. string "21" in 'id' -> integer 21.
+          #
+          self.read_attribute(field)
         end
+
         unless self.method_defined?("#{field}_html")
           define_method("#{field}_html") do
             typo_deprecated "Use html(:#{field})"
@@ -127,7 +132,7 @@ class Content < ApplicationRecord
   # cache if possible, or regenerated if needed.
   def html(field = :all)
     if field == :all
-      generate_html(:all, content_fields.map{|f| self[f].to_s}.join("\n\n"))
+      generate_html(:all, content_fields.map{|f| self.read_attribute(f).to_s}.join("\n\n"))
     elsif self.class.html_map(field)
       generate_html(field)
     else
@@ -139,7 +144,7 @@ class Content < ApplicationRecord
   # object.  The HTML is cached in the fragment cache, using the +ContentCache+
   # object in @@cache.
   def generate_html(field, text = nil)
-    text ||= self[field].to_s
+    text ||= self.read_attribute(field).to_s
     html = text_filter.filter_text_for_content(blog, text, self)
     html ||= text # just in case the filter puked
     html_postprocess(field,html).to_s
@@ -152,7 +157,15 @@ class Content < ApplicationRecord
   end
 
   def whiteboard
-    self[:whiteboard] ||= Hash.new
+    attr_value = self.read_attribute(:whiteboard)
+
+    if attr_value.nil?
+      new_hash = Hash.new
+      self.write_attribute(:whiteboard, new_hash)
+      return new_hash
+    else
+      return attr_value
+    end
   end
 
   # The default text filter.  Generally, this is the filter specified by blog.text_filter,
@@ -164,11 +177,10 @@ class Content < ApplicationRecord
   # Grab the text filter for this object.  It's either the filter specified by
   # self.text_filter_id, or the default specified in the blog object.
   def text_filter
-    if self[:text_filter_id] && !self[:text_filter_id].zero?
-      TextFilter.find(self[:text_filter_id])
-    else
-      default_text_filter
-    end
+    filter_id = self.read_attribute(:text_filter_id)
+    filter    = TextFilter.find_by_id(filter_id) if filter_id.present? && ! filter_id.zero?
+
+    return filter || default_text_filter
   end
 
   # Set the text filter for this object.
@@ -178,17 +190,17 @@ class Content < ApplicationRecord
 
   # Changing the title flags the object as changed
   def title=(new_title)
-    if new_title == self[:title]
-      self[:title]
+    old_title = self.get_attribute(:title)
+    if new_title == old_title
+      old_title
     else
-      self.changed
-      self[:title] = new_title
+      self.changed()
+      self.write_attribute(:title, new_title)
     end
   end
 
-  # FIXME -- this feels wrong.
   def blog
-    self[:blog] ||= blog_id.to_i.zero? ? Blog.default : Blog.find(blog_id)
+    super || Blog.default
   end
 
   def state=(newstate)
@@ -196,7 +208,7 @@ class Content < ApplicationRecord
       state.exit_hook(self, newstate)
     end
     @state = newstate
-    self[:state] = newstate.memento
+    self.write_attribute(:state, newstate.memento)
     newstate.enter_hook(self)
     @state
   end
@@ -216,7 +228,7 @@ class Content < ApplicationRecord
   end
 
   def published=(a_boolean)
-    self[:published] = a_boolean
+    self.write_attribute(:published, a_boolean)
     state.change_published_state(self, a_boolean)
   end
 
@@ -225,7 +237,7 @@ class Content < ApplicationRecord
   end
 
   def published_at
-    self[:published_at] || self[:created_at]
+    self.read_attribute(:published_at) || self.read_attribute(:created_at)
   end
 
   def published?

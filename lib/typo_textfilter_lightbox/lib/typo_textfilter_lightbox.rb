@@ -1,7 +1,7 @@
 require 'net/http'
 require 'flickr/flickr'
 
-class Typo
+module Typo
   class Textfilter
     class Lightbox < TextFilterPlugin::MacroPost
       plugin_display_name "Lightbox"

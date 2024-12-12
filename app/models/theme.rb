@@ -22,7 +22,7 @@ class Theme
   end
 
   def self.themes_root
-    RAILS_ROOT + "/themes"
+    Rails.root + "/themes"
   end
 
   def self.theme_path(name)

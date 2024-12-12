@@ -57,14 +57,14 @@ class Admin::ResourcesController < Admin::BaseController
       end
     end
 
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 
   def destroy
     @file = Resource.find(params[:id])
     @file.destroy
 
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 
   def remove_itunes_metadata
@@ -73,7 +73,7 @@ class Admin::ResourcesController < Admin::BaseController
     @resource.save(false)
 
     flash[:notice] = 'Metadata was successfully removed.'
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 
   def set_mime
@@ -86,7 +86,7 @@ class Admin::ResourcesController < Admin::BaseController
       flash[:error] = "Error occurred while updating Content Type."
     end
 
-    redirect_to :action => "list"
+    redirect_to :action => "index"
   end
 
   def upload_status

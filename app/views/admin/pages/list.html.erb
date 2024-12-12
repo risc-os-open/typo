@@ -1,9 +1,9 @@
   <% @page_heading = _('Manage Pages') %>
 
   <% content_for('tasks') do %>
-	<%= tab _("Manage Articles"), :controller=>"content", :action=>"list"%>
+	<%= tab _("Manage Articles"), :controller=>"content", :action=>"index"%>
 	<%= tab _("Manage Categories"), :controller=>"categories", :action=>"index"%>
-	<%= tab _("Manage Resources"), :controller=>"resources", :action=>"list" %>
+	<%= tab _("Manage Resources"), :controller=>"resources", :action=>"index" %>
   <% end %> 
 
   <div id="quick-post" style="display:none;position:absolute;">

@@ -1,5 +1,5 @@
 class Sidebar < ApplicationRecord
-  serialize :config
+  serialize :config, coder: YAML, type: Hash
   belongs_to :blog
 
   class Field

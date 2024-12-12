@@ -1,4 +1,6 @@
-class StaticSidebar < Sidebar
+require_relative '../../app/models/sidebar'
+
+class StaticSidebar::StaticSidebar < Sidebar
   DEFAULT_TEXT = %q{
 <ul>
   <li><a href="http://www.typosphere.org" title="Typo">Typo</a></li>
@@ -18,3 +20,5 @@ class StaticSidebar < Sidebar
   setting :body,  DEFAULT_TEXT, :input_type => :text_area
 
 end
+
+StaticSidebar::StaticSidebar.view_root =  File.dirname(__FILE__) + '/views'

@@ -2,7 +2,7 @@ class TextFilterPlugin
   class << self
     include TypoPlugins
   end
-  
+
   @@filter_map = {}
   def self.inherited(sub)
     if sub.to_s =~ /^Plugin/ or sub.to_s =~ /^Typo::Textfilter/
@@ -10,7 +10,7 @@ class TextFilterPlugin
       @@filter_map[name] = sub
     end
   end
-  
+
   def self.filter_map
     @@filter_map
   end
@@ -50,12 +50,12 @@ class TextFilterPlugin
 
   def self.default_helper_module!
   end
-  
+
   # Look up a config paramater, falling back to the default as needed.
   def self.config_value(params,name)
     params[:filterparams][name] || default_config[name][:default]
   end
-  
+
   def self.logger
     @logger ||= RAILS_DEFAULT_LOGGER || Logger.new(STDOUT)
   end
@@ -104,7 +104,7 @@ end
 class TextFilterPlugin::Markup < TextFilterPlugin
 end
 
-class Typo
+module Typo
   class Textfilter
     class MacroPost < TextFilterPlugin
       plugin_display_name "MacroPost"
@@ -119,7 +119,7 @@ class Typo
         end
       end
     end
-    
+
     class MacroPre < TextFilterPlugin
       plugin_display_name "MacroPre"
       plugin_description "Macro expansion meta-filter (pre-markup)"

@@ -2,11 +2,11 @@ class Admin::CategoriesController < Admin::BaseController
 
   def index
     list
-    render_action 'list'
+    render action: 'list'
   end
 
   def list
-    @categories = Category.all(order: 'position ASC')
+    @categories = Category.order(position: :asc)
   end
 
   def show
@@ -22,7 +22,7 @@ class Admin::CategoriesController < Admin::BaseController
       flash[:error] = 'Category could not be created.'
     end
 
-    redirect_to :action => 'list'
+    redirect_to :action => 'index'
   end
 
   def edit
@@ -30,7 +30,7 @@ class Admin::CategoriesController < Admin::BaseController
     @category.attributes = params[:category]
     if request.post? and @category.save
       flash[:notice] = 'Category was successfully updated.'
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 
@@ -38,7 +38,7 @@ class Admin::CategoriesController < Admin::BaseController
     @category = Category.find(params[:id])
     if request.post?
       @category.destroy
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 
@@ -53,12 +53,12 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def category_container
-    @categories = Category.all(order: 'position ASC')
+    @categories = Category.order(position: :asc)
     render :partial => "categories"
   end
 
   def reorder
-    @categories = Category.all(order: 'position ASC')
+    @categories = Category.order(position: :asc)
     render :layout => false
   end
 end

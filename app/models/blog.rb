@@ -5,6 +5,7 @@
 # matches the base_url computed for each request.
 class Blog < ApplicationRecord
   include ConfigManager
+  include Rails.application.routes.url_helpers # To access #url_for
 
   has_many :contents
   has_many :trackbacks
@@ -109,37 +110,6 @@ class Blog < ApplicationRecord
   # The +Theme+ object for the current theme.
   def current_theme
     @cached_theme ||= Theme.retrieve(theme)
-  end
-
-  # Generate a URL based on the +base_url+.  This allows us to generate URLs
-  # without needing a controller handy, so we can produce URLs from within models
-  # where appropriate.
-  #
-  # It also uses our new RouteCache, so repeated URL generation requests should be
-  # fast, as they bypass all of Rails' route logic.
-  def url_for(options = {}, *extra_params)
-    case options
-    when String then options # They asked for 'url_for "/some/path"', so return it unedited.
-    when Hash
-      unless RouteCache[options]
-        options.reverse_merge!(:only_path => true, :controller => '/articles',
-                               :action => 'permalink')
-
-        # Remove internal semi-hack that valiantly attempts to isolate
-        # code from needing a Controller but does so at the expense of
-        # assuming protocol and port, based on the admin-set blog base
-        # URL. Replace it with global (ugh) set in prime_url_writer,
-        # a before_filter in application.rb.
-        #
-        # @url ||= ActionController::UrlRewriter.new(BlogRequest.new(self.base_url), {})
-        @url ||= ActionController::UrlRewriter.new($url_writer_request_information, {})
-        RouteCache[options] = @url.rewrite(options)
-      end
-
-      return RouteCache[options]
-    else
-      raise "Invalid URL in url_for: #{options.inspect}"
-    end
   end
 
   # The URL for a static file.

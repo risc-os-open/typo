@@ -41,7 +41,7 @@ module Admin::BaseHelper
     end
   end
 
-  def cancel(url = {:action => 'list'})
+  def cancel(url = {:action => 'index'})
     link_to "Cancel", url
   end
 
@@ -88,7 +88,7 @@ module Admin::BaseHelper
   end
 
   def task_overview
-    task('Back to overview', 'list')
+    task('Back to overview', 'index')
   end
 
   def task_new(title)

@@ -1,4 +1,4 @@
-class Typo
+module Typo
   class Textfilter
     class None < TextFilterPlugin::Markup
       plugin_display_name "None"

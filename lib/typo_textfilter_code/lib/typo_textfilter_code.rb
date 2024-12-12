@@ -1,6 +1,6 @@
 require 'syntax/convertors/html'
 
-class Typo
+module Typo
   class Textfilter
     class Code < TextFilterPlugin::MacroPre
       plugin_display_name "Code"

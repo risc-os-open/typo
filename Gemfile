@@ -41,6 +41,14 @@ gem 'propshaft', '~> 1.1'
 #
 gem 'hubssolib', '~> 2.0', require: 'hub_sso_lib'
 
+# Easy pagination [https://rubygems.org/gems/pagy]
+#
+gem 'pagy', '~> 9.0'
+
+# List positioning [https://rubygems.org/gems/acts_as_list]
+#
+gem 'acts_as_list', '~> 1.2'
+
 group :development, :test do
 
   # Standard debugger

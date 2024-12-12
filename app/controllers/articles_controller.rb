@@ -20,21 +20,11 @@ class ArticlesController < ContentController
   end
 
   def index
-    # On Postgresql, paginate's default count is *SLOW*, because it does a join against
-    # all of the eager-loaded tables.  I've seen it take up to 7 seconds on my test box.
-    #
-    # So, we're going to use the older Paginator class and manually provide a count.
-    # This is a 100x speedup on my box.
-    now = Time.now
-    count = this_blog.articles.count(:conditions => ['published = ? AND contents.published_at < ?',
-                                                     true, now])
-    @pages = Paginator.new self, count, this_blog.limit_article_display, params[:page]
-
-    @articles = this_blog
+    scope = this_blog
       .published_articles
       .where('contents.published_at < ?', now)
-      .offset(@pages.current.offset)
-      .limit(@pages.items_per_page)
+
+    @pages, @articles = pagy(scope)
   end
 
   def search

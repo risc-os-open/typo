@@ -2,9 +2,9 @@
   <% @page_title = _('Upload a new File') %>
   <% content_for('tasks') do %>
     <%= task_new _('Upload a new Resource') %>
-	<%= tab _("Manage Articles"), :controller=>"content", :action=>"list"%>
-	<%= tab _("Manage Pages"), :controller=>"pages", :action=>"list" %>
-	<%= tab _("Manage Categories"), :controller=>"categories", :action=>"list" %>
+	<%= tab _("Manage Articles"), :controller=>"content", :action=>"index"%>
+	<%= tab _("Manage Pages"), :controller=>"pages", :action=>"index" %>
+	<%= tab _("Manage Categories"), :controller=>"categories", :action=>"index" %>
   <% end %> 
 
   <div class="list" id="resources">	

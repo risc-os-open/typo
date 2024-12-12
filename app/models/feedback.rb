@@ -1,7 +1,10 @@
+# 2024-12-12 (ADH)
+#
+# Content is an STI model that tends to mostly just have Article in 'type'.
+# IMHO very unwisely this is then *further* subclassed by this STI base class
+# which is where things like Comment lives. This causes confusion often!
+#
 class Feedback < Content
-  # Empty, for now, ready to hoist up methods from Comment & Trackback
-  set_table_name "feedback"
-
   include TypoGuid
   validates_age_of :article_id
 

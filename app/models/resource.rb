@@ -6,7 +6,7 @@ class Resource < ApplicationRecord
 
   #Reads YAML file from config dir (iTunes.yml) for easy updating
   def get_itunes_categories
-      itunes_categories_raw = YAML::load( File.open( "#{RAILS_ROOT}/config/iTunes.yml" ) )
+      itunes_categories_raw = YAML::load( File.open( "#{Rails.root}/config/iTunes.yml" ) )
       itunes_categories = []
       itunes_categories_raw.keys.sort.each do |cat|
         itunes_categories.push cat => itunes_categories_raw[cat]
@@ -30,7 +30,7 @@ class Resource < ApplicationRecord
     end
   end
   def fullpath(file = nil)
-    "#{RAILS_ROOT}/public/files/#{file.nil? ? filename : file}"
+    "#{Rails.root}/public/files/#{file.nil? ? filename : file}"
   end
 
   def write_to_disk(up)

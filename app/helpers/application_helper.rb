@@ -2,6 +2,7 @@
 require 'digest/sha1'
 
 module ApplicationHelper
+  include Pagy::Frontend
 
   # Basic english pluralizer.
   # Axe?

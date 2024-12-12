@@ -77,17 +77,47 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :articles, only: [:index] # Everything else is bespoke; see below
+  #
+  get  'articles/archives',                     to: 'articles#archives'
+  get  'articles/search',                       to: 'articles#search'
+  get  'articles/author',                       to: 'articles#author'
+  get  'articles/category',                     to: 'articles#archivcategoryes'
+  get  'articles/tag',                          to: 'articles#tag'
+  get  'articles/read/:id',                     to: 'articles#read'
+  get  'articles/read_and_comment/:id',         to: 'articles#read_and_comment'
+  get  'articles/markup_help/:id',              to: 'articles#markup_help'
+  #
+  get  'pages/:name',                           to: 'articles#view_page' # (sic.)
+  #
+  post 'articles/comment_preview',              to: 'articles#comment_preview'
+  post 'articles/comment',                      to: 'articles#comment'
+  post 'articles/nuke_comment',                 to: 'articles#nuke_comment'
+  post 'articles/trackback',                    to: 'articles#trackback'
+  post 'articles/nuke_trackback',               to: 'articles#nuke_trackback'
+  #
+  get  'articles/:year',                        to: 'articles#find_by_date'
+  get  'articles/:year/:month',                 to: 'articles#find_by_date'
+  get  'articles/:year/:month/:day',            to: 'articles#find_by_date'
+  get  'articles/:year/:month/:day/page/:page', to: 'articles#find_by_date'
+  get  'articles/:year/:month/page/:page',      to: 'articles#find_by_date'
+  get  'articles/:year/page/:page',             to: 'articles#find_by_date'
+  get  'articles/:year/:month/:day/:title',     to: 'articles#permalink'
 
-#   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-#
-#   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-#   # Can be used by load balancers and uptime monitors to verify that the app is live.
-#   get "up" => "rails/health#show", as: :rails_health_check
-#
-#   # Render dynamic PWA files from app/views/pwa/*
-#   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-#   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-#
-#   # Defines the root path route ("/")
-#   # root "posts#index"
+  get 'live#search', to: 'live#search'
+
+  get 'plugins/filters/:filter/:public_action', to: 'textfilter#public_action'
+
+  get 'sitemap.xml', to: 'xml#feel', defaults: { type: 'sitemap', format: 'googlesitemap' }
+
+  get 'stylesheets/theme/:filename', to: 'stylesheets#theme'
+
+  get 'xml/:format/:type/:id/feed.xml', to: 'xml#feed'
+  get 'xml/:format/:type/feed.xml',     to: 'xml#feed'
+  get 'xml/:format/feed.xml',           to: 'xml#feed', defaults: { type: 'feed' }
+  get 'xml/rss',                        to: 'xml#feed', defaults: { type: 'feed', format: 'rss' }
+  get 'xml/articlerss/:id/feed.xml',    to: 'xml#articlerss'
+  get 'xml/commentrss/feed.xml',        to: 'xml#commentrss'
+  get 'xml/trackbackrss/feed.xml',      to: 'xml#trackbackrss'
+  get 'xml/itunes/feed.xml',            to: 'xml#itunes'
 end

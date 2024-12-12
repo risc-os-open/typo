@@ -1,7 +1,7 @@
  <% @page_heading = 'Sidebar' %>
 <% content_for('tasks') do %>
 	<%= tab _("Choose a theme"), :controller=>"themes", :action=>"index" %>
-	<%= tab _("Manage Text Filters"), :controller=>"textfilters", :action=>"list" %>
+	<%= tab _("Manage Text Filters"), :controller=>"textfilters", :action=>"index" %>
 <% end %>
   <p><%= _("Drag and drop to change the sidebar items displayed on this blog.  To remove items from the sidebar just click remove  Changes are saved immediately, but not activated until you click the 'Publish' button")%>.</p>
 

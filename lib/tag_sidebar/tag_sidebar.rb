@@ -1,4 +1,6 @@
-class TagSidebar < Sidebar
+require_relative '../../app/models/sidebar'
+
+class TagSidebar::TagSidebar < Sidebar
   display_name "Tags"
   description "Show most popular tags for this blog"
 
@@ -22,3 +24,5 @@ class TagSidebar < Sidebar
     80
   end
 end
+
+TagSidebar::TagSidebar.view_root = File.dirname(__FILE__) + '/views'

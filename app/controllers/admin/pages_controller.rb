@@ -3,11 +3,11 @@ require 'base64'
 class Admin::PagesController < Admin::BaseController
   def index
     list
-    render_action 'list'
+    render action: 'list'
   end
 
   def list
-    @pages = Page.all(order: "id DESC")
+    @pages = Page.order(id: :desc)
     @page = Page.new(params[:page])
     @page.text_filter ||= this_blog.text_filter
   end
@@ -53,7 +53,7 @@ class Admin::PagesController < Admin::BaseController
     @page = Page.find(params[:id])
     if request.post?
       @page.destroy
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 

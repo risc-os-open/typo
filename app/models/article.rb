@@ -3,12 +3,11 @@ require 'net/http'
 
 class Article < Content
   include TypoGuid
-  include
 
   content_fields :body, :extended
 
   has_many :pings,      -> { order(created_at: :asc) }, dependent: :destroy
-  has_many :comments,   -> { order(created_at: :asc) }, dependent: :destroy
+  has_many :comments,   -> { order(created_at: :asc) }, dependent: :destroy, class_name: 'Comment'
   has_many :trackbacks, -> { order(created_at: :asc) }, dependent: :destroy
   has_many :resources,
            -> { order(created_at: :desc) },
@@ -16,7 +15,7 @@ class Article < Content
            foreign_key: 'article_id'
 
   has_many :categorizations
-  has_many :categories, through: :categorizations, uniq: true do
+  has_many :categories, -> { self.distinct }, through: :categorizations do
     def push_with_attributes(cat, join_attrs = { :is_primary => false })
       Categorization.with_scope(:create => join_attrs) { self << cat }
     end
@@ -37,13 +36,13 @@ class Article < Content
   def permalink_url(anchor=nil, only_path=true)
     @cached_permalink_url ||= {}
     @cached_permalink_url["#{anchor}#{only_path}"] ||= blog.url_for(
-      :year => published_at.year,
-      :month => sprintf("%.2d", published_at.month),
-      :day => sprintf("%.2d", published_at.day),
-      :title => permalink,
-      :anchor => anchor,
-      :only_path => only_path,
-      :controller => '/articles'
+      year:       published_at.year,
+      month:      sprintf("%.2d", published_at.month),
+      day:        sprintf("%.2d", published_at.day),
+      title:      permalink,
+      anchor:     anchor,
+      only_path:  only_path,
+      controller: '/articles'
     )
   end
 

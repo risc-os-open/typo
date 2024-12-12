@@ -1,8 +1,8 @@
 require 'net/http'
 
 class TextFilter < ApplicationRecord
-  serialize :filters
-  serialize :params
+  serialize :filters, coder: YAML, type: Hash
+  serialize :params, coder: YAML, type: Hash
 
   def self.available_filters
     TextFilterPlugin.filter_map.values

@@ -1,4 +1,6 @@
-class CategorySidebar < Sidebar
+require_relative '../../app/models/sidebar'
+
+class CategorySidebar::CategorySidebar < Sidebar
   display_name "Categories"
   description "List of categories for this blog"
 
@@ -9,3 +11,5 @@ class CategorySidebar < Sidebar
     @categories ||= Category.find_all_with_article_counters
   end
 end
+
+CategorySidebar::CategorySidebar.view_root = File.dirname(__FILE__) + '/views'
