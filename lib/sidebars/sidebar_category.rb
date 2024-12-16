@@ -1,4 +1,4 @@
-class CategorySidebar::CategorySidebar < Sidebar
+class Sidebars::SidebarCategory < Sidebar
   display_name "Categories"
   description "List of categories for this blog"
 
@@ -9,5 +9,3 @@ class CategorySidebar::CategorySidebar < Sidebar
     @categories ||= Category.find_all_with_article_counters
   end
 end
-
-CategorySidebar::CategorySidebar.view_root = File.dirname(__FILE__) + '/views'

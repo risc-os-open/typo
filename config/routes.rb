@@ -71,7 +71,7 @@ Rails.application.routes.draw do
 
     # Some admin resources only work when given an owning article ID.
     #
-    resources :articles, only: [] do
+    resources :articles, only: [:index] do
       resources :comments
       resources :trackbacks
     end

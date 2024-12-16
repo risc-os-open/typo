@@ -1,4 +1,4 @@
-class TagSidebar::TagSidebar < Sidebar
+class Sidebars::SidebarTag < Sidebar
   display_name "Tags"
   description "Show most popular tags for this blog"
 
@@ -22,5 +22,3 @@ class TagSidebar::TagSidebar < Sidebar
     80
   end
 end
-
-TagSidebar::TagSidebar.view_root = File.dirname(__FILE__) + '/views'

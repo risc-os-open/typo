@@ -50,6 +50,12 @@ div.lightboxplugin
   color: #61377a;
 }
 
+.post .content:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
 p.meta
 {
   font-size:  75%;

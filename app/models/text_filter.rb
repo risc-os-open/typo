@@ -38,6 +38,7 @@ class TextFilter < ApplicationRecord
   end
 
   def self.filter_text(blog, text, content, filters, filterparams={})
+    safe_filter_seen = false
     map = TextFilter.filters_map
 
     filters.each do |filter|
@@ -45,17 +46,25 @@ class TextFilter < ApplicationRecord
       begin
         filter_class = map[filter.to_s]
         next unless filter_class
+
+        # Each filter runs over the *entire* set of input text. If a filter
+        # returns an HTML-safe string, then we trust that this means what it
+        # says. Regardless of any future filtering that might not ensure HTML
+        # safety, we know that by this pass, the overall result is safe.
+        #
         text = filter_class.filtertext(blog, content, text, :filterparams => filterparams)
+        safe_filter_seen = true if text.html_safe?
+
       rescue => err
         logger.error "Filter #{filter} failed: #{err}"
       end
     end
 
-    # 2024-12-16 (ADH): Make sure that the iterative processing above really
-    # DOES create HTML-safe text. What about something where a filter fails
-    # and the text is just _left_ in that state?
-    #
-    text.html_safe()
+    if safe_filter_seen
+      text.html_safe()
+    else
+      text
+    end
   end
 
   def self.filter_text_by_name(blog, text, filtername)

@@ -24,7 +24,7 @@ class ArticlesController < ContentController
       .published_articles
       .where('contents.published_at < ?', Time.now)
 
-    @pages, @articles = pagy(scope)
+    @articles_pages, @articles = pagy(scope)
   end
 
   def search
@@ -223,11 +223,9 @@ class ArticlesController < ContentController
   def render_paginated_index(on_empty = "No posts found...")
     return error(on_empty) if @articles.empty?
 
-    @pages = Paginator.new self, @articles.size, this_blog.limit_article_display, params[:page]
-    start = @pages.current.offset
-    stop  = (@pages.current.next.offset - 1) rescue @articles.size
-    # Why won't this work? @articles.slice!(start..stop)
-    @articles = @articles.slice(start..stop)
+    scope = @articles # (sic.)
+    @articles_pages, @articles = pagy(scope)
+
     render :action => 'index'
   end
 end

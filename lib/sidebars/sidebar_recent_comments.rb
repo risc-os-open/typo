@@ -1,4 +1,4 @@
-class RecentCommentsSidebar::RecentCommentsSidebar < Sidebar
+class Sidebars::SidebarRecentComments < Sidebar
   description "Displays the most recent comments."
 
   setting :title,          'Recent Comments', label: 'Title'
@@ -7,8 +7,6 @@ class RecentCommentsSidebar::RecentCommentsSidebar < Sidebar
   setting :show_article,   true,              label: 'Show Article Title', input_type: :checkbox
 
   def comments
-    @comments ||= Comments.where(published: true).order(created_at: :desc).limit(count)
+    @comments ||= Comment.where(published: true).order(created_at: :desc).limit(count)
   end
 end
-
-RecentCommentsSidebar::RecentCommentsSidebar.view_root = File.dirname(__FILE__) + '/views'

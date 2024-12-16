@@ -8,6 +8,8 @@ class Feedback < Content
   self.table_name = 'feedback'
 
   include TypoGuid
+  include WhiteListFormattedContentConcern
+
   validates_age_of :article_id
 
   before_create :create_guid, :article_allows_this_feedback
@@ -35,8 +37,7 @@ class Feedback < Content
   end
 
   def html_postprocess(field, html)
-    helper = ContentTextHelpers.new
-    sanitize(helper.auto_link(html),'a href, b, br, i, p, em, strong, pre, code, ol, ul, li, blockquote').nofollowify
+    xhtml_sanitize(html) # WhiteListFormattedContentConcern
   end
 
   def correct_url

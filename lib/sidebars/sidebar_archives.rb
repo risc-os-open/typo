@@ -1,4 +1,4 @@
-class ArchivesSidebar::ArchivesSidebar < Sidebar
+class Sidebars::SidebarArchives < Sidebar
   description 'Displays links to monthly archives'
   setting :show_count, true, :label => 'Show article counts', :input_type => :checkbox
   setting :count,      10,   :label => 'Number of Months'
@@ -19,5 +19,3 @@ class ArchivesSidebar::ArchivesSidebar < Sidebar
     end
   end
 end
-
-ArchivesSidebar::ArchivesSidebar.view_root = File.dirname(__FILE__) + '/views'

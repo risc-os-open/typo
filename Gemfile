@@ -45,6 +45,10 @@ gem 'hubssolib', '~> 2.0', require: 'hub_sso_lib'
 #
 gem 'pagy', '~> 9.0'
 
+# Replace Rails <= 3.0 'auto_link' [https://rubygems.org/gems/rails_autolink]
+#
+gem 'rails_autolink', '~> 1.1'
+
 # List positioning [https://rubygems.org/gems/acts_as_list]
 #
 gem 'acts_as_list', '~> 1.2'
