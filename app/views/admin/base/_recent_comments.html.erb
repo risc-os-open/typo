@@ -3,7 +3,7 @@
 <% Comment.order(id: :desc).limit(5).to_a.each do | comment | %>
   <li>
     <h4><%= truncate(comment.author, 20) %></h4>
-    <div><%= link_to truncate(comment.body, 20), :controller => "/admin/comments", :action => "show", :id => comment.id, :article_id => comment.article_id %></div>
+    <div><%= link_to truncate(comment.body, 20), :controller => "admin/comments", :action => "show", :id => comment.id, :article_id => comment.article_id %></div>
     <p class="right"><%= time_ago_in_words(comment.created_at) %> ago</p>
   </li>
 <% end %>

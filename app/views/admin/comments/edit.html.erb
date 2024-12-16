@@ -1,4 +1,4 @@
-  <% @page_heading = _("Comments for") + " #{ link_to h(@article.title), :controller => '/admin/content', :action => 'show', :id => @article }" %>
+  <% @page_heading = _("Comments for") + " #{ link_to h(@article.title), :controller => 'admin/content', :action => 'show', :id => @article }" %>
 
   <% content_for('tasks') do %>
     <li><%= link_to_permalink @comment, _('View comment on your blog') %></li>
@@ -8,7 +8,7 @@
 
   <h3><%= _("Editing comment")%></h3>
   <div class="form">
-    <%= render_partial "form" %>
+    <%= render partial: "form" %>
   </div>
 
   <div id="operations">

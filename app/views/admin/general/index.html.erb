@@ -252,15 +252,6 @@
         <p class="r"><%= save(_("Save Settings")) %></p>
 	</fieldset>
 
-	<fieldset id="misc" class="set">
-		<legend><%= _("Cache")%></legend>
-		<ul>
-			<li><%= link_to _('Empty Fragment Cache'), :controller => '/admin/cache', :action => 'sweep' %></li>
-			<li><%= link_to _('Rebuild cached HTML'), :controller => '/admin/cache', :action => 'sweep_html' %></li>
-     	<p id="users"></p>
-		</ul>
-	</fieldset>
-
 	<div id="operations" class="tasks">
     <%= save(_("Save Settings")) %>
   </div>

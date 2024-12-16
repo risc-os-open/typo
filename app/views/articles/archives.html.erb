@@ -15,7 +15,7 @@
   <%= article.published_at.mday %> -
   <%= link_to_permalink(article,h(article.title)) %>
   <% if !article.categories.empty? %> posted in
-  <%= article.categories.collect {|c| link_to_permalink c,c.name }.join(", ") -%>
+    <%= article.categories.collect {|c| link_to_permalink c,c.name }.join(', ') -%>
   <% end -%>
  </div>
 <% end

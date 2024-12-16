@@ -27,11 +27,11 @@ class Feedback < Content
   end
 
   def edit_url(anchor=:ignored, only_path=true)
-    blog.url_for(:controller => "/admin/#{self.class.to_s.downcase}s", :action =>"edit", :id => id)
+    blog.url_for(:controller => "admin/#{self.class.to_s.downcase}s", :action =>"edit", :id => id)
   end
 
   def delete_url(anchor=:ignored, only_path=true)
-    blog.url_for(:controller => "/admin/#{self.class.to_s.downcase}s", :action =>"destroy", :id => id)
+    blog.url_for(:controller => "admin/#{self.class.to_s.downcase}s", :action =>"destroy", :id => id)
   end
 
   def html_postprocess(field, html)

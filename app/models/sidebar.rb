@@ -1,5 +1,5 @@
 class Sidebar < ApplicationRecord
-  serialize :config, coder: YAML, type: Hash
+  serialize :config, coder: YAML, class: ActiveSupport::HashWithIndifferentAccess
   belongs_to :blog
 
   class Field
@@ -199,10 +199,6 @@ class Sidebar < ApplicationRecord
 
   def publish
     self.active_position=self.staged_position
-  end
-
-  def config
-    self[:config] ||= { }
   end
 
   def sidebar_controller

@@ -6,8 +6,7 @@ module ThemeHelper
   # hum. -- pdcawley
 
   def search_paths
-    ["../themes/#{this_blog.theme}/views",     # for components
-     "../../themes/#{this_blog.theme}/views",  # for normal views
+    ["themes/#{this_blog.theme}/views",
      ".",
      "../app/views"]
   end

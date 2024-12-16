@@ -1,5 +1,3 @@
-require_relative '../../app/models/sidebar'
-
 class TagSidebar::TagSidebar < Sidebar
   display_name "Tags"
   description "Show most popular tags for this blog"

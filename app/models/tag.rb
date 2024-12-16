@@ -1,5 +1,5 @@
 class Tag < ApplicationRecord
-  has_and_belongs_to_many :articles, -> { order(created_at: :desc) }
+  has_and_belongs_to_many :articles, -> { order(created_at: :desc) }, join_table: 'articles_tags'
   validates_uniqueness_of :name
 
   def self.get(name)

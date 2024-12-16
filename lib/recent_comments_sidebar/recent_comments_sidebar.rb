@@ -1,5 +1,3 @@
-require_relative '../../app/models/sidebar'
-
 class RecentCommentsSidebar::RecentCommentsSidebar < Sidebar
   description "Displays the most recent comments."
 

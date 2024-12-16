@@ -9,7 +9,7 @@ class Theme
   end
 
   def layout
-    "../../themes/#{name}/layouts/default"
+    "themes/#{name}/layouts/default"
   end
 
   def description

@@ -1,7 +1,7 @@
 require 'net/http'
 
 class TextFilter < ApplicationRecord
-  serialize :filters, coder: YAML, type: Hash
+  serialize :filters, coder: YAML, type: Array
   serialize :params, coder: YAML, type: Hash
 
   def self.available_filters
@@ -60,8 +60,13 @@ class TextFilter < ApplicationRecord
   end
 
   def filter_text_for_content(blog, text, content)
-    self.class.filter_text(blog, text, content,
-      [:macropre, markup, :macropost, filters].flatten, params)
+    self.class.filter_text(
+      blog,
+      text,
+      content,
+      [:macropre, markup, :macropost, filters].flatten,
+      params
+    )
   end
 
   def filter(text)

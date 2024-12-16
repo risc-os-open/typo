@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>RISC OS Open: News: <%=h page_title %></title>
+
+    <%= page_header %>
+    <%= stylesheet_link_tag 'theme/risc_os_open', media: 'all' %>
+    <%= stylesheet_link_tag 'user-styles',        media: 'all' %>
+  </head>
+  <body>
+    <%= render 'themes/risc_os_open/views/shared/fixed_header' %>
+
+    <div id="template_main">
+
+      <!-- Main body content -->
+
+      <div id="template_body">
+        <div id="template_body_content">
+          <%= apphelp_flash() -%>
+          <h1><%= this_blog.blog_name %></h1>
+
+          <br />
+          <%= yield %>
+          <%= javascript_tag 'show_dates_as_local_time();' %>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+
+      <div id="template_sidebar">
+        <div id="template_sidebar_content">
+          <div class="template_sidebar_node" id="search">
+            <%= render :partial => "shared/search" %>
+            <div class="template_sidebar_static"><div id="search-results"></div></div>
+          </div>
+
+          <p />
+          <%= render 'themes/risc_os_open/views/shared/fixed_sidebar' %>
+
+          <p />
+          <div class="template_sidebar_node">
+            <%= render_sidebars %>
+          </div>
+        </div>
+      </div>
+
+      <div id="template_main_block_end"></div>
+    </div>
+
+    <%= render 'themes/risc_os_open/views/shared/fixed_footer' %>
+  </body>
+</html>

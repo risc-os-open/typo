@@ -1,5 +1,3 @@
-require_relative '../../app/models/sidebar'
-
 class CategorySidebar::CategorySidebar < Sidebar
   display_name "Categories"
   description "List of categories for this blog"

@@ -82,7 +82,7 @@ module ArticlesHelper
         #{ page_header_includes.join("\n") }
         <script type="text/javascript">#{ content_for('script') }</script>
       HTML
-    ).chomp
+    ).chomp.html_safe
   end
 
   def article_links(article)
@@ -91,24 +91,25 @@ module ArticlesHelper
     code << tag_links(article)        unless article.tags.empty?
     code << comments_link(article)    if article.allow_comments?
     code << trackbacks_link(article)  if article.allow_pings?
-    code.join("&nbsp;<strong>|</strong>&nbsp;")
+
+    code.join("&nbsp;<strong>|</strong>&nbsp;").html_safe()
   end
 
   def category_links(article)
-    "Posted in " + article.categories.map { |c| link_to h(c.name), c.permalink_url, :rel => 'tag'}.join(", ")
+    ('Posted in ' + article.categories.map { |c| link_to h(c.name), c.permalink_url, rel: 'tag'}.join(', ')).html_safe()
   end
 
   def tag_links(article)
-    "Tags " + article.tags.map { |tag| link_to tag.display_name, tag.permalink_url, :rel => "tag"}.sort.join(", ")
+    ('Tags ' + article.tags.map { |tag| link_to tag.display_name, tag.permalink_url, rel: 'tag'}.sort.join(', ')).html_safe()
   end
 
   def author_link(article)
-    if this_blog.link_to_author and article.user and article.user.email.to_s.size>0
-      "<a href=\"mailto:#{h article.user.email}\">#{h article.user.name}</a>"
-    elsif article.user and article.user.name.to_s.size>0
-      h article.user.name
+    html = if this_blog.link_to_author && article.user&.email.present?
+      mail_to(article.user.email, article.user.name)
+    elsif article.user&.name.present?
+      article.user.name
     else
-      h article.author
+      article.author
     end
   end
 
@@ -150,7 +151,7 @@ module ArticlesHelper
   end
 
   def urlspec_for_grouping(grouping)
-    { :controller => "/articles", :action => grouping.class.to_prefix, :id => grouping.permalink }
+    { :controller => "articles", :action => grouping.class.to_prefix, :id => grouping.permalink }
   end
 
   def title_for_grouping(grouping)

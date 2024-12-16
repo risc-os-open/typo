@@ -60,7 +60,7 @@ class Category < ApplicationRecord
     blog = Blog.find(1) # remove me...
 
     blog.url_for(
-      :controller => '/articles',
+      :controller => 'articles',
       :action => 'category',
       :id => permalink
     )

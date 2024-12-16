@@ -1,5 +1,5 @@
 <p>A new article has been posted on
-    <a href="<%= @blog.base_url + @blog.url_for(:controller => '/articles', :action => 'index') %>"><%= @blog.blog_name %></a>:</p>
+    <a href="<%= @blog.base_url + @blog.url_for(:controller => 'articles', :action => 'index') %>"><%= @blog.blog_name %></a>:</p>
 
 <%= render :partial => './mail_header' %>
 <h2><%=h @article.title %></h2>

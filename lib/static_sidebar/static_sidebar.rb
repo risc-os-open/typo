@@ -1,5 +1,3 @@
-require_relative '../../app/models/sidebar'
-
 class StaticSidebar::StaticSidebar < Sidebar
   DEFAULT_TEXT = %q{
 <ul>

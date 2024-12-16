@@ -81,9 +81,9 @@ Rails.application.routes.draw do
   #
   get  'articles/archives',                     to: 'articles#archives'
   get  'articles/search',                       to: 'articles#search'
-  get  'articles/author',                       to: 'articles#author'
-  get  'articles/category',                     to: 'articles#archivcategoryes'
-  get  'articles/tag',                          to: 'articles#tag'
+  get  'articles/author(/:id)',                 to: 'articles#author'
+  get  'articles/category(/:id)',               to: 'articles#category'
+  get  'articles/tag(/:id)',                    to: 'articles#tag'
   get  'articles/read/:id',                     to: 'articles#read'
   get  'articles/read_and_comment/:id',         to: 'articles#read_and_comment'
   get  'articles/markup_help/:id',              to: 'articles#markup_help'
@@ -116,6 +116,7 @@ Rails.application.routes.draw do
   get 'xml/:format/:type/feed.xml',     to: 'xml#feed'
   get 'xml/:format/feed.xml',           to: 'xml#feed', defaults: { type: 'feed' }
   get 'xml/rss',                        to: 'xml#feed', defaults: { type: 'feed', format: 'rss' }
+  get 'xml/rsd',                        to: 'xml#rsd',  defaults: { type: 'application/rsd+xml', format: 'xml' }
   get 'xml/articlerss/:id/feed.xml',    to: 'xml#articlerss'
   get 'xml/commentrss/feed.xml',        to: 'xml#commentrss'
   get 'xml/trackbackrss/feed.xml',      to: 'xml#trackbackrss'

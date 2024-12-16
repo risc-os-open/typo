@@ -21,7 +21,7 @@ class Article < Content
     end
   end
 
-  has_and_belongs_to_many :tags, foreign_key: 'article_id'
+  has_and_belongs_to_many :tags, foreign_key: 'article_id', join_table: 'articles_tags'
   belongs_to :user
   has_many :triggers, as: :pending_item
 
@@ -55,11 +55,11 @@ class Article < Content
   end
 
   def edit_url
-    blog.url_for(:controller => "/admin/content", :action =>"edit", :id => id)
+    blog.url_for(:controller => "admin/content", :action =>"edit", :id => id)
   end
 
   def delete_url
-    blog.url_for(:controller => "/admin/content", :action =>"destroy", :id => id)
+    blog.url_for(:controller => "admin/content", :action =>"destroy", :id => id)
   end
 
   def html_urls

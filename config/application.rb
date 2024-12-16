@@ -26,5 +26,15 @@ module Typo
     # Permitted hosts.
     #
     config.hosts << "epsilon.arachsys.com"
+
+    # Legacy data run through YAML deserialisation includes classes (stated in
+    # the data itself) such as HashWithIndifferentAccess, usually prohibited.
+    #
+    config.active_record.yaml_column_permitted_classes = [
+      Array,
+      Hash,
+      'HashWithIndifferentAccess',              # A string, else true name "ActiveSupport::HashWithIndifferentAccess" is used and fails on *legacy* data...
+      ActiveSupport::HashWithIndifferentAccess, # ...but any saved, modern data will use this instead, so we need to permit that too.
+    ]
   end
 end

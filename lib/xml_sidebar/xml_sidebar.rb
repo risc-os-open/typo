@@ -1,5 +1,5 @@
-require_relative '../../app/models/sidebar'
-
+# Namespace keeps Zeitwerk happy while letting us keep a sane folder structure.
+#
 class XmlSidebar::XmlSidebar < Sidebar
   display_name "XML Syndication"
   description "RSS and Atom feeds"

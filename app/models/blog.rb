@@ -7,6 +7,17 @@ class Blog < ApplicationRecord
   include ConfigManager
   include Rails.application.routes.url_helpers # To access #url_for
 
+  def default_url_options # Lets #url_for work properly and provide full URLs
+    this_blog_base_url = URI.parse(self.base_url() || 'http://localhost:3000')
+
+    options            = Rails.application.routes.default_url_options
+    options[:host    ] = this_blog_base_url.host
+    options[:port    ] = this_blog_base_url.port
+    options[:protocol] = this_blog_base_url.scheme
+
+    return options
+  end
+
   has_many :contents
   has_many :trackbacks
   has_many :articles
