@@ -38,7 +38,7 @@ class TextFilter < ApplicationRecord
   end
 
   def self.filter_text(blog, text, content, filters, filterparams={})
-    map=TextFilter.filters_map
+    map = TextFilter.filters_map
 
     filters.each do |filter|
       next if filter == nil
@@ -51,7 +51,11 @@ class TextFilter < ApplicationRecord
       end
     end
 
-    text
+    # 2024-12-16 (ADH): Make sure that the iterative processing above really
+    # DOES create HTML-safe text. What about something where a filter fails
+    # and the text is just _left_ in that state?
+    #
+    text.html_safe()
   end
 
   def self.filter_text_by_name(blog, text, filtername)

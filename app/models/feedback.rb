@@ -18,7 +18,7 @@ class Feedback < Content
   end
 
   def initialize(*args, &block)
-    super(*args, &block)
+    super
     self.state = ContentState::Unclassified.instance
   end
 

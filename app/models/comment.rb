@@ -2,6 +2,8 @@ require_dependency 'spam_protection'
 require 'timeout'
 
 class Comment < Feedback
+  self.table_name = 'feedback'
+
   belongs_to :article
   belongs_to :user
   content_fields :body

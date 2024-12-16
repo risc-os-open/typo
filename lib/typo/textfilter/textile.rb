@@ -10,8 +10,10 @@ See the [Textile Quick Reference page](http://hobix.com/textile/quick.html).
 }
       end
 
-      def self.filtertext(blog,content,text,params)
-        RedCloth.new(text).to_html()
+      def self.filtertext(blog, content, text, params)
+        puts "-"*800
+        puts caller.inspect
+        RedCloth.new(text).to_html().html_safe()
       end
     end
   end

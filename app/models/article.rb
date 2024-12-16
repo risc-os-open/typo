@@ -33,9 +33,8 @@ class Article < Content
     self.title.gsub(/<[^>]*>/,'').to_url
   end
 
-  def permalink_url(anchor=nil, only_path=true)
-    @cached_permalink_url ||= {}
-    @cached_permalink_url["#{anchor}#{only_path}"] ||= blog.url_for(
+  def permalink_url(anchor = nil, only_path = true)
+    blog.article_permalink_url(
       year:       published_at.year,
       month:      sprintf("%.2d", published_at.month),
       day:        sprintf("%.2d", published_at.day),
@@ -127,7 +126,7 @@ class Article < Content
     from, to = self.time_delta(year, month, day)
 
     Article
-      .where(published: true, published_at: from..to)
+      .where(published: true, published_at: from...to)
       .count
   end
 
@@ -137,7 +136,7 @@ class Article < Content
 
     Article
       .order(default_order)
-      .where(published: true, published_at: from..to)
+      .where(published: true, published_at: from...to)
   end
 
   # Find one article on a certain date
@@ -152,7 +151,8 @@ class Article < Content
 
     Article
       .order(default_order)
-      .where(published: true, published_at: from..to, permalink: title)
+      .where(published: true, published_at: from...to, permalink: title)
+      .first
   end
 
   # Fulltext searches the body of published articles
@@ -299,13 +299,17 @@ class Article < Content
     return self.notify_users
   end
 
+  # This returns a start-inclusive, end-exclusive from-to tuple in UTC. If
+  # putting into an ActiveRecord query using a range, be sure to use "..." to
+  # get the correct ">= from, < to" semantics in the query.
+  #
   def self.time_delta(year, month = nil, day = nil)
-    from = Time.mktime(year, month || 1, day || 1)
+    from = Time.utc(year, month || 1, day || 1)
 
-    to = from.next_year
+    to = from + 1.day
     to = from.next_month unless month.blank?
     to = from + 1.day unless day.blank?
-    to = to - 1 # pull off 1 second so we don't overlap onto the next day
+
     return [from, to]
   end
 

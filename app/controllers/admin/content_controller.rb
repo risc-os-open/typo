@@ -150,17 +150,17 @@ class Admin::ContentController < Admin::BaseController
 
   def get_or_build_article
     @article = case params[:action]
-               when 'new'
-                 this_blog.articles.build(
-                   allow_comments: this_blog.default_allow_comments,
-                   allow_pings:    this_blog.default_allow_pings,
-                   published:      true
-                 )
-               when 'edit'
-                 this_blog.articles.find(params[:id])
-               else
-                 raise "Don't know how to get article for action: #{params[:action]}"
-               end
+      when 'new'
+        this_blog.articles.build(
+          allow_comments: this_blog.default_allow_comments,
+          allow_pings:    this_blog.default_allow_pings,
+          published:      true
+        )
+      when 'edit'
+        this_blog.articles.find(params[:id])
+      else
+        raise "Don't know how to get article for action: #{params[:action]}"
+    end
   end
 
   def setup_categories

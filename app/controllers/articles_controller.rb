@@ -190,7 +190,7 @@ class ArticlesController < ContentController
       @page_title   = @article.title
       auto_discovery_feed :type => 'article', :id => @article.id
       render :action => action
-    rescue ActiveRecord::RecordNotFound, NoMethodError => e
+    rescue ActiveRecord::RecordNotFound
       error("Post not found...")
     end
   end

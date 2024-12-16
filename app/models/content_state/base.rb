@@ -22,11 +22,11 @@ module ContentState
     end
 
     def exit_hook(content, target_state)
-      logger.debug("#{content} leaving state #{self.memento}")
+      Rails.logger.debug("#{content} leaving state #{self.memento}")
     end
 
     def enter_hook(content)
-      logger.debug("#{content} entering state #{self.memento}")
+      Rails.logger.debug("#{content} entering state #{self.memento}")
     end
 
     def before_save(content)
@@ -94,10 +94,6 @@ module ContentState
 
     def status_confirmed?(content)
       false
-    end
-
-    def logger
-      @logger ||= RAILS_DEFAULT_LOGGER || Logger.new(STDERR)
     end
 
     def confirm_classification(content)

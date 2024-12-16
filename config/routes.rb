@@ -102,7 +102,7 @@ Rails.application.routes.draw do
   get  'articles/:year/:month/:day/page/:page', to: 'articles#find_by_date'
   get  'articles/:year/:month/page/:page',      to: 'articles#find_by_date'
   get  'articles/:year/page/:page',             to: 'articles#find_by_date'
-  get  'articles/:year/:month/:day/:title',     to: 'articles#permalink'
+  get  'articles/:year/:month/:day/:title',     to: 'articles#permalink', as: 'article_permalink'
 
   get 'live#search', to: 'live#search'
 

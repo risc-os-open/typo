@@ -55,10 +55,6 @@ class TextFilterPlugin
   def self.config_value(params,name)
     params[:filterparams][name] || default_config[name][:default]
   end
-
-  def self.logger
-    @logger ||= RAILS_DEFAULT_LOGGER || Logger.new(STDOUT)
-  end
 end
 
 class TextFilterPlugin::PostProcess < TextFilterPlugin

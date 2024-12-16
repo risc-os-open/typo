@@ -1,8 +1,4 @@
 class EmailNotify
-  def self.logger
-    @@logger ||= RAILS_DEFAULT_LOGGER || Logger.new(STDOUT)
-  end
-
   def self.send_comment(comment, user)
     return if user.email.blank?
 
@@ -10,7 +6,7 @@ class EmailNotify
       email = NotificationMailer.create_comment(comment, user)
       EmailNotify.send_message(user,email)
     rescue => err
-      logger.error "Unable to send comment email: #{err.inspect}"
+      Rails.logger.error "Unable to send comment email: #{err.inspect}"
     end
   end
 
@@ -21,7 +17,7 @@ class EmailNotify
       email = NotificationMailer.create_article(article, user)
       EmailNotify.send_message(user,email)
     rescue => err
-      logger.error "Unable to send article email: #{err.inspect}"
+      Rails.logger.error "Unable to send article email: #{err.inspect}"
     end
   end
 

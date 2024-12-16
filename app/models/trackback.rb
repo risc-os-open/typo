@@ -1,6 +1,8 @@
 require_dependency 'spam_protection'
 
 class Trackback < Feedback
+  self.table_name = 'feedback'
+
   belongs_to :article
   content_fields :excerpt
   validates_presence_of :title, :excerpt, :url

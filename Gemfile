@@ -49,6 +49,18 @@ gem 'pagy', '~> 9.0'
 #
 gem 'acts_as_list', '~> 1.2'
 
+# Textile support [https://rubygems.org/gems/RedCloth]
+#
+gem 'RedCloth', '~> 4.3'
+
+# Markdown with GFM extensions etc. [https://rubygems.org/gems/commonmarker]
+#
+gem 'commonmarker', '~> 1.1'
+
+# Wider support for markup formats [https://rubygems.org/gems/github-markup]
+#
+gem 'github-markup', '~> 5.0'
+
 # HTML processing [https://rubygems.org/gems/html-pipeline]
 #
 gem 'html-pipeline', '~> 3.2'

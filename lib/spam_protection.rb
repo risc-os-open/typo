@@ -14,7 +14,7 @@ class SpamProtection
     return false if this_blog.sp_article_auto_close.zero? or not record.new_record?
 
     if record.article.published_at.to_i < this_blog.sp_article_auto_close.days.ago.to_i
-      logger.info("[SP] Blocked interaction with #{record.article.title}")
+      Rails.logger.info("[SP] Blocked interaction with #{record.article.title}")
       return true
     end
   end
@@ -35,7 +35,7 @@ class SpamProtection
     end
 
     if reason
-      logger.info("[SP] Hit: #{reason}")
+      Rails.logger.info("[SP] Hit: #{reason}")
       return true
     end
   end
@@ -43,7 +43,7 @@ class SpamProtection
   protected
 
   def scan_ip(ip_address)
-    logger.info("[SP] Scanning IP #{ip_address}")
+    Rails.logger.info("[SP] Scanning IP #{ip_address}")
     query_rbls(IP_RBLS, ip_address.split('.').reverse.join('.'))
   end
 
@@ -87,9 +87,9 @@ class SpamProtection
         domain.unshift(host_parts.shift)
       end
 
-      logger.info("[SP] Scanning domain #{domain.join('.')}")
+      Rails.logger.info("[SP] Scanning domain #{domain.join('.')}")
       query_rbls(HOST_RBLS, host, domain.join('.'))
-      logger.info("[SP] Finished domain scan #{domain.join('.')}")
+      Rails.logger.info("[SP] Finished domain scan #{domain.join('.')}")
       return false
     end
   end
@@ -109,10 +109,6 @@ class SpamProtection
       end
     end
     return false
-  end
-
-  def logger
-    @logger ||= RAILS_DEFAULT_LOGGER || Logger.new(STDOUT)
   end
 end
 
