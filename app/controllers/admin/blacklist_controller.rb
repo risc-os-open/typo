@@ -17,8 +17,10 @@ class Admin::BlacklistController < Admin::BaseController
 
     if params[:blacklist_pattern].has_key?('type')
       @blacklist_pattern = case params[:blacklist_pattern][:type]
-        when "StringPattern": StringPattern.new
-        when "RegexPattern": RegexPattern.new
+        when "StringPattern"
+          StringPattern.new
+        when "RegexPattern"
+          RegexPattern.new
       end
     end rescue nil
 

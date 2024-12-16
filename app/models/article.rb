@@ -7,8 +7,8 @@ class Article < Content
   content_fields :body, :extended
 
   has_many :pings,      -> { order(created_at: :asc) }, dependent: :destroy
-  has_many :comments,   -> { order(created_at: :asc) }, dependent: :destroy, class_name: 'Comment'
-  has_many :trackbacks, -> { order(created_at: :asc) }, dependent: :destroy
+  has_many :comments,   -> { order(created_at: :asc) }, dependent: :destroy, class_name: 'Feedback'
+  has_many :trackbacks, -> { order(created_at: :asc) }, dependent: :destroy, class_name: 'Feedback'
   has_many :resources,
            -> { order(created_at: :desc) },
            class_name:  'Resource',

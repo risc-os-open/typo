@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   # exposed action method in every controller, along with finding where and how
   # all of them are used (in particular, with respect to HTTP method).
 
-  get  'accounts/signup', to: 'accounts#signuip' # For first-time setup initial user only
-  post 'accounts/signup', to: 'accounts#signuip' #  "
+  get  'accounts/signup', to: 'accounts#signup' # For first-time setup initial user only
+  post 'accounts/signup', to: 'accounts#signup' #  "
   get  'accounts/login',  to: 'accounts#login'
   post 'accounts/login',  to: 'accounts#login'
   get  'accounts/logout', to: 'accounts#logout'

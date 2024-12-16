@@ -284,15 +284,3 @@ class Content < ApplicationRecord
   end
 
 end
-
-class Object
-  def to_text_filter
-    TextFilter.find_by(name: self.to_s) || TextFilter.find_by(name: 'none')
-  end
-end
-
-class ContentTextHelpers
-  include ActionView::Helpers::TagHelper
-  include ActionView::Helpers::TextHelper
-end
-

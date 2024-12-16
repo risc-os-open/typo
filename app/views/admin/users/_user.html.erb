@@ -1,7 +1,7 @@
 <div class="user">
   <h4><%= link_to h(user.login), {:action => "show", :id => user.id} %></h4>
-        <p><%= _("Number of Articles")%>: <%= Article.count :conditions => "user_id = #{user.id}"  %></p>
-        <p><%= _("Number of Comments")%>: <%= Comment.count :conditions => "user_id = #{user.id}"  %></p>
+        <p><%= _("Number of Articles")%>: <%= Article.where(user_id: user.id).count %></p>
+        <p><%= _("Number of Comments")%>: <%= Comment.where(user_id: user.id).count %></p>
         <p><%= _("Notified") %> <% if user.notify_via_email? %> <%= _("via email") %> <% end %>:
           <%= "new articles" if user.notify_on_new_articles? %>
           <%= "comments" if user.notify_on_comments? %></p>

@@ -17,10 +17,11 @@ class Trigger < ApplicationRecord
       return if pending_item.new_record?
       conditions_string =
         conditions.keys.collect{ |k| "(#{k} = :#{k})"}.join(' AND ')
-      with_scope(:find => { :conditions => [conditions_string, conditions]}) do
-        delete_all(["pending_item_id = ? AND pending_item_type = ?",
-                    pending_item.id, pending_item.class.to_s])
-      end
+
+      self
+        .where(conditions_string, conditions)
+        .where('pending_item_id = ? AND pending_item_type = ?', pending_item.id, pending_item.class.to_s)
+        .delete_all
     end
   end
 

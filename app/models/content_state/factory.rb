@@ -6,7 +6,6 @@ module ContentState
       unless state_name.rindex('/')
         state_name = 'content_state/' + state_name
       end
-      require state_name
       state_name.camelize.constantize.instance
     end
   end

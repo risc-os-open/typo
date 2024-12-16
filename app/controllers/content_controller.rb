@@ -25,24 +25,6 @@ class ContentController < ApplicationController
   helper :theme
   before_action :auto_discovery_defaults
 
-  def self.cache_page(content, path)
-    begin
-      # Don't cache the page if there are any questionmark characters in the url
-      unless path =~ /\?\w+/ or path =~ /page\d+$/
-        super(content,path)
-        PageCache.create(:name => page_cache_file(path))
-      end
-    rescue # if there's a caching error, then just return the content.
-      content
-    end
-  end
-
-  def self.expire_page(path)
-    if cache = PageCache.find_by(name: path)
-      cache.destroy
-    end
-  end
-
   def auto_discovery_defaults
     @auto_discovery_url_rss =
       request.instance_variable_get(:@auto_discovery_url_rss)

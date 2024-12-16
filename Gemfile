@@ -49,6 +49,14 @@ gem 'pagy', '~> 9.0'
 #
 gem 'acts_as_list', '~> 1.2'
 
+# HTML processing [https://rubygems.org/gems/html-pipeline]
+#
+gem 'html-pipeline', '~> 3.2'
+
+# XML toolkit [https://rubygems.org/gems/rexml]
+#
+gem 'rexml', '~> 3.4'
+
 group :development, :test do
 
   # Standard debugger

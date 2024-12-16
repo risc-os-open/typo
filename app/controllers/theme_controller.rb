@@ -1,5 +1,4 @@
 class ThemeController < ContentController
-  caches_page :stylesheets, :javascript, :images
 
   def stylesheets
     render_theme_item(:stylesheets, params[:filename], 'text/css; charset=utf-8')

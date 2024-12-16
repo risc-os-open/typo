@@ -1,7 +1,7 @@
 class Resource < ApplicationRecord
   validates_uniqueness_of :filename
   after_destroy :delete_filename_on_disk
-  before_validation_on_create :uniq_filename_on_disk
+  before_validation :uniq_filename_on_disk
   belongs_to :article
 
   #Reads YAML file from config dir (iTunes.yml) for easy updating
@@ -59,18 +59,22 @@ class Resource < ApplicationRecord
 
 
   protected
-  def uniq_filename_on_disk
-    i = 0
-    raise if filename.empty?
-    tmpfile = File.basename(filename.gsub(/\\/, '/')).gsub(/[^\w\.\-]/,'_')
-    filename = tmpfile
-    while File.exists?(fullpath(tmpfile))
-      i += 1
-      tmpfile = filename.sub(/^(.*?)(\.[^\.]+)?$/, '\1'+"#{i}"+'\2')
+    def uniq_filename_on_disk
+      return unless self.new_record? # NOTE EARLY EXIT
+
+      i = 0
+      raise if filename.empty?
+      tmpfile = File.basename(filename.gsub(/\\/, '/')).gsub(/[^\w\.\-]/,'_')
+      filename = tmpfile
+      while File.exists?(fullpath(tmpfile))
+        i += 1
+        tmpfile = filename.sub(/^(.*?)(\.[^\.]+)?$/, '\1'+"#{i}"+'\2')
+      end
+      self.filename = tmpfile
     end
-    self.filename = tmpfile
-  end
-  def delete_filename_on_disk
-    File.unlink(fullpath(filename)) if File.exist?(fullpath(filename))
-  end
+
+    def delete_filename_on_disk
+      File.unlink(fullpath(filename)) if File.exist?(fullpath(filename))
+    end
+
 end

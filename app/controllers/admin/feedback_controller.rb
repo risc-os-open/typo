@@ -1,6 +1,3 @@
-require 'comment'
-require 'trackback'
-
 class Admin::FeedbackController < Admin::BaseController
 
   def index
@@ -21,10 +18,11 @@ class Admin::FeedbackController < Admin::BaseController
       conditions.last.merge!(:status_confirmed => false)
     end
 
-    @pages, @feedback = paginate(:feedback,
-      :order => 'feedback.created_at desc',
-      :conditions => conditions,
-      :per_page => 40)
+    scope = Feedback
+      .order('feedback.created_at DESC')
+      .where(conditions)
+
+    @feedback_pages, @feedback = pagy(scope)
 
     render action: 'list'
   end
@@ -50,10 +48,6 @@ class Admin::FeedbackController < Admin::BaseController
         count += Feedback.delete(id) ## XXX Should this be #destroy?
       end
       flash[:notice] = "Deleted #{count} item(s)"
-
-      # Sweep cache
-      PageCache.sweep_all
-      expire_fragment(/.*/)
     when 'Mark Checked Items as Ham'
       ids.each do |id|
         feedback = Feedback.find(id)

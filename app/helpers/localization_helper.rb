@@ -11,7 +11,7 @@
 # minimal Rails 7+ conversion just stubs the method to return the string.
 #
 module LocalizationHelper
-  def _(str)
-    str
+  def _(str, *args)
+    sprintf str, *args
   end
 end

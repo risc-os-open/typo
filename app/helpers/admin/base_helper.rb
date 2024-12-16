@@ -34,10 +34,10 @@ module Admin::BaseHelper
   end
 
   def tab(label, options = {})
-    if controller.controller_name =~ /#{options[:controller].split('/').last}/
-      content_tag :li, link_to(label, options, {"class"=> ""}), {"class"=> ""}
+    if controller.controller_name.match? /^#{options[:controller].split('/').last}$/
+      tag.li(link_to(label, options, { class: '' }))
     else
-      content_tag :li, link_to(label, options)
+      tag.li(link_to(label, options))
     end
   end
 

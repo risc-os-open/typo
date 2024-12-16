@@ -22,7 +22,6 @@ module Typo
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     #
     config.autoload_lib(ignore: %w[assets tasks])
-    config.eager_load_paths << Rails.root.join('vendor')
 
     # Permitted hosts.
     #

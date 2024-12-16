@@ -5,6 +5,8 @@
 # which is where things like Comment lives. This causes confusion often!
 #
 class Feedback < Content
+  self.table_name = 'feedback'
+
   include TypoGuid
   validates_age_of :article_id
 

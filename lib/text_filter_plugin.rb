@@ -105,7 +105,7 @@ class TextFilterPlugin::Markup < TextFilterPlugin
 end
 
 module Typo
-  class Textfilter
+  module Textfilter
     class MacroPost < TextFilterPlugin
       plugin_display_name "MacroPost"
       plugin_description "Macro expansion meta-filter (post-markup)"

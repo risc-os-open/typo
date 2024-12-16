@@ -22,7 +22,7 @@ class ArticlesController < ContentController
   def index
     scope = this_blog
       .published_articles
-      .where('contents.published_at < ?', now)
+      .where('contents.published_at < ?', Time.now)
 
     @pages, @articles = pagy(scope)
   end

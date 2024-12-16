@@ -48,7 +48,7 @@ class XmlController < ContentController
       .limit(this_blog.limit_rss_display)
       .order('created_at DESC'),
 
-    render :action => "itunes_feed"
+    render(action: 'itunes_feed')
   end
 
   def articlerss

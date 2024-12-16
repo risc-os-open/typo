@@ -18,8 +18,8 @@ class Tag < ApplicationRecord
       .first
   end
 
-  def self.find_by_name(name, *args)
-    self.find_or_initialize_by(name: *args)
+  def self.find_by_name(name)
+    self.find_or_initialize_by(name: name)
   end
 
   def ensure_naming_conventions

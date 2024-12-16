@@ -18,7 +18,7 @@ class Blog < ApplicationRecord
     class_name: 'Article'
   ) do
     def before(date = Time.now)
-      find(:all, :conditions => ["contents.created_at < ?", date])
+      self.all.where('contents.created_at < ?', date)
     end
   end
 
