@@ -16,12 +16,16 @@ class Content < ApplicationRecord
 
   def notify_users=(collection)
     return notify_users.clear if collection.empty?
-    self.class.transaction do
+
+    ActiveRecord::Base.transaction do
       self.notifications.clear
+
       collection.uniq.each do |u|
-        self.notifications.build(:notify_user => u)
+        self.notifications << Notification.create(
+          notify_user:    u,
+          notify_content: self
+        )
       end
-      notify_users.target = collection
     end
   end
 

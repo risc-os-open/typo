@@ -4,10 +4,20 @@ require 'timeout'
 class Comment < Feedback
   self.table_name = 'feedback'
 
+  self.permitted_params_for_new  = [:body]
+  self.permitted_params_for_edit = [:author, :url, :email, :body]
+
   belongs_to :article
-  belongs_to :user
+  belongs_to :user, optional: true # See validator below
   content_fields :body
+
   validates_presence_of :author, :body
+
+  validate do | comment |
+    if comment.author.blank? && comment.user.blank?
+      comment.errors.add(:base, 'Comments must be assigned to a specific user, or given a named author from Hub')
+    end
+  end
 
   attr_accessor :user_agent
   attr_accessor :referrer
@@ -40,32 +50,33 @@ class Comment < Feedback
 
   protected
 
-  def article_allows_feedback?
-    return true if article.allow_comments?
-    errors.add(:article, "Article is not open to comments")
-    false
-  end
-
-  def originator
-    author
-  end
-
-  def additional_akismet_options
-    { :user_agent => user_agent,
-      :referrer   => referrer,
-      :permalink  => permalink }
-  end
-
-  def self.html_map(field=nil)
-    html_map = { :body => true }
-    if field
-      html_map[field.to_sym]
-    else
-      html_map
+    def article_allows_feedback?
+      return true if article.allow_comments?
+      errors.add(:article, "Article is not open to comments")
+      false
     end
-  end
 
-  def content_fields
-    [:body]
-  end
+    def originator
+      author
+    end
+
+    def additional_akismet_options
+      { :user_agent => user_agent,
+        :referrer   => referrer,
+        :permalink  => permalink }
+    end
+
+    def self.html_map(field=nil)
+      html_map = { :body => true }
+      if field
+        html_map[field.to_sym]
+      else
+        html_map
+      end
+    end
+
+    def content_fields
+      [:body]
+    end
+
 end

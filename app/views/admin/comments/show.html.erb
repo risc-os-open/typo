@@ -1,6 +1,6 @@
-  <% @page_heading = _("Comments for") + " #{ link_to h(@article.title), :controller => 'admin/content', :action => 'show', :id => @article }" %>
+  <% @page_heading = _('Comments for %s', link_to(@article.title, controller: 'admin/content', action: 'show', id: @article)).html_safe %>
 
-  <div class="form">	
+  <div class="form">
     <label><%= _("Author")%>:</label> <span class="static"><%=h @comment.author %></span><br/>
     <label><%= _("URL")%>:</label> <span class="static"><%=h @comment.url %></span><br/>
     <label><%= _("Email")%>:</label> <span class="static"><%=h @comment.email %></span><br/>

@@ -1,5 +1,5 @@
-<%= error_messages_for 'trackback' %>
-<!--[form:trackback]-->
+<%= error_messages_for @trackback %>
+
 <p>
   <label for="trackback_blog_name"><%=_("Blog name")%>:</label><br />
   <%= text_field 'trackback', 'blog_name'  %>
@@ -16,4 +16,3 @@
   <label for="trackback_excerpt"><%= _("Body")%>:</label><br />
   <%= text_area 'trackback', 'excerpt'  %>
 </p>
-<!--[eoform:trackback]-->

@@ -1,4 +1,4 @@
-  <% @page_heading =  _("Articles in") + " #{h @category.name}" %>
+  <% @page_heading = _('Articles in %s', @category.name) %>
 
   <% content_for('tasks') do %>
     <%= task_edit _('Edit this category'), @category.id %>

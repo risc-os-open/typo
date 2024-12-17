@@ -2,10 +2,12 @@
     <a href="<%= @blog.base_url + @blog.url_for(:controller => 'articles', :action => 'index') %>"><%= @blog.blog_name %></a>, responding to
     <a href="<%= @blog.base_url + @comment.article.permalink_url %>"><%=h(@comment.article.title) %></a>.</p>
 
-<%= render :partial => './mail_header' %>
+<%= render partial: 'mail_header' %>
+
 <h2><%=h @comment.title %></h2>
 <cite><strong><%= (@comment.url.blank?) ? h(@comment.author) : link_to(h(@comment.author), @comment.url) %></strong> </cite>
- <%= link_to('said', @comment.permalink_url) %>
- <%= distance_of_time_in_words @article.published_at, @comment.created_at %> later:<br />
-<%= html @comment %>
-<%= render :partial => './mail_footer' %>
+<%= link_to('said', @comment.permalink_url) %>
+<%= distance_of_time_in_words @article.published_at, @comment.created_at %> later:<br />
+<%= html_for_email @comment %>
+
+<%= render partial: 'mail_footer' %>

@@ -1,5 +1,5 @@
-<%= error_messages_for 'comment' %>
-<!--[form:comment]-->
+<%= error_messages_for @comment %>
+
 <p>
   <label for="comment_author"><%= _("Author")%>:</label><br/>
   <%= text_field 'comment', 'author'  %>
@@ -14,6 +14,5 @@
 </p>
 <p>
   <label for="comment_body"><%= _("Body")%>:</label><br/>
-  <%= text_area 'comment', 'body'  %>
+  <%= text_area 'comment', 'body' %>
 </p>
-<!--[eoform:comment]-->

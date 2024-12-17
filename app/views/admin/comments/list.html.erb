@@ -1,11 +1,11 @@
-  <% @page_heading = "Comments for #{ link_to h(@article.title), :controller => 'admin/content', :action => 'show', :id => @article }" %>
+  <% @page_heading = _('Comments for %s', link_to(@article.title, controller: 'admin/content', action: 'show', id: @article)).html_safe %>
 
   <% content_for('tasks') do %>
     <%= task_new('Write a comment') %>
     <li><%= link_to _('Manage articles'), :controller => 'admin/content', :action => 'index' %></li>
-  <% end %> 
+  <% end %>
 
-  <div class="list">	
+  <div class="list">
     <table>
     <tr>
       <th><%= _("Author")%></th>
@@ -24,8 +24,8 @@
       <td class="field"><%=h comment.ip %></td>
       <td class="field"><%=h distance_of_time_in_words_to_now(comment.created_at) %></td>
       <td class="operation"><%= link_to_edit comment %></td>
-      <td class="operation"><%= link_to_destroy comment %></td>    
-    </tr>  
+      <td class="operation"><%= link_to_destroy comment %></td>
+    </tr>
     <% end -%>
     </table>
   </div>

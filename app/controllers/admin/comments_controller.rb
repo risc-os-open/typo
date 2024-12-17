@@ -34,7 +34,7 @@ class Admin::CommentsController < Admin::BaseController
 
   def edit
     @comment = @article.comments.find(params[:id])
-    @comment.attributes = params[:comment] || {}
+    @comment.attributes = Comment.params_for_edit(params, :comment, required: action_name == 'update')
   end
 
   def update

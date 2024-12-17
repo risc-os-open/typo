@@ -281,7 +281,10 @@ label {
 }
 
 .form textarea {
-  width: 350px;
+  width: 50%;
+  min-width: 200px;
+  height: 10em;
+  min-height: 2em;
   font-family: Georgia;
   line-height: 1.1em;
   font-size: 1em;

@@ -78,6 +78,11 @@ group :development, :test do
   # Standard debugger
   #
   gem 'debug'
+
+  # E-mail inspection.
+  #
+  gem 'mailcatcher'
+
 end
 
 group :development do

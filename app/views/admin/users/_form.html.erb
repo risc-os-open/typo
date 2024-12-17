@@ -1,5 +1,5 @@
-<%= error_messages_for 'user' %>
-<!--[form:user]-->
+<%= error_messages_for @user %>
+
 <p>
   <label for="user_login"><%= _("Login")%>:</label><br />
   <%= text_field 'user', 'login'  %>
@@ -44,5 +44,3 @@
   <label for="user_notify_on_comments"><%= _("Send notification messages when comments are posted")%>?</label><br />
   <%= check_box 'user', 'notify_on_comments'  %>
 </p>
-
-<!--[eoform:user]-->

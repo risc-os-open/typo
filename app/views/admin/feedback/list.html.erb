@@ -1,4 +1,4 @@
-<% @page_heading = _("Comments and Trackbacks for") + " #{ this_blog.settings['blog_name'] }" %>
+<% @page_heading = _('Comments and Trackbacks for %s', this_blog.settings['blog_name']) %>
 
 <% content_for('tasks') do %>
   <%= task_showmod _('Limit to spam') %>

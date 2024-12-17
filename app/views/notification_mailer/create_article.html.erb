@@ -1,7 +1,9 @@
 <p>A new article has been posted on
     <a href="<%= @blog.base_url + @blog.url_for(:controller => 'articles', :action => 'index') %>"><%= @blog.blog_name %></a>:</p>
 
-<%= render :partial => './mail_header' %>
+<%= render partial: 'mail_header' %>
+
 <h2><%=h @article.title %></h2>
-<%= html @article, :body %>
-<%= render :partial => './mail_footer' %>
+<%= html_for_email @article, :body %>
+
+<%= render partial: 'mail_footer' %>

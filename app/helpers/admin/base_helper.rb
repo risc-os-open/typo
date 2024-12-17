@@ -46,11 +46,11 @@ module Admin::BaseHelper
   end
 
   def save(val = "Store")
-    '<input type="submit" value="' + val + '" class="primary" />'
+    tag.input(type: 'submit', value: val, class: 'primary')
   end
 
   def confirm_delete(val = "Delete")
-   '<input type="submit" value="' + val + '" />'
+    tag.input(type: 'submit', value: val)
   end
 
   def link_to_show(record)

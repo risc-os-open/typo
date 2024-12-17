@@ -3,8 +3,7 @@ class EmailNotify
     return if user.email.blank?
 
     begin
-      email = NotificationMailer.create_comment(comment, user)
-      EmailNotify.send_message(user,email)
+      NotificationMailer.create_comment(comment, user).deliver_now
     rescue => err
       Rails.logger.error "Unable to send comment email: #{err.inspect}"
     end
@@ -14,15 +13,9 @@ class EmailNotify
     return if user.email.blank?
 
     begin
-      email = NotificationMailer.create_article(article, user)
-      EmailNotify.send_message(user,email)
+      NotificationMailer.create_article(article, user).deliver_now
     rescue => err
       Rails.logger.error "Unable to send article email: #{err.inspect}"
     end
-  end
-
-  def self.send_message(user, email)
-    email.content_type = "text/html; charset=utf-8"
-    NotificationMailer.deliver(email)
   end
 end
