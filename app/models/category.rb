@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
   acts_as_list
+
   has_many :categorizations
   has_many(
     :articles,
@@ -10,6 +11,11 @@ class Category < ApplicationRecord
   default_scope do
     self.order(position: :asc)
   end
+
+  validates_presence_of :name
+  validates_uniqueness_of :name, :on => :create
+
+  before_save :set_defaults
 
   def self.find_all_with_article_counters(maxcount=nil)
     self.find_by_sql([%{
@@ -56,25 +62,18 @@ class Category < ApplicationRecord
     name
   end
 
-  def permalink_url(anchor=nil, only_path=true)
-    blog = Blog.find(1) # remove me...
-
-    blog.url_for(
-      :controller => 'articles',
-      :action => 'category',
-      :id => permalink
+  def permalink_url(anchor = nil, only_path = true)
+    Current.blog.url_for(
+      controller: 'articles',
+      action:     'category',
+      id:         permalink
     )
   end
 
   protected
 
-  before_save :set_defaults
+    def set_defaults
+      self.permalink ||= self.stripped_name
+    end
 
-  def set_defaults
-    self.permalink ||= self.stripped_name
-  end
-
-  validates_presence_of :name
-  validates_uniqueness_of :name, :on => :create
 end
-

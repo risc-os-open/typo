@@ -8,7 +8,7 @@ class Blog < ApplicationRecord
   include Rails.application.routes.url_helpers # To access #url_for
 
   def default_url_options # Lets #url_for work properly and provide full URLs
-    this_blog_base_url = URI.parse(self.base_url() || 'http://localhost:3000')
+    this_blog_base_url = URI.parse(Current.request&.original_url || self.base_url() || 'http://localhost:3000')
 
     options            = Rails.application.routes.default_url_options
     options[:host    ] = this_blog_base_url.host

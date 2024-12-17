@@ -199,8 +199,18 @@ class Content < ApplicationRecord
     end
   end
 
+  # Overrides the association accessor behind the 'blog_id' column, to allow
+  # fallback to a default blog.
+  #
   def blog
-    super || Blog.default
+
+    # Try to avoid an ActiveRecord query, cached or otherwise
+    #
+    if self[:blog_id] == Current.blog.id
+      Current.blog
+    else
+      super || Blog.default
+    end
   end
 
   def state=(newstate)

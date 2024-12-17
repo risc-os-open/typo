@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   require 'hub_sso_lib'
   include HubSsoLib::Core
 
+  before_action :set_current!
   before_action :hubssolib_beforehand
   after_action :hubssolib_afterwards
 
@@ -50,28 +51,30 @@ class ApplicationController < ActionController::Base
       $cache ||= SimpleCache.new 1.hour
     end
 
-    @@blog_id_for = Hash.new
-
-    # The Blog object for the blog that matches the current request.  This is looked
-    # up using Blog.find_blog and cached for the lifetime of the controller instance;
-    # generally one request.
+    # The Blog object for the blog that matches the current request. This is
+    # looked up using Blog.find_blog and cached for the lifetime of the
+    # controller instance; generally one request. While ActiveRecord would
+    # cache this for us, it saves a bit of time to not bother even calling it
+    # and leads to far less log noise.
+    #
     def this_blog
-      @blog ||= if @@blog_id_for[blog_base_url]
-                  Blog.find(@@blog_id_for[blog_base_url])
-                else
-                  blog = Blog.find_blog(blog_base_url)
-                  @@blog_id_for[blog_base_url] = blog.id
-                  blog
-                end
+      @blog ||= Blog.find_blog(blog_base_url)
     end
     helper_method :this_blog
 
     # The base URL for this request, calculated by looking up the URL for the main
     # blog index page.  This is matched with Blog#base_url to determine which Blog
     # is supposed to handle this URL
+    #
     def blog_base_url
       url_for(:controller => 'articles').gsub(%r{/$},'')
     end
 
+  private
+
+    def set_current!
+      Current.blog    = self.this_blog()
+      Current.request = self.request()
+    end
 end
 

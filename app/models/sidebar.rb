@@ -241,9 +241,16 @@ class Sidebar < ApplicationRecord
   end
 
   def to_locals_hash
-    fields.inject({ :sidebar => self }) do |hash, field|
-      hash.merge(field.key => config[field.key])
+    hash = { sidebar: self }
+
+    fields.each do | field |
+      field_name  = field.key
+      field_value = self.config[field_name]
+
+      hash[field_name.to_sym] = field_value
     end
+
+    return hash
   end
 
   def lifetime
@@ -254,4 +261,3 @@ class Sidebar < ApplicationRecord
     self.class.view_root
   end
 end
-
