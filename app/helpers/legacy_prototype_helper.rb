@@ -4,7 +4,7 @@
 #
 module LegacyPrototypeHelper
 
-  CALLBACKS	=	Set.new(
+  CALLBACKS = Set.new(
     %i(
       create
       uninitialized
@@ -17,7 +17,7 @@ module LegacyPrototypeHelper
     ) + (100..599).to_a
   )
 
-  AJAX_OPTIONS	=	Set.new(
+  AJAX_OPTIONS = Set.new(
     %i(
       before
       after
@@ -34,6 +34,12 @@ module LegacyPrototypeHelper
       type
     )
   ).merge(CALLBACKS)
+
+  # https://api.rubyonrails.org/v2.3.8/classes/ActionView/Helpers/PrototypeHelper.html#M002166
+  #
+  def link_to_remote(name, options = {}, html_options = nil)
+    link_to_function(name, remote_function(options), html_options || options.delete(:html))
+  end
 
   # https://api.rubyonrails.org/v2.3.8/classes/ActionView/Helpers/PrototypeHelper.html#M002175
   #
@@ -74,7 +80,7 @@ module LegacyPrototypeHelper
     function = "if (#{options[:condition]}) { #{function}; }" if options[:condition]
     function = "if (confirm('#{escape_javascript(options[:confirm])}')) { #{function}; }" if options[:confirm]
 
-    return function
+    return function.html_safe()
   end
 
   # https://api.rubyonrails.org/v2.3.8/classes/ActionView/Helpers/PrototypeHelper.html#M002182
@@ -105,6 +111,7 @@ module LegacyPrototypeHelper
     javascript << "function(element, value) {"
     javascript << "#{callback}}"
     javascript << ")"
+
     javascript_tag(javascript)
   end
 
@@ -113,7 +120,7 @@ module LegacyPrototypeHelper
   def options_for_ajax(options)
     js_options = build_callbacks(options)
 
-     js_options['asynchronous'] = options[:type] != :synchronous
+    js_options['asynchronous'] = options[:type] != :synchronous
     js_options['method']       = method_option_to_s(options[:method]) if options[:method]
     js_options['insertion']    = "'#{options[:position].to_s.downcase}'" if options[:position]
     js_options['evalScripts']  = options[:script].nil? || options[:script]

@@ -43,6 +43,14 @@ div.lightboxplugin
   border-bottom: 1px solid #c4ccd8;
 }
 
+/* Fairly new CSS feature to look ahead to a post which has the Pagy navigator
+ * after it - avoids need to add DIV soup just to use ":last-child" and isn't a
+ * vital style item on browsers that don't support it, so fails gracefully.
+ */
+.post:has(+ nav) {
+  border-bottom: none;
+}
+
 .post h1
 {
   font: normal 125% Arial, Verdana, Helvetica, sans-serif;

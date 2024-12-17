@@ -22,7 +22,7 @@ class Admin::FeedbackController < Admin::BaseController
       .order('feedback.created_at DESC')
       .where(conditions)
 
-    @feedback_pages, @feedback = pagy(scope)
+    @feedback_pages, @feedback = pagy_with_params(scope: scope)
 
     render action: 'list'
   end

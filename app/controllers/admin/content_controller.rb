@@ -14,7 +14,7 @@ class Admin::ContentController < Admin::BaseController
       .all
       .order('id DESC')
 
-    @articles_pages, @articles = pagy(scope)
+    @articles_pages, @articles = pagy_with_params(scope: scope)
     @article = this_blog.articles.build(params[:article])
   end
 

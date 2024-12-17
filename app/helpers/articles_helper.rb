@@ -2,36 +2,36 @@ module ArticlesHelper
   include SidebarHelper
 
   def admin_tools_for(model)
-    type             = model.class.to_s.downcase
-    url_for_delete   = url_for(action: "nuke_#{type}", id: model.id)
-    visual_effect_id = "#{type}-I#{model.id}"
-    javascript       = "if (confirm('Are you sure you want to delete this comment?')) { new Ajax.Request('#{url_for_delete}', {asynchronous:true, evalScripts:true, onComplete:function(request){new Effect.Puff("#{visual_effect_id}",{duration:0.6});}}); }; return false;"
+    type = model.class.to_s.downcase
 
-    tag.div(id: "admin_#{type}_#{model.id}", style: 'display: none') do
-      link_to(
+    return tag.div(id: "admin_#{type}_#{model.id}", style: 'display: none') do
+      link_to_remote(
         'nuke',
-        class:   'admintools',
-        onclick: javascript
-      ) << link_to(
+        {
+          url:      { action: "nuke_#{type}", id: model },
+          complete: visual_effect(:puff, "#{type}-I#{model.id}", duration: 0.6),
+          confirm: "Are you sure you want to delete this #{type}?"
+        },
+        class: 'admintools'
+      )
+      .concat link_to(
         'edit',
         {
           controller: "admin/#{type.pluralize}",
+          article_id: model.article.id,
           action:     'edit',
-          id:         model.id,
-          article_id: model.article.id
+          id:         model
         },
-        {
-          class: 'admintools'
-        }
+        class: 'admintools'
       )
     end
   end
 
   def onhover_show_admin_tools(type, id = nil)
-    tag = []
+    tag = ''
     tag << %{ onmouseover="if (getCookie('typoapp_is_admin') == 'yes') { Element.show('admin_#{[type, id].compact.join('_')}'); }" }
     tag << %{ onmouseout="Element.hide('admin_#{[type, id].compact.join('_')}');" }
-    tag
+    tag.html_safe()
   end
 
   def render_errors(obj)

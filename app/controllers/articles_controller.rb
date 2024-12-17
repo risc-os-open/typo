@@ -24,7 +24,7 @@ class ArticlesController < ContentController
       .published_articles
       .where('contents.published_at < ?', Time.now)
 
-    @articles_pages, @articles = pagy(scope)
+    @articles_pages, @articles = pagy_with_params(scope: scope, default_limit: 5)
   end
 
   def search
@@ -224,7 +224,7 @@ class ArticlesController < ContentController
     return error(on_empty) if @articles.empty?
 
     scope = @articles # (sic.)
-    @articles_pages, @articles = pagy(scope)
+    @articles_pages, @articles = pagy_with_params(scope: scope)
 
     render :action => 'index'
   end
