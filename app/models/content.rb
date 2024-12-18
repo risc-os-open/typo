@@ -189,12 +189,13 @@ class Content < ApplicationRecord
 
   # Set the text filter for this object.
   def text_filter=(filter)
-    returning(filter.to_text_filter) { |tf| self.text_filter_id = tf.id }
+    text_filter = filter.to_text_filter
+    self.text_filter_id = text_filter.id
   end
 
   # Changing the title flags the object as changed
   def title=(new_title)
-    old_title = self.get_attribute(:title)
+    old_title = self.read_attribute(:title)
     if new_title == old_title
       old_title
     else

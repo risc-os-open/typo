@@ -62,7 +62,7 @@ module ArticlesHelper
   end
 
   def page_header
-    page_header_includes = contents.collect { |c| c.whiteboard }.collect do |w|
+    page_header_includes = contents.compact.collect { |c| c.whiteboard }.collect do |w|
       w.select {|k,v| k =~ /^page_header_/}.collect do |(k,v)|
         v = v.chomp
         # trim the same number of spaces from the beginning of each line
@@ -75,7 +75,7 @@ module ArticlesHelper
       <<~HTML
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         #{ meta_tag 'ICBM', this_blog.geourl_location unless this_blog.geourl_location.empty? }
-        <link rel="EditURI" type="application/rsd+xml" title="RSD" href="#{ url_for :controller => 'xml', :action => 'rsd' }" />
+        <link rel="EditURI" type="application/rsd+xml" title="RSD" href="#{ url_for :controller => '/xml', :action => 'rsd' }" />
         <link rel="alternate" type="application/atom+xml" title="Atom" href="#{ @auto_discovery_url_atom }" />
         <link rel="alternate" type="application/rss+xml" title="RSS" href="#{ @auto_discovery_url_rss }" />
         #{ javascript_include_tag "application" }

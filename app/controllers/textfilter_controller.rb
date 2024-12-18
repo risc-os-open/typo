@@ -8,12 +8,12 @@ class TextfilterController < ApplicationController
       render_component(:controller => "plugins/textfilters/#{params[:filter]}",
         :action => params[:public_action], :params => params)
     else
-      render :text => '', :status => 404
+      head :not_found
     end
   end
 
   def test_action
-    render :text => ''
+    render plain: ''
   end
 end
 

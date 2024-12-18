@@ -9,7 +9,7 @@ class RedirectController < ContentController
 
       redirect_to path, status: 301
     else
-      render text: "Page not found", status: 404
+      render plain: "Page not found", status: 404
     end
   end
 end

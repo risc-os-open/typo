@@ -143,21 +143,39 @@ module WhiteListFormattedContentConcern
     })
   end
 
-  # https://github.com/gjtorikian/html-pipeline#convertfilter
+  # https://github.com/gjtorikian/html-pipeline#textfilters
   #
-  # Runs through RedCloth, then adds a second pass which auto-links anything
-  # not already converted to a link through Textile '"foo":link' markup.
+  # Textile processing via RedCloth.
   #
-  class RedClothAndAutoLinkConvertFilter < HTMLPipeline::ConvertFilter
+  # Implemented as a TextFilter not a ConvertFilter because HTMLPipeline only
+  # allows one convert filter to turn 'text into HTML', even though example
+  # text filters *also* turn (at least part of) text into HTML. Auto-linking,
+  # if used, must be done *after* RedCloth processing, else the URLs that are
+  # part of valid RedCloth link syntax would get incorrectly auto-linked too.
+  # We need a chain of filters; only the text filter system supports that.
+  #
+  class TextileTextFilter < HTMLPipeline::TextFilter
+    def call(text, context: {}, result: {})
+      return RedCloth.new(text).to_html()
+    end
+  end
+
+  # https://github.com/gjtorikian/html-pipeline#textfilters
+  #
+  # Auto-links anything not already converted to a link through e.g. Textile
+  # '"foo":link' markup or other means.
+  #
+  # See RedClothTextFilter for text filter rationale.
+  #
+  class AutoLinkTextFilter < HTMLPipeline::TextFilter
     include ActionView::Helpers::TextHelper
 
-    def call(text, context: @context)
-      html = RedCloth.new(text).to_html()
+    def call(text, context: {}, result: {})
 
       # Sanitization is disabled as we use CustomHtmlSanitizationOptions for
       # that via the HTML pipeline; Auto Link's variant is very aggressive..
       #
-      html = auto_link(html, sanitize: false) do | link_text |
+      html = auto_link(text, sanitize: false) do | link_text |
         truncate(link_text, length: 55, omission: '&hellip;')
       end
 
@@ -171,17 +189,25 @@ module WhiteListFormattedContentConcern
 
     protected
 
-      def xhtml_sanitize(content)
-        content.strip! if content.respond_to?(:strip!)
-
+      def xhtml_sanitize(content, textile: true, auto_link: true)
         if content.blank?
           ''
         else
+          content.strip! if content.respond_to?(:strip!)
+
+          text_filters  = []
+          text_filters <<  TextileTextFilter.new if textile
+          text_filters << AutoLinkTextFilter.new if auto_link
+
           pipeline = HTMLPipeline.new(
-            convert_filter:      RedClothAndAutoLinkConvertFilter.new,
+            text_filters:        text_filters,
             sanitization_config: CustomHtmlSanitizationOptions::CONFIG,
           )
 
+          # Even if the output hasn't run through Textile, auto-link or any
+          # other filters or converters, it's always run through the sanitiser
+          # and is thus marked as HTML-safe for the view layer.
+          #
           result = pipeline.call(content)
           (result[:output] || '').html_safe()
         end

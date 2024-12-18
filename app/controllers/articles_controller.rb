@@ -5,7 +5,7 @@ class ArticlesController < ContentController
 
   before_action only: [:nuke_comment, :nuke_trackback] do
     if request.post? && session.key?(:user)
-      render text: 'Forbidden', status: 403
+      render plain: 'Forbidden', status: 403
     end
   end
 
@@ -34,13 +34,12 @@ class ArticlesController < ContentController
 
   def comment_preview
     if params[:comment].blank? or params[:comment][:body].blank?
-      render :nothing => true
+      head :ok
       return
     end
 
-    set_headers
-    @comment = this_blog.comments.build(params[:comment])
-    @controller = self
+    safe_params = Comment.params_for_new(params, :comment, required: true)
+    @comment = this_blog.comments.build(safe_params)
   end
 
   def archives
@@ -98,22 +97,27 @@ class ArticlesController < ContentController
     if request.post?
       begin
         @article = this_blog.published_articles.find(params[:id])
-        params[:comment].merge!({:ip => request.remote_ip,
-                                :published => true,
-                                :user => session[:user],
-                                :user_agent => request.env['HTTP_USER_AGENT'],
-                                :referrer => request.env['HTTP_REFERER'],
-                                :permalink => @article.permalink_url})
-        @comment = @article.comments.build(params[:comment])
+
+        safe_params = Comment.params_for_new(params, :comment, required: true)
+        safe_params.merge!({
+          ip:         request.remote_ip,
+          published:  true,
+          user_id:    session.dig('user', 'id'),
+          user_agent: request.env['HTTP_USER_AGENT'],
+          referrer:   request.env['HTTP_REFERER'],
+          permalink:  @article.permalink_url
+        })
+
+        @comment = @article.comments.build(safe_params)
         @comment.author ||= 'Anonymous'
         @comment.save!
+
         add_to_cookies(:typoapp_author, @comment.author)
         add_to_cookies(:typoapp_url, @comment.url)
 
-        set_headers
-        render :partial => "comment", :object => @comment
+        render partial: 'comment', object: @comment
       rescue ActiveRecord::RecordInvalid
-        STDERR.puts @comment.errors.inspect
+        Rails.logger.error @comment.errors.inspect
         render_error(@comment)
       end
     end
@@ -163,7 +167,7 @@ class ArticlesController < ContentController
   end
 
   def markup_help
-    render :text => TextFilter.find(params[:id]).commenthelp
+    render layout: 'minimal', html: TextFilter.find(params[:id]).commenthelp
   end
 
   private
@@ -199,10 +203,6 @@ class ArticlesController < ContentController
 
   def render_error(object = '', status = 500)
     render(:text => (object.errors.full_messages.join(", ") rescue object.to_s), :status => status)
-  end
-
-  def set_headers
-    headers["Content-Type"] = "text/html; charset=utf-8"
   end
 
   def list_groupings(klass)

@@ -48,15 +48,30 @@ class Admin::ContentController < Admin::BaseController
     render :partial => 'show_categories'
   end
 
+  # 2024-12-18 (ADH):
+  #
+  # See app/views/shared/_edit.html.erb for the form observer that sets this
+  # up. For whatever reasons, an iframe is used and the on-response handler
+  # sets the **src attribute** to the result. That means it has to be encoded
+  # as a "data" attribute. That's a... Brave choice of implementation.
+  #
   def preview
-    headers["Content-Type"] = "text/html; charset=utf-8"
-    @article = this_blog.articles.build
-    @article.attributes = params[:article]
-    set_article_author
-    data = render_to_string(:layout => "minimal")
+    begin
+      safe_params = Article.params_for_new(params, :article, required: true)
+
+      @article = this_blog.articles.build
+      @article.attributes = safe_params
+      set_article_author
+
+      data = render_to_string(layout: 'minimal')
+    rescue => e
+      data = e.message + "\n\n" + (e&.backtrace&.join("\n") || '')
+    end
+
     data = Base64.encode64(data).gsub("\n", '')
     data = "data:text/html;charset=utf-8;base64,#{data}"
-    render :text => data
+
+    render plain: data
   end
 
   def attachment_box_add
@@ -125,9 +140,10 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def set_article_author
-    return if @article.author
-    @article.author = session[:user].login
-    @article.user   = session[:user]
+    unless @article.author.present?
+      @article.author  = session.dig('user', 'login')
+      @article.user_id = session.dig('user', 'id')
+    end
   end
 
   def save_attachments

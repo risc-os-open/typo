@@ -23,7 +23,7 @@ class Admin::TextfiltersController < Admin::BaseController
 
   def macro_help
     @macro = TextFilter.available_filters.find { |filter| filter.short_name == params[:id] }
-    @help_text = BlueCloth.new(@macro.help_text).to_html
+    @help_text = RedCloth.new(@macro.help_text).to_html
   end
 
   def new

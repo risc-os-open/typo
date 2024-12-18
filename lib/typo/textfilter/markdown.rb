@@ -6,8 +6,8 @@ module Typo
 
       def self.help_text
         %{
-[Markdown](http://daringfireball.net/projects/markdown/) is a simple text-to-HTML converter that
-turns common text idioms into HTML.  The [full syntax](http://daringfireball.net/projects/markdown/syntax)
+[Markdown](https://www.markdownguide.org) is a simple text-to-HTML converter that
+turns common text idioms into HTML.  The [full syntax](https://www.markdownguide.org/basic-syntax/)
 is available from the author's site, but here's a short summary:
 
 * **Paragraphs**: Start a new paragraph by skipping a line.
@@ -21,7 +21,8 @@ is available from the author's site, but here's a short summary:
   "[amazon's web site](http://www.amazon.com)".
 * **Lists**: You can create numbered or bulleted lists by ending a paragraph with a colon (:), skipping a line, and then using
   asterisks (*, for bullets) or numbers (for numbered lists).  See the
-  [Markdown syntax page](http://daringfireball.net/projects/markdown/syntax) for examples.
+  [basic syntax page](https://www.markdownguide.org/basic-syntax/) and
+  [extended syntax page](https://www.markdownguide.org/extended-syntax/) for examples.
 * **Raw HTML**: Markdown will pass raw HTML through unchanged, so you can use HTML's syntax whenever Markdown doesn't provide
   a reasonable alternative.
 

@@ -1444,6 +1444,12 @@ Ajax.Request = Class.create(Ajax.Base, {
     };
 
     if (this.method == 'post') {
+
+      /* 2024-12-18 (ADH): Add in CSRF support for Rails forms on assumption of
+       * the standard 'meta' tag's presence via e.g. "<%= csrf_meta_tag %>".
+       */
+
+      headers['X-CSRF-Token'] = document.querySelector("meta[name='csrf-token']").content
       headers['Content-type'] = this.options.contentType +
         (this.options.encoding ? '; charset=' + this.options.encoding : '');
 

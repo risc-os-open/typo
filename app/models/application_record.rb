@@ -16,7 +16,7 @@ class ApplicationRecord < ActiveRecord::Base
   # not have parameters and that's fine, or 'true' for "create" actions, since
   # we definitely expect parameters to be given.
   #
-  def self.params_for_create(params, key, required:)
+  def self.params_for_new(params, key, required:)
     unpermitted = required ? params.require(key) : params[key]
     permitted   = unpermitted.nil? ? {} : unpermitted.permit(self.permitted_params_for_new)
 

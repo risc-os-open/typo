@@ -6,7 +6,7 @@ module Typo
 
       def self.help_text
         %{
-See the [Textile Quick Reference page](http://hobix.com/textile/quick.html).
+See the "Textile Quick Reference page":https://textile-lang.com.
 }
       end
 

@@ -63,6 +63,6 @@ class Admin::PagesController < Admin::BaseController
     data = render_to_string(:layout => "minimal")
     data = Base64.encode64(data).gsub("\n", '')
     data = "data:text/html;charset=utf-8;base64,#{data}"
-    render :text => data
+    render plain: data
   end
 end

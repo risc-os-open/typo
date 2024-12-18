@@ -4,7 +4,7 @@ require 'timeout'
 class Comment < Feedback
   self.table_name = 'feedback'
 
-  self.permitted_params_for_new  = [:body]
+  self.permitted_params_for_new  = [         :url, :email, :body]
   self.permitted_params_for_edit = [:author, :url, :email, :body]
 
   belongs_to :article

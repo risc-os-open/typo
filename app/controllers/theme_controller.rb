@@ -24,7 +24,7 @@ class ThemeController < ContentController
   def render_theme_item(type, file, mime = nil)
     mime ||= mime_for(file)
     if file.split(%r{[\\/]}).include?("..")
-      render :text => "Not Found", :status => 404
+      render plain: "Not Found", status: 404
       return
     end
     send_file(this_blog.current_theme.path + "/#{type}/#{file}",

@@ -2,8 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <%= page_header if defined? page_header %>
-    <%= stylesheet_link_tag "/stylesheets/minimal", :media => 'all' %>
-    <%= stylesheet_link_tag "/stylesheets/user-styles", :media => 'all' %>
+
+    <%= tag.link(rel: 'stylesheet', media: 'all', href: stylesheet_url('minimal.css'    )) %>
+    <%= tag.link(rel: 'stylesheet', media: 'all', href: stylesheet_url('theme/risc_os_open.css')) %>
+    <%= tag.link(rel: 'stylesheet', media: 'all', href: stylesheet_url('user-styles.css')) %>
   </head>
 
   <body>

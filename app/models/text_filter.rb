@@ -1,6 +1,8 @@
 require 'net/http'
 
 class TextFilter < ApplicationRecord
+  include WhiteListFormattedContentConcern
+
   serialize :filters, coder: YAML, type: Array
   serialize :params, coder: YAML, type: Hash
 
@@ -98,7 +100,7 @@ class TextFilter < ApplicationRecord
     filters.each { |f| help.push(filter_map[f.to_s]) }
 
     help_text = help.collect do |f|
-      f.help_text.blank? ? '' : "<h3>#{f.display_name}</h3>\n#{BlueCloth.new(f.help_text).to_html}\n"
+      f.help_text.blank? ? '' : "<h3>#{f.display_name}</h3>\n#{RedCloth.new(f.help_text).to_html}\n"
     end
 
     help_text.join("\n")
@@ -111,10 +113,10 @@ class TextFilter < ApplicationRecord
     filters.each { |f| help.push(filter_map[f.to_s]) }
 
     help_text = help.collect do |f|
-      f.help_text.blank? ? '' : "#{BlueCloth.new(f.help_text).to_html}\n"
-    end.join("\n")
+      xhtml_sanitize(f.help_text, textile: true, auto_link: true) # See WhiteListFormattedContentConcern
+    end.join('\n')
 
-    return help_text
+    return help_text.html_safe()
   end
 
   def to_s; self.name; end

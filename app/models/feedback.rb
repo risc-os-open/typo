@@ -37,7 +37,7 @@ class Feedback < Content
   end
 
   def html_postprocess(field, html)
-    xhtml_sanitize(html) # WhiteListFormattedContentConcern
+    xhtml_sanitize(html, auto_link: true, textile: false) # See WhiteListFormattedContentConcern
   end
 
   def correct_url

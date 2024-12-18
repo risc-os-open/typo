@@ -24,7 +24,7 @@ class XmlController < ContentController
     @format = NORMALIZED_FORMAT_FOR[@format]
 
     if not @format
-      render :text => 'Unsupported format', :status => 404
+      render plain: 'Unsupported format', status: 404
       return
     end
 
@@ -33,7 +33,7 @@ class XmlController < ContentController
     if respond_to?("prep_#{params[:type]}")
       self.send("prep_#{params[:type]}")
     else
-      render :text => 'Unsupported action', :status => 404
+      render plain: 'Unsupported action', status: 404
       return
     end
 

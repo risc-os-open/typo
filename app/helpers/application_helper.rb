@@ -113,11 +113,11 @@ module ApplicationHelper
       link_to(
         text,
         url_for(
-          controller: 'articles',
+          controller: '/articles',
           action:     'markup_help',
           id:         markup.id,
-          onclick:    '"return popup(this, "Typo Markup Help")'
-        )
+        ),
+        onclick: "return popup(this, 'Typo Markup Help')"
       )
     else
       ''

@@ -16,7 +16,8 @@ class Admin::CommentsController < Admin::BaseController
   end
 
   def new
-    @comment = @article.comments.build(params[:comment])
+    safe_params = Comment.params_for_new(params, :comment, required: action_name == 'create')
+    @comment = @article.comments.build(safe_params)
   end
 
   def create
@@ -34,7 +35,8 @@ class Admin::CommentsController < Admin::BaseController
 
   def edit
     @comment = @article.comments.find(params[:id])
-    @comment.attributes = Comment.params_for_edit(params, :comment, required: action_name == 'update')
+    safe_params = Comment.params_for_edit(params, :comment, required: action_name == 'update')
+    @comment.attributes = safe_params
   end
 
   def update
