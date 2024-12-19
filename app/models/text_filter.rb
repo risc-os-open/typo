@@ -58,7 +58,7 @@ class TextFilter < ApplicationRecord
         safe_filter_seen = true if text.html_safe?
 
       rescue => err
-        logger.error "Filter #{filter} failed: #{err}"
+        Rails.logger.error "Filter #{filter} failed: #{err}"
       end
     end
 

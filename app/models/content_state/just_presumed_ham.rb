@@ -8,13 +8,13 @@ module ContentState
     end
 
     def enter_hook(content)
-      logger.debug("#{content} entering state Content::JustPresumedHam")
+      Rails.logger.debug("#{content} entering state Content::JustPresumedHam")
       content[:published] = true
       content[:status_confirmed] = false
     end
 
     def exit_hook(content, target_state)
-      logger.debug("#{content} leaving state Content::JustPresumedHam")
+      Rails.logger.debug("#{content} leaving state Content::JustPresumedHam")
     end
 
     def just_published?

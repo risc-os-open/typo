@@ -12,6 +12,6 @@
   </div>
   <%= comment.generate_html(:body) %>
   <% unless comment.published -%>
-    <div class="spamwarning"><%= _("This comment has been flagged for moderator approval.  It won't appear on this blog until the author approves it")%>.</div>
+    <div class="spamwarning"><%= _("This comment has been flagged for moderator approval.  It won't appear on this blog until an admin approves it")%>.</div>
   <% end -%>
 </li>

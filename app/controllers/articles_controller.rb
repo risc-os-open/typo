@@ -40,6 +40,7 @@ class ArticlesController < ContentController
 
     safe_params = Comment.params_for_new(params, :comment, required: true)
     @comment = this_blog.comments.build(safe_params)
+    @comment.author = hubssolib_unique_name() unless hubssolib_privileged?
   end
 
   def archives
@@ -109,6 +110,8 @@ class ArticlesController < ContentController
         })
 
         @comment = @article.comments.build(safe_params)
+
+        @comment.author   = hubssolib_unique_name() unless hubssolib_privileged?
         @comment.author ||= 'Anonymous'
         @comment.save!
 

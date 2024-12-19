@@ -4,7 +4,12 @@ require 'timeout'
 class Comment < Feedback
   self.table_name = 'feedback'
 
-  self.permitted_params_for_new  = [         :url, :email, :body]
+  # Regular Hub users can create comments but only admins, via the admin UI,
+  # can edit them. The "author" field is writable for new comments if you're
+  # an admin too so the parameter is permitted, but its value is overwritten
+  # by #hubssolib_unique_name() for non-admin users upon form submission.
+  #
+  self.permitted_params_for_new  = [:author, :url, :email, :body]
   self.permitted_params_for_edit = [:author, :url, :email, :body]
 
   belongs_to :article

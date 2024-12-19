@@ -1,4 +1,5 @@
 module UploadProgress
+
   # Provides a set of methods to be used in your views to help with the
   # rendering of Ajax enabled status updating during a multipart upload.
   #
@@ -75,7 +76,6 @@ module UploadProgress
       :update => '"#{human_size(upload_progress.received_bytes)} of #{human_size(upload_progress.total_bytes)} at #{human_size(upload_progress.bitrate)}/s; #{distance_of_time_in_words(0,upload_progress.remaining_seconds,true)} remaining"',
       :finish => 'upload_progress.message.blank? ? "Upload finished." : upload_progress.message',
     }
-
 
     # Creates a form tag and hidden <iframe> necessary for the upload progress
     # status messages to be displayed in a designated +div+ on your page.
@@ -422,5 +422,3 @@ module UploadProgress
 
   end
 end
-
-ActionView::Base.send(:include, UploadProgress::UploadProgressHelper)

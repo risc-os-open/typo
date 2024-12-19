@@ -89,7 +89,7 @@ class Admin::ContentController < Admin::BaseController
       Resource.create(:filename => attachment.original_filename,
                       :mime => attachment.content_type.chomp, :created_at => Time.now).write_to_disk(attachment)
     rescue => e
-      logger.info(e.message)
+      Rails.logger.info(e.message)
       nil
     end
   end

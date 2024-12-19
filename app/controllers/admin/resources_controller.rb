@@ -1,5 +1,6 @@
 class Admin::ResourcesController < Admin::BaseController
-  upload_status_for :file_upload, :status => :upload_status
+  include UploadProgress::UploadProgressConcern
+  upload_status_for :upload, :upload_status
 
   def index
     list
@@ -9,7 +10,7 @@ class Admin::ResourcesController < Admin::BaseController
   def list
     @r = Resource.new
     @itunes_category_list = @r.get_itunes_categories
-    @resources_pages, @resources = paginate :resource, :per_page => 15, :order_by => "created_at DESC", :parameter => 'id'
+    @resources_pages, @resources = pagy_with_params(scope: Resource.order(created_at: :desc))
   end
 
   def new

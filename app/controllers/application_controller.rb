@@ -53,6 +53,12 @@ class ApplicationController < ActionController::Base
       limit        = limit.clamp(1, 200)
       pagy_options = { :limit => limit }
 
+      # Some Typo views do e.g. "?page=&..." - i.e. the param is there, but it
+      # has no value. This makes Pagy grumpy, as a #to_i turns "nil" into "0"
+      # and it complains that page zero is invalid.
+      #
+      params.delete(:page) if params.key?(:page) && params[:page].blank?
+
       pagy(scope, **pagy_options)
     end
 

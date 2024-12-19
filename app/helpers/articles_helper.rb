@@ -115,12 +115,12 @@ module ArticlesHelper
 
   def next_link(article)
     n = article.next
-    return  n ? n.link_to_permalink("#{n.title} &raquo;") : ''
+    return  n ? n.link_to_permalink("#{h n.title} &raquo;".html_safe()) : ''
   end
 
   def prev_link(article)
     p = article.previous
-    return p ? n.link_to_permalink("&laquo; #{p.title}") : ''
+    return p ? n.link_to_permalink("&laquo; #{h p.title}".html_safe()) : ''
   end
 
   def render_to_string(*args, &block)

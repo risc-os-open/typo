@@ -14,11 +14,11 @@
     <div id="container">
       <div id="header">
         <div id="info">
-          <%= current_user_notice rescue nil %> |
-          <%= link_to _('your blog') + '&raquo;', :controller => "articles" %>
+          <%= current_user_notice %> |
+          <%= link_to (_('your blog') + '&raquo;').html_safe, :controller => "/articles" %>
         </div>
 
-        <h1><%= link_to _("Typo admin") + " - #{this_blog.blog_name rescue nil}", :controller => "admin/general" %></h1>
+        <h1><%= link_to _("Typo admin") + " - #{this_blog&.blog_name}", :controller => "admin/general" %></h1>
       </div>
 
       <div id="tabs-container">
@@ -35,7 +35,7 @@
       <div id="overall">
         <% if flash[:notice] or flash[:error] %>
           <div id="flash">
-            <%= render_flash rescue nil %>
+            <%= render_flash %>
           </div>
         <% end %>
 

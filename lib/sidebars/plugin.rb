@@ -131,6 +131,6 @@ class Sidebars::Plugin < ApplicationController
   end
 
   def log_processing
-    logger.info "\n\nProcessing #{controller_class_name}\##{action_name} (for #{request_origin})"
+    Rails.logger.info "\n\nProcessing #{controller_class_name}\##{action_name} (for #{request_origin})"
   end
 end

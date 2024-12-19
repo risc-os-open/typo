@@ -18,7 +18,7 @@
     </tr>
     <% for comment in @comments -%>
     <tr>
-      <td class="field"><%= image_tag 'checked.gif' %> <%=link_to_unless comment.url.blank?, h(comment.author), comment.url %></td>
+      <td class="field"><%= image_tag 'checked.png' %> <%=link_to_unless comment.url.blank?, h(comment.author), comment.url %></td>
       <td class="field"><%=h comment.email %></td>
       <td class="field"><%=link_to truncate((comment.body).strip_html), :action => 'show', :id => comment.id %> <%= link_to_permalink comment,image_tag('go.png') %></td>
       <td class="field"><%=h comment.ip %></td>

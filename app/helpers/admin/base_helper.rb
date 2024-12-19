@@ -9,10 +9,10 @@ module Admin::BaseHelper
     output = []
 
     for key,value in flash
-      output << "<span class=\"#{key.to_s.downcase}\">#{value}</span>"
+      output << "<span class=\"#{key.to_s.downcase}\">#{h value}</span>"
     end if flash
 
-    output.join("<br/>\n")
+    output.join("<br/>\n").html_safe()
   end
 
   def render_tasks
@@ -27,9 +27,9 @@ module Admin::BaseHelper
 
   def current_user_notice
     unless session[:user]
-      link_to "log in", :controller => "accounts", :action=>"login"
+      link_to "log in", :controller => "/accounts", :action=>"login"
     else
-      link_to "log out", :controller => "accounts", :action=>"logout"
+      link_to "log out", :controller => "/accounts", :action=>"logout"
     end
   end
 

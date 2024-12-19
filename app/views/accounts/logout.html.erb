@@ -3,10 +3,10 @@
 
     <p>
       <%= _("You are now logged out of the system") %>.
-      <%= link_to _("Do you want to go to your blog?"), :controller => "articles" %>
+      <%= link_to _("Do you want to go to your blog?"), :controller => "/articles" %>
     </p>
 
-    <%= link_to "&#171; " + _('Login'), :action => "login" %><br />
+    <%= link_to ("&#171; " + _('Login')).html_safe(), :action => "login" %><br />
 
 </div>
 

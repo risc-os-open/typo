@@ -115,10 +115,10 @@ class Ping < ApplicationRecord
       begin
         result = server.call(name, *args)
       rescue XMLRPC::FaultException => e
-        logger.error(e)
+        Rails.logger.error(e)
       end
     rescue Exception => e
-      logger.error(e)
+      Rails.logger.error(e)
     end
   end
 end
