@@ -247,12 +247,13 @@ class Content < ApplicationRecord
     state.change_published_state(self, a_boolean)
   end
 
-  def published_at=(a_time)
-    state.set_published_at(self, (a_time.to_time rescue nil))
+  def published_at
+    super || self.created_at
   end
 
-  def published_at
-    self.read_attribute(:published_at) || self.read_attribute(:created_at)
+  def published_at=(object)
+    super
+    state.set_published_at(self, object.blank? ? nil : self.published_at)
   end
 
   def published?

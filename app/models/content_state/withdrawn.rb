@@ -13,9 +13,10 @@ module ContentState
     end
 
     def set_published_at(content, new_time)
-      content[:published_at] = new_time
-      Trigger.remove(content, :trigger_method => 'publish!')
-      return if new_time.nil? || new_time <= Time.now
+      Trigger.remove(content, trigger_method: 'publish!')
+
+      return if new_time.blank? || new_time <= Time.now
+
       content.state = PublicationPending.instance
     end
 
@@ -24,4 +25,3 @@ module ContentState
     end
   end
 end
-

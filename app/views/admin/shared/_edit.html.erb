@@ -1,4 +1,6 @@
-<%= form_tag(form_action, :id => "#{form_type}_form", :enctype => "multipart/form-data") do %>
+<% http_method = (form_action[:action] == 'update') ? :put : :post %>
+
+<%= form_tag(form_action, id: "#{form_type}_form", enctype: 'multipart/form-data', method: http_method) do %>
   <%= render :partial => "form" %>
 
   <div id="operations" class="tasks">

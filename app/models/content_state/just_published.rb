@@ -21,13 +21,13 @@ module ContentState
       true
     end
 
-#    def enter_hook(content)
-#      super
-#    end
+    def enter_hook(content)
+      super
+    end
 
-#    def set_published_at(content, new_time)
-#      super
-#    end
+    def set_published_at(content, new_time)
+      super
+    end
 
     def send_notifications(content)
       content.interested_users.each do |user|

@@ -22,50 +22,50 @@ Rails.application.routes.draw do
 
     resources :blacklist
 
-    resources :categories
     get 'categories/order',                to: 'categories#order'
     get 'categories/reorder',              to: 'categories#reorder'
     get 'categories/asort',                to: 'categories#asort'
     get 'categories/categories_container', to: 'categories#categories_container'
+    resources :categories
 
-    resources :content
     post 'content/category_add',       to: 'content#category_add'
     post 'content/category_remove',    to: 'content#category_remove'
-    post 'content/preview',            to: 'content#preview'
     post 'content/attachment_box_add', to: 'content#attachment_box_add'
     post 'content/attachment_save',    to: 'content#attachment_save'
+    put  'content/preview',            to: 'content#preview'
+    resources :content
 
-    resources :feedback, only: [:index, :destroy]
     post 'feedback/bulkops', to: 'feedback#bulkops'
+    resources :feedback, only: [:index, :destroy]
 
-    resources :pages
     post 'page/preview', to: 'post#preview'
+    resources :pages
 
-    resources :themes, only: [:index]
     get 'themes/preview/:id',  to: 'themes#preview'
     get 'themes/switchto/:id', to: 'themes#switchto'
+    resources :themes, only: [:index]
 
+    put  'resources/upload',                 to: 'resources#upload'
+    post 'resources/set_mime',               to: 'resources#set_mime'
+    post 'resources/update',                 to: 'resources#update'
+    post 'resources/upload_status',          to: 'resources#upload_status'
+    post 'resources/upload_status',          to: 'resources#upload_status'
+    get  'resources/remove_itunes_metadata', to: 'resources#remove_itunes_metadata'
     resources :resources, except: [:show, :create, :edit]
-    put  'upload',                 to: 'resources#upload'
-    post 'set_mime',               to: 'resources#set_mime'
-    post 'update',                 to: 'resources#update'
-    post 'upload_status',          to: 'resources#upload_status'
-    post 'upload_status',          to: 'resources#upload_status'
-    get  'remove_itunes_metadata', to: 'resources#remove_itunes_metadata'
 
-    resources :sidebar, only: [:index]
     get  'sidebar/set_active', to: 'sidebar#set_active'
     get  'sidebar/remove',     to: 'sidebar#remove'
     post 'sidebar/publish',    to: 'sidebar#publish'
+    resources :sidebar, only: [:index]
 
-    resources :textfilters
     get  'textfilters/show_help' , to: 'textfilters#show_help'
     get  'textfilters/macro_help', to: 'textfilters#macro_help'
     post 'textfilters/preview',    to: 'textfilters#preview'
+    resources :textfilters
 
-    resources :themes, only: [:index]
     get 'themes/preview',  to: 'themes#preview'
     get 'themes/switchto', to: 'themes#switchto'
+    resources :themes, only: [:index]
 
     resources :users
 
@@ -77,7 +77,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :articles, only: [:index] # Everything else is bespoke; see below
+  # get  'articles/:year/:month/:day/:title',     to: 'articles#permalink', as: 'article_permalink'
+  # get  'articles/:year/:month/:day/page/:page', to: 'articles#find_by_date'
+  # get  'articles/:year/:month/page/:page',      to: 'articles#find_by_date'
+  # get  'articles/:year/page/:page',             to: 'articles#find_by_date'
+  # get  'articles/:year/:month/:day',            to: 'articles#find_by_date'
+  # get  'articles/:year/:month',                 to: 'articles#find_by_date'
+  # get  'articles/:year',                        to: 'articles#find_by_date'
   #
   get  'articles/archives',                     to: 'articles#archives'
   get  'articles/search',                       to: 'articles#search'
@@ -87,22 +93,16 @@ Rails.application.routes.draw do
   get  'articles/read/:id',                     to: 'articles#read'
   get  'articles/read_and_comment/:id',         to: 'articles#read_and_comment'
   get  'articles/markup_help/:id',              to: 'articles#markup_help'
+  get  'articles/trackback/:id',                to: 'articles#trackback'
   #
   get  'pages/:name',                           to: 'articles#view_page' # (sic.)
   #
   post 'articles/comment_preview',              to: 'articles#comment_preview'
   post 'articles/comment',                      to: 'articles#comment'
   post 'articles/nuke_comment',                 to: 'articles#nuke_comment'
-  post 'articles/trackback',                    to: 'articles#trackback'
   post 'articles/nuke_trackback',               to: 'articles#nuke_trackback'
   #
-  get  'articles/:year',                        to: 'articles#find_by_date'
-  get  'articles/:year/:month',                 to: 'articles#find_by_date'
-  get  'articles/:year/:month/:day',            to: 'articles#find_by_date'
-  get  'articles/:year/:month/:day/page/:page', to: 'articles#find_by_date'
-  get  'articles/:year/:month/page/:page',      to: 'articles#find_by_date'
-  get  'articles/:year/page/:page',             to: 'articles#find_by_date'
-  get  'articles/:year/:month/:day/:title',     to: 'articles#permalink', as: 'article_permalink'
+  resources :articles, only: [:index]
 
   get 'live#search', to: 'live#search'
 

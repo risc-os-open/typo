@@ -149,6 +149,10 @@ class ArticlesController < ContentController
       end
       nil
     end
+
+    render formats: :xml
+  rescue => e
+    debugger
   end
 
   def nuke_comment

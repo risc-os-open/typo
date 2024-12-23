@@ -16,7 +16,8 @@ class Article < Content
     :allow_pings,
     :published,
     :published_at,
-    :text_filter
+    :text_filter,
+    { categories: [] }, # This is a HABTM association
   ]
 
   self.permitted_params_for_edit = self.permitted_params_for_new
@@ -30,7 +31,7 @@ class Article < Content
            foreign_key: 'article_id'
 
   has_many :categorizations
-  has_many :categories, -> { self.distinct }, through: :categorizations do
+  has_many :categories, through: :categorizations do
     def push_with_attributes(cat, join_attrs = { :is_primary => false })
       Categorization.with_scope(:create => join_attrs) { self << cat }
     end
@@ -279,14 +280,12 @@ class Article < Content
   protected
 
   before_create :set_defaults, :create_guid
-  before_save :set_published_at
+  after_validation :set_published_at_if_unset
   after_save :keywords_to_tags
   after_create :add_notifications
 
-  def set_published_at
-    if self.published and self[:published_at].nil?
-      self[:published_at] = self.created_at || Time.now
-    end
+  def set_published_at_if_unset
+    self.published_at ||= Time.now if self.published
   end
 
   def set_defaults
