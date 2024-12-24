@@ -143,9 +143,19 @@ td#frm-btns
   text-align: right;
 }
 
+div.comment-box table.frm-tbl {
+  width: 100%;
+}
+
+div.comment-box table.frm-tbl td:first-child {
+  white-space: nowrap;
+  width: 1px;
+}
+
 #comment_body
 {
   height: 140px;
+  width: 100%;
 }
 
  /*+-------------------------------------------+
