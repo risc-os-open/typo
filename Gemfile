@@ -73,6 +73,15 @@ gem 'html-pipeline', '~> 3.2'
 #
 gem 'rexml', '~> 3.4'
 
+# Observers (removed from Ruby core in 3.4.0) [https://rubygems.org/gems/observer]
+#
+gem 'observer', '~> 0.1'
+
+# Custom data structures (removed from Ruby core in 3.5.0)
+# [https://rubygems.org/gems/ostruct]
+#
+gem 'ostruct', '~> 0.6'
+
 group :development, :test do
 
   # Standard debugger

@@ -3,6 +3,27 @@ class ApplicationController < ActionController::Base
 
   before_action :set_current!
 
+  # Used for the unusual range of ".foo" formats that 'routes.rb' supports for
+  # a family of XML-based responses; #on_error_rotate_and_raise needs to know
+  # what format it should render an error in.
+  #
+  XML_LIKE_MAP = {
+    xml:           'application/xml',
+    rss:           'application/rss+xml',
+    rss20:         'application/rss+xml',
+    atom:          'application/atom+xml',
+    atom10:        'application/atom+xml',
+    rsd:           'application/rsd+xml',
+    googlesitemap: 'application/xml',
+  }
+
+  XML_LIKE_MAP.each do | format, mime |
+    known_mime = Mime::Type.lookup_by_extension(format)
+    Mime::Type.register(mime, format) if known_mime.blank?
+  end
+
+  XML_LIKE_FORMATS = XML_LIKE_MAP.keys.freeze
+
   # Hub single sign-on support. Run the Hub filters for all actions to ensure
   # activity timeouts etc. work properly.
   #
@@ -18,13 +39,13 @@ class ApplicationController < ActionController::Base
   rescue_from ::Exception, with: :on_error_rotate_and_raise
 
   # Standard Typo gubbins follows, including its own admin login system.
-
+  #
   include LoginSystem
   before_action :fire_triggers
 
   # Extra filter to prime URL writing so that it doesn't make invalid
   # assumptions about protocol or port
-
+  #
   before_action :prime_url_writer
 
   def self.include_protected(*modules)
@@ -124,7 +145,20 @@ class ApplicationController < ActionController::Base
       end
 
       session[:last_exception_at] = Time.now.iso8601(1)
-      render 'exception', locals: { exception: exception }
+      locals                      = { exception: exception }
+
+      # Depending on application, XML variants can be numerous - e.g. ".rss",
+      # ".rss20" and so-on - so use that as a default for anything that is not
+      # otherwise explicitly recognised as a JSON or HTML request.
+      #
+      respond_to do | format |
+        format.html { render 'exception', locals: locals }
+        format.json { render 'exception', locals: locals, formats: :json }
+
+        format.any(*XML_LIKE_FORMATS) do
+          render 'exception', locals: locals, formats: :xml
+        end
+      end
     end
 
 end

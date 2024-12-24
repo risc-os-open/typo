@@ -18,7 +18,11 @@ module ContentState
     end
 
     def memento
-      self.class.to_s
+      self.class.to_s().demodulize
+    end
+
+    def to_s
+      self.memento()
     end
 
     def exit_hook(content, target_state)

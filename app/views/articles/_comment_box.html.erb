@@ -19,9 +19,9 @@
         <td><p><label for="comment_author"><%= _("Your name")%></label></p></td>
         <td>
           <% if hubssolib_privileged? -%>
-                  <input id="comment_author" name="comment[author]" size="20" type="text" value="<%= hubssolib_unique_name %>" />
+            <input id="comment_author" name="comment[author]" size="20" type="text" value="<%= hubssolib_unique_name %>" />
           <% else -%>
-                   <b><%= hubssolib_unique_name %></b>
+            <b><%= hubssolib_unique_name %></b>
           <% end -%>
           <small><%= link_to_function("(add url/email &#187;)".html_safe(), "Element.toggle('guest_url'); Element.toggle('guest_email')") %></small>
         </td>

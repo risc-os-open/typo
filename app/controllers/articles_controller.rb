@@ -116,7 +116,7 @@ class ArticlesController < ContentController
         @comment.save!
 
         add_to_cookies(:typoapp_author, @comment.author)
-        add_to_cookies(:typoapp_url, @comment.url)
+        add_to_cookies(:typoapp_url,    @comment.url)
 
         render partial: 'comment', object: @comment
       rescue ActiveRecord::RecordInvalid
@@ -179,60 +179,61 @@ class ArticlesController < ContentController
 
   private
 
-  def add_to_cookies(name, value)
-    cookies[name] = { :value => value, :path => url_for(:controller => :articles, :action => :index, :only_path => true),
-                       :expires => 6.weeks.from_now }
-  end
-
-  def verify_config
-    if User.count == 0
-      redirect_to :controller => "accounts", :action => "signup"
-    elsif ! this_blog.is_ok?
-      redirect_to :controller => "admin/general", :action => "redirect"
-    else
-      return true
+    def add_to_cookies(name, value)
+      cookies[name] = { :value => value, :path => url_for(:controller => :articles, :action => :index, :only_path => true),
+                        :expires => 6.weeks.from_now }
     end
-  end
 
-  def display_article(article = nil, action = 'read')
-    begin
-      @article      = block_given? ? yield : article
-      @comment      = Comment.new
-      @page_title   = @article.title
-      auto_discovery_feed :type => 'article', :id => @article.id
-      render :action => action
-    rescue ActiveRecord::RecordNotFound
-      error("Post not found...")
+    def verify_config
+      if User.count == 0
+        redirect_to :controller => "accounts", :action => "signup"
+      elsif ! this_blog.is_ok?
+        redirect_to :controller => "admin/general", :action => "redirect"
+      else
+        return true
+      end
     end
-  end
 
-  alias_method :rescue_action_in_public, :error
+    def display_article(article = nil, action = 'read')
+      begin
+        @article      = block_given? ? yield : article
+        @comment      = Comment.new
+        @page_title   = @article.title
+        auto_discovery_feed :type => 'article', :id => @article.id
+        render :action => action
+      rescue ActiveRecord::RecordNotFound
+        error("Post not found...")
+      end
+    end
 
-  def render_error(object = '', status = 500)
-    render(:text => (object.errors.full_messages.join(", ") rescue object.to_s), :status => status)
-  end
+    alias_method :rescue_action_in_public, :error
 
-  def list_groupings(klass)
-    @grouping_class = klass
-    @groupings = klass.find_all_with_article_counters(1000)
-    render :action => 'groupings'
-  end
+    def render_error(object = '', status = 500)
+      render(:text => (object.errors.full_messages.join(", ") rescue object.to_s), :status => status)
+    end
 
-  def render_grouping(klass)
-    return list_groupings(klass) unless params[:id]
+    def list_groupings(klass)
+      @grouping_class = klass
+      @groupings = klass.find_all_with_article_counters(1000)
+      render :action => 'groupings'
+    end
 
-    @page_title = "#{klass.to_s.underscore} #{params[:id]}"
-    @articles = klass.find_by_permalink(params[:id]).articles.find_already_published rescue []
-    auto_discovery_feed :type => klass.to_s.underscore, :id => params[:id]
-    render_paginated_index("Can't find posts with #{klass.to_prefix} '#{h(params[:id])}'")
-  end
+    def render_grouping(klass)
+      return list_groupings(klass) unless params[:id]
 
-  def render_paginated_index(on_empty = "No posts found...")
-    return error(on_empty) if @articles.empty?
+      @page_title = "#{klass.to_s.underscore} #{params[:id]}"
+      @articles = klass.find_by_permalink(params[:id]).articles.find_already_published rescue []
+      auto_discovery_feed :type => klass.to_s.underscore, :id => params[:id]
+      render_paginated_index("Can't find posts with #{klass.to_prefix} '#{h(params[:id])}'")
+    end
 
-    scope = @articles # (sic.)
-    @articles_pages, @articles = pagy_with_params(scope: scope)
+    def render_paginated_index(on_empty = "No posts found...")
+      return error(on_empty) if @articles.empty?
 
-    render :action => 'index'
-  end
+      scope = @articles # (sic.)
+      @articles_pages, @articles = pagy_with_params(scope: scope)
+
+      render :action => 'index'
+    end
+
 end

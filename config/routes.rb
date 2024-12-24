@@ -20,26 +20,35 @@ Rails.application.routes.draw do
     get  'general/redirect', to: 'general#redirect'
     post 'general/update',   to: 'general#update'
 
-    resources :blacklist
+    def resources_with_special_destroy(name, except = [])
+      get  "#{name}/destroy/:id", to: "#{name}\#destroy"
+      post "#{name}/destroy/:id", to: "#{name}\#destroy"
+
+      resources name, except: [:destroy]
+    end
+
+    resources_with_special_destroy(:blacklist)
 
     get 'categories/order',                to: 'categories#order'
     get 'categories/reorder',              to: 'categories#reorder'
     get 'categories/asort',                to: 'categories#asort'
     get 'categories/categories_container', to: 'categories#categories_container'
-    resources :categories
+    resources_with_special_destroy :categories
 
     post 'content/category_add',       to: 'content#category_add'
     post 'content/category_remove',    to: 'content#category_remove'
     post 'content/attachment_box_add', to: 'content#attachment_box_add'
     post 'content/attachment_save',    to: 'content#attachment_save'
     put  'content/preview',            to: 'content#preview'
-    resources :content
+    resources_with_special_destroy :content
 
-    post 'feedback/bulkops', to: 'feedback#bulkops'
-    resources :feedback, only: [:index, :destroy]
+    get  'feedback',             to: 'feedback#index'
+    get  'feedback/destroy/:id', to: 'feedback#destroy'
+    post 'feedback/destroy/:id', to: 'feedback#destroy'
+    post 'feedback/bulkops',     to: 'feedback#bulkops'
 
     post 'page/preview', to: 'post#preview'
-    resources :pages
+    resources_with_special_destroy :pages
 
     get 'themes/preview/:id',  to: 'themes#preview'
     get 'themes/switchto/:id', to: 'themes#switchto'
@@ -51,7 +60,9 @@ Rails.application.routes.draw do
     post 'resources/upload_status',          to: 'resources#upload_status'
     post 'resources/upload_status',          to: 'resources#upload_status'
     get  'resources/remove_itunes_metadata', to: 'resources#remove_itunes_metadata'
-    resources :resources, except: [:show, :create, :edit]
+    get  'resources/destroy/:id',            to: 'resources#destroy'
+    post 'resources/destroy/:id',            to: 'resources#destroy'
+    resources :resources, except: [:show, :create, :edit, :destroy]
 
     get  'sidebar/set_active', to: 'sidebar#set_active'
     get  'sidebar/remove',     to: 'sidebar#remove'
@@ -61,7 +72,7 @@ Rails.application.routes.draw do
     get  'textfilters/show_help' , to: 'textfilters#show_help'
     get  'textfilters/macro_help', to: 'textfilters#macro_help'
     post 'textfilters/preview',    to: 'textfilters#preview'
-    resources :textfilters
+    resources_with_special_destroy :textfilters
 
     get 'themes/preview',  to: 'themes#preview'
     get 'themes/switchto', to: 'themes#switchto'
@@ -72,19 +83,21 @@ Rails.application.routes.draw do
     # Some admin resources only work when given an owning article ID.
     #
     resources :articles, only: [:index] do
-      resources :comments
-      resources :trackbacks
+      resources_with_special_destroy :comments
+      resources_with_special_destroy :trackbacks
     end
   end
 
-  # get  'articles/:year/:month/:day/:title',     to: 'articles#permalink', as: 'article_permalink'
-  # get  'articles/:year/:month/:day/page/:page', to: 'articles#find_by_date'
-  # get  'articles/:year/:month/page/:page',      to: 'articles#find_by_date'
-  # get  'articles/:year/page/:page',             to: 'articles#find_by_date'
-  # get  'articles/:year/:month/:day',            to: 'articles#find_by_date'
-  # get  'articles/:year/:month',                 to: 'articles#find_by_date'
-  # get  'articles/:year',                        to: 'articles#find_by_date'
-  #
+  YEAR_CONSTRAINTS = { year: /\d\d\d\d/ }
+
+  get  'articles/:year/:month/:day/:title',     to: 'articles#permalink',    constraints: YEAR_CONSTRAINTS, as: 'article_permalink'
+  get  'articles/:year/:month/:day/page/:page', to: 'articles#find_by_date', constraints: YEAR_CONSTRAINTS
+  get  'articles/:year/:month/page/:page',      to: 'articles#find_by_date', constraints: YEAR_CONSTRAINTS
+  get  'articles/:year/page/:page',             to: 'articles#find_by_date', constraints: YEAR_CONSTRAINTS
+  get  'articles/:year/:month/:day',            to: 'articles#find_by_date', constraints: YEAR_CONSTRAINTS
+  get  'articles/:year/:month',                 to: 'articles#find_by_date', constraints: YEAR_CONSTRAINTS
+  get  'articles/:year',                        to: 'articles#find_by_date', constraints: YEAR_CONSTRAINTS
+
   get  'articles/archives',                     to: 'articles#archives'
   get  'articles/search',                       to: 'articles#search'
   get  'articles/author(/:id)',                 to: 'articles#author'

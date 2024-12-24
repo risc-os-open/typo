@@ -28,14 +28,13 @@ class Admin::FeedbackController < Admin::BaseController
   end
 
   def destroy
-    begin
-      Feedback.destroy(params[:id])
-      flash[:notice] = "Deleted"
-    rescue ActiveRecord::RecordNotFound
-      flash[:notice] = "Not found"
-    end
+    @feedback = Feedback.find(params[:id])
 
-    redirect_to :action => 'index', :page => params[:page], :search => params[:search]
+    if request.post?
+      @feedback.destroy
+      flash[:notice] = "Deleted"
+      redirect_to :action => 'index'
+    end
   end
 
   def bulkops

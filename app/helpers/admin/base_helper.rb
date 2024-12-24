@@ -54,15 +54,23 @@ module Admin::BaseHelper
   end
 
   def link_to_show(record)
-    link_to image_tag('go.png'), :action => 'show', :id => record.id
+    link_to image_tag('go.png'), action: 'show', id: record.id
   end
 
   def link_to_edit(record)
-    link_to image_tag('edit.png', :alt => "edit", :title => "Edit content"), :action => 'edit', :id => record.id
+    link_to image_tag('edit.png', alt: "edit", title: "Edit content"), action: 'edit', id: record.id
   end
 
   def link_to_destroy(record)
-    link_to image_tag('delete.png', :alt => "delete", :title => "Delete content"), :action => 'destroy', :id => record.id
+    image = image_tag('delete.png', alt: "delete", title: "Delete content")
+
+    link_to(
+      image,
+      {
+        id:      record.id,
+        action: 'destroy'
+      }
+    )
   end
 
   def text_filter_options

@@ -168,7 +168,7 @@ class Article < Content
     Article
       .order(default_order)
       .where(published: true, published_at: from...to, permalink: title)
-      .first
+      .first!
   end
 
   # Fulltext searches the body of published articles
