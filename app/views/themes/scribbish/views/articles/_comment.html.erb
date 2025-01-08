@@ -1,6 +1,6 @@
 <ol id="comments" class="comments">
-  <% if @article.published_comments.any? -%>
-    <% for comment in @article.published_comments -%>
+  <% if @article.published_comments.any? %>
+    <% for comment in @article.published_comments %>
     <li class="comment" id="comment-<%= comment.id %>">
       <div class="author">
         <%= content_tag(:div, gravatar_tag(comment.email)) if this_blog.use_gravatar and comment.email %>
@@ -11,8 +11,8 @@
         <%= comment.html %>
       </div>
     </li>
-    <% end -%>
-  <% else -%>
+    <% end %>
+  <% else %>
     <li class="dummy_comment" style="display:none">No comments</li>
-  <% end -%>
+  <% end %>
 </ol>

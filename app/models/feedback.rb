@@ -16,7 +16,7 @@ class Feedback < Content
   before_save :correct_url
 
   def self.default_order
-    'created_at ASC'
+    'created_at DESC'
   end
 
   def initialize(*args, &block)
@@ -55,16 +55,21 @@ class Feedback < Content
   end
 
   def akismet_options
-    {:user_ip => ip,
-      :comment_type => self.class.to_s.downcase,
-      :comment_author => originator,
-      :comment_author_email => email,
-      :comment_author_url => url,
-      :comment_content => body}.merge(additional_akismet_options)
+    options = {
+      user_ip:              ip,
+      comment_type:         self.class.to_s.downcase,
+      comment_author:       originator,
+      comment_author_email: email,
+      comment_author_url:   url,
+      comment_content:      body
+    }
+
+    options.merge!(self.additional_akismet_options())
+    return options
   end
 
-  def additional_akismet_options
-    { }
+  def additional_akismet_options # See subclasses for more interesting code!
+    {}
   end
 
   def spam_fields
@@ -87,7 +92,6 @@ class Feedback < Content
   #  :user_agent => the poster's UserAgent string
   #  :referer => the poster's Referer string
   #
-
   def is_spam?(options={})
     return false unless blog.sp_global
     sp_is_spam?(options) || akismet_is_spam?(options)
@@ -96,13 +100,14 @@ class Feedback < Content
   def classify
     return :spam if blog.default_moderate_comments
     return :ham unless blog.sp_global
-    test_result = is_spam?
+
+    test_result = self.is_spam?
 
     # Yeah, three state logic is evil...
-    case is_spam?
-    when nil; :spam
-    when true; :spam
-    when false; :ham
+    case test_result
+      when nil;   :spam
+      when true;  :spam
+      when false; :ham
     end
   end
 

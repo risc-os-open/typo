@@ -7,12 +7,6 @@ class String
     self.downcase.tr("\"'", '').gsub(/\W/, ' ').strip.tr_s(' ', '-').tr(' ', '-').sub(/^$/, "-")
   end
 
-  # A quick and dirty fix to add 'nofollow' to any urls in a string.
-  # Decidedly unsafe, but will have to do for now.
-  def nofollowify
-    self.gsub(/<\s*a\s*(.+?)>/i, '<a \1 rel="nofollow">')
-  end
-
   # Strips any html markup from a string
   TYPO_TAG_KEY = TYPO_ATTRIBUTE_KEY = /[\w:_-]+/
   TYPO_ATTRIBUTE_VALUE = /(?:[A-Za-z0-9]+|(?:'[^']*?'|"[^"]*?"))/

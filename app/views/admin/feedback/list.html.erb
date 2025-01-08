@@ -9,17 +9,18 @@
 
 <div class="search">
   <%= form_tag({:action => 'index'}, :method => :get) do %>
-    <label for="search"><%= _("Feedback Search")%>:</label><input type="text" id="feedback_search" name="search" value="<%=h params[:search] %>" size="15" />
+    <label for="search"><%= _("Feedback Search") %>:</label><input type="text" id="feedback_search" name="search" value="<%=h params[:search] %>" size="15" />
   <% end %>
 </div>
 
 <div class="list">
   <%= form_tag({:action => 'bulkops'}, :method => :post) do %>
   <br/>
-  <%= submit_tag "Delete Checked Items" %> &nbsp;
   <%= submit_tag "Mark Checked Items as Ham" %>
   <%= submit_tag "Mark Checked Items as Spam" %>
   <%= submit_tag "Confirm Classification of Checked Items" %>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <%= submit_tag "Delete Checked Items Now" %> <small>(no confirmation prompt)</small>
 
   <%= hidden_field_tag "search", params[:search]%>
   <%= hidden_field_tag "page", params[:page]%>
@@ -27,21 +28,22 @@
   <table>
   <tr>
   	<th><input class="feedback_check" type="checkbox" name="checkall" id="checkall" onclick="check_all(this);"/></th>
-	<th><%= _("Status")%></th>
-	<th><%= _("Type")%></th>
-	<th><%= _("Article")%></th>
-    <th><%= _("Author")%></th>
-    <th><%= _("Body")%></th>
-    <th><%= _("IP")%></th>
-    <th><%= _("Posted date")%></th>
+	<th><%= _("Status") %></th>
+	<th><%= _("Type") %></th>
+	<th><%= _("Article") %></th>
+    <th><%= _("Author") %></th>
+    <th><%= _("Body") %></th>
+    <th><%= _("IP") %></th>
+    <th><%= _("Posted date") %></th>
     <th><%= _("Delete") %></th>
   </tr>
   <%= render :partial => 'item', :collection => @feedback %>
   </table>
-  <%= submit_tag "Delete Checked Items" %> &nbsp;
   <%= submit_tag "Mark Checked Items as Ham" %>
   <%= submit_tag "Mark Checked Items as Spam" %>
   <%= submit_tag "Confirm Classification of Checked Items" %>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <%= submit_tag "Delete Checked Items Now" %> <small>(no confirmation prompt)</small>
   <% end %>
 </div>
 

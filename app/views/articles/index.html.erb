@@ -1,4 +1,4 @@
-<% for article in @articles -%>
+<% for article in @articles %>
   <div class="post">
     <div class="content">
       <%= render partial: "article", object: article %>
@@ -7,6 +7,6 @@
     <%= link_to_permalink article, _("Read more") + "..." if article.extended? %>
     <p class="meta"><%= article_links article %></p>
   </div>
-<% end -%>
+<% end %>
 
 <%= pagy_nav(@articles_pages).html_safe() %>

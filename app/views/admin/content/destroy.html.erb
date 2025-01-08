@@ -4,7 +4,7 @@
     <%= task_show _("Show this article"), @article.id %>
   <% end %>
 
-  <p><%= _("Are you sure you want to delete the article \"%s\"?", @article.title)%></p>
+  <p><%= _("Are you sure you want to delete the article \"%s\"?", @article.title) %></p>
   <%= form_tag :controller => 'admin/content', :action => 'destroy' do %>
   <%= hidden_field_tag "id", @article.id %>
   <%= confirm_delete(_("Delete this article")) %>

@@ -8,11 +8,11 @@
 <div class="set theme" style="margin-top:10px;">
   <div class="preview"><img src="<%= url_for :action => 'preview', :theme => theme.name %>" alt="<%= theme.name %>" /></div>
   <%= theme.description_html %>
-  <% if theme.path == @active.path -%>
-  <em>(<%= _("Active theme")%>)</em>
-  <% else -%>
+  <% if theme.path == @active.path %>
+  <em>(<%= _("Active theme") %>)</em>
+  <% else %>
   <%= link_to _("Activate"), :action => 'switchto', :theme => theme.name %>
-  <% end -%>
+  <% end %>
   <br clear="all" />
 </div>
 <% end %>

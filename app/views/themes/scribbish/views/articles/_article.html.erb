@@ -12,15 +12,15 @@
   <div class="content">
     <%= article.html(:body) %>
 
-    <% if article.extended? -%>
+    <% if article.extended? %>
       <div class="extended">
-        <% if controller.action_name == 'index' -%>
+        <% if controller.action_name == 'index' %>
           <p><%= link_to_permalink article,"Continue reading..." %></p>
-        <% else -%>
+        <% else %>
           <%= article.html(:extended) %>
-        <% end -%>
+        <% end %>
       </div>
-    <% end -%>
+    <% end %>
   </div>
 
   <ul class="meta">

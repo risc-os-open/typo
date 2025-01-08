@@ -8,27 +8,27 @@
   <h3><%=h @textfilter.description %></h3>
 
   <div class="form">
-    <h4><%= _("Markup type")%>:</h4>
+    <h4><%= _("Markup type") %>:</h4>
     <%=h @textfilters[@textfilter.markup].display_name %>
 
-    <% if @textfilter.filters.size > 0 -%>
-    <h4><%= _("Post-processing filters")%></h4>
+    <% if @textfilter.filters.size > 0 %>
+    <h4><%= _("Post-processing filters") %></h4>
       <ul>
-       <% @textfilter.filters.each do |key| -%>
+       <% @textfilter.filters.each do |key| %>
         <li><%=h @textfilters[key.to_s].display_name %></li>
-       <% end -%>
+       <% end %>
       </ul>
-    <% end -%>
+    <% end %>
 
-    <% if @textfilter.params.size > 0 -%>
-    <h4><%= _("Parameters")%></h4>
+    <% if @textfilter.params.size > 0 %>
+    <h4><%= _("Parameters") %></h4>
       <table>
-        <% @textfilter.params.keys.sort.each do |key| -%>
+        <% @textfilter.params.keys.sort.each do |key| %>
         <tr>
           <td><em><%=h key %></em></td>
           <td><%= @textfilter.params[key] %></td>
         </tr>
-        <% end -%>
+        <% end %>
       </table>
-    <% end -%>
+    <% end %>
   </div>

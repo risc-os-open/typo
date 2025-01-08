@@ -1,12 +1,12 @@
 <h3>RSS Feeds</h3>
 <ul>
-  <% if ActiveModel::Type::Boolean.new.cast(articles) -%>
+  <% if ActiveModel::Type::Boolean.new.cast(articles) %>
   <li><a href="<%= url_for :controller=>'xml', :action=>'feed', :format => format, :type => 'feed' %>" title="Articles feed">Articles</a></li>
   <% end %>
-  <% if ActiveModel::Type::Boolean.new.cast(comments) -%>
+  <% if ActiveModel::Type::Boolean.new.cast(comments) %>
   <li><a href="<%= url_for :controller=>'xml', :action=>'feed', :format => format, :type => 'comments' %>" title="Comments feed">Comments</a></li>
   <% end %>
-  <% if ActiveModel::Type::Boolean.new.cast(trackbacks) -%>
+  <% if ActiveModel::Type::Boolean.new.cast(trackbacks) %>
   <li><a href="<%= url_for :controller=>'xml', :action=>'feed', :format => format, :type => 'trackbacks' %>" title="Trackbacks feed">Trackbacks</a></li>
   <% end %>
 </ul>

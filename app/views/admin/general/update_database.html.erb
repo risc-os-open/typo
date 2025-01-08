@@ -3,17 +3,17 @@
 
 <div id="settings">
  <div id="gensettings" class="set" style="margin-top:10px;">
-   <h3><%= _("Information")%></h3>
+   <h3><%= _("Information") %></h3>
    <p>
-     <label><%= _("Current database version")%>:</label>
+     <label><%= _("Current database version") %>:</label>
      <span class="db_version"><%= @current_version %></span>
    </p>
    <p>
-     <label><%= _("New database version")%>:</label>
+     <label><%= _("New database version") %>:</label>
      <span class="db_version"><%= @needed_version %></span>
    </p>
    <p>
-     <label><%= _("Your database supports migrations")%>:</label>
+     <label><%= _("Your database supports migrations") %>:</label>
      <span class="db_version"><%= @support ? _('yes') : _('no') %></span>
    </p>
   </div>
@@ -21,7 +21,7 @@
 
   <% unless @needed_migrations.blank? %>
   <div id="gensettings" class="set" style="margin-top:10px;">
-    <h3><%= _("Needed migrations")%></h3>
+    <h3><%= _("Needed migrations") %></h3>
     <ul>
     <% for migration in @needed_migrations %>
     <li><%= migration.humanize %></li>
@@ -36,9 +36,9 @@
 <%= form_tag :action => 'migrate' do %>
  <div id="operations" class="tasks">
    <% if @current_version == @needed_version %>
-     <strong><%= _("You are up to date!")%></strong>
+     <strong><%= _("You are up to date!") %></strong>
    <% else %>
-     <%= save(_("Update database now")) %>  <small><%= _("may take a moment")%></small>
+     <%= save(_("Update database now")) %>  <small><%= _("may take a moment") %></small>
    <% end %>
  </div>
 <% end %>

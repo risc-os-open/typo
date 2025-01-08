@@ -1,4 +1,4 @@
-<h2><%=_("Recent trackbacks")%></h2>
+<h2><%=_("Recent trackbacks") %></h2>
 <ul class="recent">
 <% Trackback.order(id: :desc).limit(5).to_a.each do | trackback | %>
   <li>

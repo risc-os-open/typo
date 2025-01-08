@@ -1,7 +1,7 @@
 <ul id="category_list">
-  <% for category in @categories -%>
-  <li id="category_<%= category.id -%>"><%= category.name -%></li>
-  <% end -%>
+  <% for category in @categories %>
+  <li id="category_<%= category.id %>"><%= category.name %></li>
+  <% end %>
 </ul>
 
 <%= link_to_remote _("(Done)"), :update => "category_container", :url => { :action => "category_container" } %>

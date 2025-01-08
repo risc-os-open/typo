@@ -9,16 +9,16 @@
   <%= text_field 'textfilter', 'description', :size => 40  %>
 </p>
 
-<label for="markup"><%= _("Markup type")%>:</label><br/>
+<label for="markup"><%= _("Markup type") %>:</label><br/>
 
 <select name="textfilter[markup]">
-  <% @markup_options.each do |filter| -%>
+  <% @markup_options.each do |filter| %>
     <option value="<%=h filter[0] %>" <% if @textfilter.markup == filter[0] %>selected<% end %>><%= filter[1] %></option>
-  <% end -%>
+  <% end %>
 </select>
 
 <br/>
-<h4><%= _("Post-processing filters")%></h4>
+<h4><%= _("Post-processing filters") %></h4>
 
 <table>
   <tbody>
@@ -28,23 +28,23 @@
         <td><label title="<%=h filter[2] %>"><%= filter[1]%></label></td>
         <td><em><%= filter[2]%></em></td>
       </tr>
-    <% end -%>
+    <% end %>
   <tbody>
 </table>
 
-<h4><%= _("Parameters")%></h4>
+<h4><%= _("Parameters") %></h4>
 
 <table>
   <tbody>
-    <% @filterparams.keys.sort.each do |key| -%>
+    <% @filterparams.keys.sort.each do |key| %>
       <tr>
         <td><label for="params[<%= key %>]"  title="<%=h @filterhelp[key] %>"><%= @filterdescriptions[key] %></label></td>
-        <% if @filteroptions[key].nil? -%>
+        <% if @filteroptions[key].nil? %>
           <td><input name="params[<%= key %>]" value="<%=h @filterparams[key] %>"/></td>
-        <% else -%>
+        <% else %>
           <td>
             <select name="params[<%= key %>]">
-              <% for option_text in @filteroptions[key] -%>
+              <% for option_text in @filteroptions[key] %>
                 <%=
                   opt_as_param       = opt.downcase.gsub(' ', '_')
                   is_selected        = (opt_as_param == @filterparams[key])
@@ -54,12 +54,12 @@
 
                   tag.option(option_text, **options)
                 %>
-              <% end -%>
+              <% end %>
             </select>
           </td>
-        <% end -%>
+        <% end %>
       </tr>
-    <% end -%>
+    <% end %>
   <tbody>
 </table>
 

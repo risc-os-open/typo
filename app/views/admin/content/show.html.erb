@@ -10,17 +10,17 @@
 
   <div class="form">
     <div><%= @article.html %></div>
-    <p class="meta"><label><%= _("Posted date")%>:</label> <%=h @article.published_at.to_formatted_s(:long_weekday) %> by <%=h @article.author %></p>
-    <p class="meta"><label><%= _("Last updated")%>:</label> <%=h @article.updated_at.to_formatted_s(:long_weekday) %></p>
-    <p class="meta"><label><%= _("Online")%>:</label> <%=h (@article.published? ? "Yes" : "No") %></p>
+    <p class="meta"><label><%= _("Posted date") %>:</label> <%=h @article.published_at.to_formatted_s(:long_weekday) %> by <%=h @article.author %></p>
+    <p class="meta"><label><%= _("Last updated") %>:</label> <%=h @article.updated_at.to_formatted_s(:long_weekday) %></p>
+    <p class="meta"><label><%= _("Online") %>:</label> <%=h (@article.published? ? "Yes" : "No") %></p>
   </div>
 
-  <h3><%= _("Categories")%></h3>
+  <h3><%= _("Categories") %></h3>
   <div id="categories" class="form">
-    <%= render :partial => 'show_categories' -%>
+    <%= render :partial => 'show_categories' %>
   </div>
 
-  <h3><%= _("Attachments")%></h3>
+  <h3><%= _("Attachments") %></h3>
   <div id="resources" class="form">
-    <%= render :partial => 'show_resources' -%>
+    <%= render :partial => 'show_resources' %>
   </div>

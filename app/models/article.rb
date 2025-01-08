@@ -22,9 +22,9 @@ class Article < Content
 
   self.permitted_params_for_edit = self.permitted_params_for_new
 
-  has_many :pings,      -> { order(created_at: :asc) }, dependent: :destroy
-  has_many :comments,   -> { order(created_at: :asc) }, dependent: :destroy, class_name: 'Comment'
-  has_many :trackbacks, -> { order(created_at: :asc) }, dependent: :destroy, class_name: 'Trackback'
+  has_many :pings,      -> { order(created_at: :desc) }, dependent: :destroy
+  has_many :comments,   -> { order(created_at: :desc) }, dependent: :destroy, class_name: 'Comment'
+  has_many :trackbacks, -> { order(created_at: :desc) }, dependent: :destroy, class_name: 'Trackback'
   has_many :resources,
            -> { order(created_at: :desc) },
            class_name:  'Resource',

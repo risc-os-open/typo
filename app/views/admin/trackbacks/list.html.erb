@@ -8,15 +8,15 @@
   <div class="list">
     <table>
     <tr>
-      <th><%= _("Blog Name")%></th>
-      <th><%= _("Title")%></th>
-      <th><%= _("Body")%></th>
-      <th><%= _("IP")%></th>
-      <th><%= _("Created at")%></th>
-      <th><%= _("Edit")%></th>
-      <th><%= _("Delete")%></th>
+      <th><%= _("Blog Name") %></th>
+      <th><%= _("Title") %></th>
+      <th><%= _("Body") %></th>
+      <th><%= _("IP") %></th>
+      <th><%= _("Created at") %></th>
+      <th><%= _("Edit") %></th>
+      <th><%= _("Delete") %></th>
     </tr>
-    <% for trackback in @trackbacks -%>
+    <% for trackback in @trackbacks %>
     <tr>
       <td class="field"><%= image_tag 'checked.png' %> <%= link_to trackback.blog_name, trackback.url %></td>
       <td class="field"><%= link_to truncate(trackback.title), :action => "show", :id => trackback.id %> <%= link_to_permalink trackback.article,image_tag('go.png') %></td>
@@ -26,6 +26,6 @@
       <td class="operation"><%= link_to_edit trackback %></td>
       <td class="operation"><%= link_to_destroy trackback %></td>
     </tr>
-    <% end -%>
+    <% end %>
     </table>
   </div>

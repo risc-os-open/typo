@@ -8776,7 +8776,7 @@ function get_local_time_for_date(time) {
   }
 }
 
-// a vague copy of rails' inbuilt function, 
+// a vague copy of rails' inbuilt function,
 // but a bit more friendly with the hours.
 function distance_of_time_in_words(minutes) {
   if (minutes.isNaN) return "";
@@ -8792,10 +8792,23 @@ function distance_of_time_in_words(minutes) {
 
 function commentAdded(request) {
   Element.cleanWhitespace('commentList');
-  new Effect.BlindDown($('commentList').lastChild);
+  new Effect.BlindDown($('commentList').firstChild);
   if ($('dummy_comment')) { Element.remove('dummy_comment'); }
   $('commentform').elements["comment_body"].value = '';
   $('commentform').elements["comment_body"].focus();
+
+  /* Without the timeout hack, browsers do not always jump to the comment area
+   * top anchor, for whatever browsers-do-their-own-thing reasons. With the
+   * hack, the anchor is usually honoured. It's annoying (but not critical) if
+   * this fails, so the nasty timeout workaround is good enough here.
+   */
+
+  window.setTimeout(
+    function() {
+      window.location = window.location.origin + window.location.pathname + '#comments';
+    },
+    100
+  );
 }
 
 function failure(request) {
@@ -8812,9 +8825,9 @@ function loading() {
 function complete(request) {
   Element.hide('comment_loading');
   Element.show('commentform');
-  $('form-submit-button').disabled = false;  
+  $('form-submit-button').disabled = false;
 
-  if (request.status == 200) { commentAdded() };  
+  if (request.status == 200) { commentAdded() };
 }
 
 function popup(mylink, windowname)
@@ -8842,7 +8855,7 @@ register_onload(function() {
 
     if(_author != null) { $('commentform').elements['comment[author]'].value = _author }
     if(_url != null) { $('commentform').elements['comment[url]'].value = _url }
-    
+
     if ($('commentform').elements['comment[url]'].value != ''
         || $('commentform').elements['comment[email]'].value != '') {
       Element.show('guest_url'); Element.show('guest_email');
