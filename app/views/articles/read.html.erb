@@ -59,7 +59,7 @@
       content_tag(
         :ol,
         render(:partial => "trackback", :collection => @article.published_trackbacks),
-        id:    'trackbackList'
+        id:    'trackbackList',
         class: 'trackback-list'
       )
     end
