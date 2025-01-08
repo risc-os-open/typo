@@ -14,9 +14,9 @@
   <td><%= link_to pluralize(article.comments.size,   'comment'  ), controller: '/admin/comments',   action: 'index', article_id: article %></td>
   <td><%= link_to pluralize(article.trackbacks.size, 'trackback'), controller: '/admin/trackbacks', action: 'index', article_id: article %></td>
   <td class="operation"><%= (article.published?) ? image_tag('checked.png', :alt => "online", :title => _("Online")) : image_tag('cancel.png', :alt => "offline", :title => _("Offline")) %></td>
-  <td class="operation"><%= link_to image_tag('show.png', title: "Preview article"), {action: "show", id: article.id} %></td>
-  <td class="operation"><%= link_to_edit article %></td>
-  <td class="operation"><%= link_to_destroy article %></td>
+  <td class="operation"><%= link_to image_tag('show.png', title: "Preview article"), admin_content_path(article) %></td>
+  <td class="operation"><%= link_to_edit article, controller: 'admin/content' %></td>
+  <td class="operation"><%= link_to_destroy article, controller: 'admin/content' %></td>
 </tr>
 <% end %>
 </table>

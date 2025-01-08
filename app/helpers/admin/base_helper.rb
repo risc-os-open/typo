@@ -57,20 +57,18 @@ module Admin::BaseHelper
     link_to image_tag('go.png'), action: 'show', id: record.id
   end
 
-  def link_to_edit(record)
-    link_to image_tag('edit.png', alt: "edit", title: "Edit content"), action: 'edit', id: record.id
+  def link_to_edit(record, controller: nil)
+    url_options = { action: 'edit', id: record.id }
+    url_options[:controller] = controller unless controller.nil?
+
+    link_to(image_tag('edit.png', alt: "edit", title: "Edit content"), url_options)
   end
 
-  def link_to_destroy(record)
-    image = image_tag('delete.png', alt: "delete", title: "Delete content")
+  def link_to_destroy(record, controller: nil)
+    url_options = { action: 'destroy', id: record.id }
+    url_options[:controller] = controller unless controller.nil?
 
-    link_to(
-      image,
-      {
-        id:      record.id,
-        action: 'destroy'
-      }
-    )
+    link_to(image_tag('delete.png', alt: "delete", title: "Delete content"), url_options)
   end
 
   def text_filter_options
