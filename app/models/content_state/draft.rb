@@ -18,9 +18,7 @@ module ContentState
     def set_published_at(content, new_time)
       return if new_time.blank?
 
-      if new_time <= Time.now
-        self.published_at = nil
-      else
+      if new_time > Time.now
         content.state = PublicationPending.instance
       end
     end

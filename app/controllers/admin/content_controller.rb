@@ -194,8 +194,6 @@ class Admin::ContentController < Admin::BaseController
         else
           raise "Don't know how to get article for action: #{params[:action]}"
       end
-    rescue => e
-      debugger
     end
 
     def setup_categories

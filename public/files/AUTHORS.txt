@@ -1,0 +1,1 @@
+#<ActionDispatch::Http::UploadedFile:0x0000000123e1b468>

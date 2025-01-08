@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     post 'content/category_remove',    to: 'content#category_remove'
     post 'content/attachment_box_add', to: 'content#attachment_box_add'
     post 'content/attachment_save',    to: 'content#attachment_save'
+    post 'content/preview',            to: 'content#preview'
     put  'content/preview',            to: 'content#preview'
     resources_with_special_destroy :content
 
