@@ -23,17 +23,19 @@
           <% else %>
             <b><%= hubssolib_unique_name %></b>
           <% end %>
-          <small><%= link_to_function("(add url/email &#187;)".html_safe(), "Element.toggle('guest_url'); Element.toggle('guest_email')") %></small>
+          <small><%= link_to_function("(more &#187;)".html_safe(), "Element.toggle('guest_url'); Element.toggle('guest_email')") %></small>
         </td>
       </tr>
       <tr id="guest_url" style="display:none;">
         <td><p><label for="comment_url"><%= _("Your blog") %></label></p></td>
         <td> <%= text_field "comment", "url" %></td>
       </tr>
-      <tr id="guest_email" style="display:none;">
-        <td><p><label for="comment_email"><%= _("Your email") %></label></p></td>
-        <td> <%= text_field "comment", "email" %></td>
-      </tr>
+      <% if hubssolib_privileged? %>
+        <tr id="guest_email" style="display:none;">
+          <td><p><label for="comment_email"><%= _("Your email") %></label></p></td>
+          <td><%= text_field "comment", "email" %></td>
+        </tr>
+      <% end %>
       <tr>
         <td><p><label for="comment_body"><%= _("Your message") %></label></p></td>
         <td valign="top" colspan="2">

@@ -24,7 +24,7 @@ class ArticlesController < ContentController
       .published_articles
       .where('contents.published_at < ?', Time.now)
 
-    @articles_pages, @articles = pagy_with_params(scope: scope, default_limit: 5)
+    @articles_pages, @articles = pagy_with_params(scope: scope, default_limiunique_namet: 5)
   end
 
   def search
@@ -40,7 +40,13 @@ class ArticlesController < ContentController
 
     safe_params = Comment.params_for_new(params, :comment, required: true)
     @comment = this_blog.comments.build(safe_params)
-    @comment.author = hubssolib_unique_name() unless hubssolib_privileged?
+
+    if hubssolib_privileged?
+      @comment.email = hubssolib_current_user()&.user_email if @comment.email.blank?
+    else
+      @comment.author = hubssolib_unique_name()
+      @comment.email  = hubssolib_current_user()&.user_email
+    end
   end
 
   def archives
@@ -111,7 +117,13 @@ class ArticlesController < ContentController
 
         @comment = @article.comments.build(safe_params)
 
-        @comment.author   = hubssolib_unique_name() unless hubssolib_privileged?
+        if hubssolib_privileged?
+          @comment.email = hubssolib_current_user()&.user_email if @comment.email.blank?
+        else
+          @comment.author = hubssolib_unique_name()
+          @comment.email  = hubssolib_current_user()&.user_email
+        end
+
         @comment.author ||= 'Anonymous'
         @comment.save!
 

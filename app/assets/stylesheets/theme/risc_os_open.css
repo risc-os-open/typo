@@ -5,17 +5,23 @@
 
 @import url("../../css/risc_os_open_2024.css");
 
+/* Some variables */
+
+:root {
+  --paragraph-bottom-margin: 1em;
+}
+
 /* Global - collapse paragraph breaks, except in the sidebar */
 
 p
 {
-  margin: 0 0 1em 0;
+  margin: 0 0 var(--paragraph-bottom-margin) 0;
   padding: 0;
 }
 
 div.lightboxplugin
 {
-  margin-bottom: 1em;
+  margin-bottom: var(--paragraph-bottom-margin);
 }
 
 /*+-------------------------------------------+
@@ -96,9 +102,8 @@ h4.blueblk /* "Comments" title - make it look like <h3> elsewhere */
 .comment-list > li, #preview
 {
   background: #f0f0f0 url(/images/risc_os_open/top_fade.png) top left repeat-x;
-  padding: 15px;
   margin-right: 5px; /* Else right hand shadow gets cropped off in WebKit - must be a "display: table-cell" quirk */
-  margin-bottom: 1em;
+  margin-bottom: var(--paragraph-bottom-margin);
   clear: right;
 
   /* border-radius: 8px; */ /* Valid, but the W3C CSS3 validator is buggy and complains - and has since 2006! */
@@ -110,14 +115,20 @@ h4.blueblk /* "Comments" title - make it look like <h3> elsewhere */
   -webkit-box-shadow: #888 0 0 5px;
 }
 
-.comment-list > li p:last-child {
+.comment-list > li > div.comment-content,
+div#preview        > div.comment-content {
+  padding: 15px;
+}
+
+.comment-list > li p:last-child,
+div#preview        p:last-child {
   margin-bottom: 0;
 }
 
 div.citation
 {
   font-size: small;
-  margin-bottom: 6px;
+  margin-bottom: var(--paragraph-bottom-margin);
 }
 
 div.citation cite
