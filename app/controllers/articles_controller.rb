@@ -4,7 +4,7 @@ class ArticlesController < ContentController
   layout :theme_layout, :except => [:comment_preview, :trackback]
 
   before_action only: [:nuke_comment, :nuke_trackback] do
-    if request.post? && session.key?(:user)
+    unless request.post? && hubssolib_current_user().present?
       render plain: 'Forbidden', status: 403
     end
   end

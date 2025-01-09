@@ -9,7 +9,7 @@ module ArticlesHelper
         'nuke',
         {
           url:      { action: "nuke_#{type}", id: model },
-          complete: visual_effect(:puff, "#{type}-I#{model.id}", duration: 0.6),
+          complete: visual_effect(:puff, "#{type}-#{model.id}", duration: 0.6),
           confirm: "Are you sure you want to delete this #{type}?"
         },
         class: 'admintools'
