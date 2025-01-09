@@ -47,19 +47,6 @@ function commentAdded(request) {
   if ($('dummy_comment')) { Element.remove('dummy_comment'); }
   $('commentform').elements["comment_body"].value = '';
   $('commentform').elements["comment_body"].focus();
-
-  /* Without the timeout hack, browsers do not always jump to the comment area
-   * top anchor, for whatever browsers-do-their-own-thing reasons. With the
-   * hack, the anchor is usually honoured. It's annoying (but not critical) if
-   * this fails, so the nasty timeout workaround is good enough here.
-   */
-
-  window.setTimeout(
-    function() {
-      window.location = window.location.origin + window.location.pathname + '#comments';
-    },
-    100
-  );
 }
 
 function failure(request) {
