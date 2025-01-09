@@ -67,6 +67,7 @@
     <li>
       <label for="article_published_at" class="float"><%= _("Publish at") %>:</label>
       <%= datetime_select 'article', 'published_at', :include_blank => true  %>
+      (always UTC, regardless of your local time zone)
     </li>
     <li>
       <label for="article_text_filter" class="float"><%= _("Textfilter") %>: </label>
