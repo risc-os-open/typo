@@ -15,7 +15,7 @@ module ContentState
       end
     end
 
-    def set_published_at(content, new_time)
+    def published_at_was_set(content, new_time)
       Trigger.remove(content, trigger_method: 'publish!')
 
       if new_time.nil?

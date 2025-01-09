@@ -4,7 +4,7 @@ module ContentState
 
     def enter_hook(content)
       super
-      content[:published] = false
+      content[:published   ] = false
       content[:published_at] = nil
     end
 
@@ -20,10 +20,10 @@ module ContentState
       end
     end
 
-    def set_published_at(content, new_time)
-      return if new_time.blank?
-
-      if new_time <= Time.now
+    def published_at_was_set(content, new_time)
+      if new_time.nil?
+        return
+      elsif new_time <= Time.now
         content.state = JustPublished.instance
       else
         content.state = PublicationPending.instance

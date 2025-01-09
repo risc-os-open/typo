@@ -24,10 +24,10 @@ module ContentState
       content.state = Factory.new(:just_withdrawn)
     end
 
-    def set_published_at(content, new_time)
-      return if new_time.blank?
-
-      if new_time > Time.now
+    def published_at_was_set(content, new_time)
+      if new_time.nil?
+        return
+      elsif new_time > Time.now
         content.state = PublicationPending.instance
       end
     end

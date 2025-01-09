@@ -11,7 +11,7 @@ class Admin::ContentController < Admin::BaseController
 
     scope = this_blog
       .articles
-      .all
+      .includes(:comments, :trackbacks)
       .order('id DESC')
 
     @articles_pages, @articles = pagy_with_params(scope: scope)
@@ -128,6 +128,16 @@ class Admin::ContentController < Admin::BaseController
         when 'update'
           Article.params_for_edit(params, :article, required: true)
       end
+
+      # (Sigh) Typo's older code has some very risky decisions. It's important
+      # to get the ordering of the published boolean vs published_at attribute
+      # setting correct, because the latter causes changes in the state
+      # machine but the state that's being driven will change depending upon
+      # whether or not the published boolean is set.
+      #
+      order_of_this_matters = safe_params.delete(:published)
+      order_of_this_matters = '1' if order_of_this_matters.nil? # Default new articles to 'published'
+      @article.published = ActiveModel::Type::Boolean.new.cast(order_of_this_matters)
 
       @article.assign_attributes(safe_params)
     end

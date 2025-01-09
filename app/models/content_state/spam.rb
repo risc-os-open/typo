@@ -16,10 +16,6 @@ module ContentState
       true
     end
 
-    def to_s
-      'Spam'
-    end
-
     def mark_as_spam(content)
 
     end

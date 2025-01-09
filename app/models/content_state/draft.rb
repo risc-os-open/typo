@@ -10,15 +10,15 @@ module ContentState
 
     def change_published_state(content, boolean)
       content[:published] = boolean
-      if boolean
-        content.state = JustPublished.instance
-      end
+      content.state = JustPublished.instance if boolean
     end
 
-    def set_published_at(content, new_time)
-      return if new_time.blank?
-
-      if new_time > Time.now
+    def published_at_was_set(content, new_time)
+      if new_time.nil?
+        return
+      elsif new_time <= Time.now
+        content.write_attribute(:published_at, nil)
+      else
         content.state = PublicationPending.instance
       end
     end

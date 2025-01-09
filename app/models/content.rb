@@ -8,9 +8,6 @@ class Content < ApplicationRecord
   belongs_to :blog
   validates_presence_of :blog_id
 
-  composed_of :state, :class_name => 'ContentState::Factory',
-    :mapping => %w{ state memento }
-
   has_many :notifications, foreign_key: 'content_id'
   has_many :notify_users, through: :notifications, source: 'notify_user'
 
@@ -218,14 +215,28 @@ class Content < ApplicationRecord
     end
   end
 
-  def state=(newstate)
-    if state
-      state.exit_hook(self, newstate)
+  def state
+    state_name = self.read_attribute(:state)
+
+    if state_name.nil?
+      ContentState::New.instance
+    else
+      state_name = "ContentState::#{state_name}" unless state_name.start_with?('ContentState::')
+      state_name.constantize.instance
     end
-    @state = newstate
-    self.write_attribute(:state, newstate.memento)
-    newstate.enter_hook(self)
-    @state
+  end
+
+  def state=(new_state_instance)
+    new_state_name = new_state_instance.memento() rescue new_state_instance.class.name
+
+    if self.state.present?
+      self.state.exit_hook(self, new_state_instance)
+    end
+
+    super(new_state_name)
+    new_state_instance.enter_hook(self)
+
+    return new_state_instance
   end
 
   def publish!
@@ -251,9 +262,13 @@ class Content < ApplicationRecord
     super || self.created_at
   end
 
+  # This is a bit convoluted and runs via the assigned state object to decide
+  # if it should *clear* or otherwise change the "published_at" attribute here
+  # (via passed-in 'self'), or change state (e.g. for a "in the future" date).
+  #
   def published_at=(object)
     super
-    state.set_published_at(self, object.blank? ? nil : self.published_at)
+    state.published_at_was_set(self, object.blank? ? nil : self.published_at)
   end
 
   def published?

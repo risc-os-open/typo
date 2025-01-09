@@ -5,6 +5,7 @@ module ContentState
     # We need to save the state as 'Published', but we need after_save
     # to be handled by JustPublished. So, JustPublished tells Rails that
     # it's *actually* Published and all shall be well.
+    #
     def memento
       'ContentState::Published'
     end
@@ -25,7 +26,7 @@ module ContentState
       super
     end
 
-    def set_published_at(content, new_time)
+    def published_at_was_set(content, new_time)
       super
     end
 

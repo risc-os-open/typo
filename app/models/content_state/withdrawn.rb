@@ -12,12 +12,14 @@ module ContentState
       content.state = Published.instance
     end
 
-    def set_published_at(content, new_time)
+    def published_at_was_set(content, new_time)
       Trigger.remove(content, trigger_method: 'publish!')
 
-      return if new_time.blank? || new_time <= Time.now
-
-      content.state = PublicationPending.instance
+      if new_time.nil?
+        return
+      elsif new_time <= Time.now
+        content.state = PublicationPending.instance
+      end
     end
 
     def withdrawn?
