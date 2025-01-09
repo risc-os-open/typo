@@ -2,7 +2,9 @@
 
   <% content_for('tasks') do %>
     <%= task_edit _('Edit this article'), @article.id %>
-    <li><%= link_to _('View article on your blog'), @article.permalink_url %></li>
+    <% if @article.published? %>
+      <li><%= link_to _('View article on your blog'), @article.permalink_url %></li>
+    <% end %>
 	<%= task_overview %>
   <% end %>
 
