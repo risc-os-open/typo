@@ -41,7 +41,7 @@ class Admin::FeedbackController < Admin::BaseController
     ids = (params[:feedback_check]||{}).keys.map(&:to_i)
 
     case params[:commit]
-    when 'Delete Checked Items'
+    when 'Delete Checked Items Now'
       count = 0
       ids.each do |id|
         count += Feedback.delete(id) ## XXX Should this be #destroy?
