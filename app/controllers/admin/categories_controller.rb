@@ -6,7 +6,7 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def list
-    @categories = Category.order(position: :asc)
+    @categories = Category.includes(:articles).order(position: :asc)
   end
 
   def show
