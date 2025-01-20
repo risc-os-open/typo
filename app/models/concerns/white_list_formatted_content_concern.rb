@@ -169,6 +169,7 @@ module WhiteListFormattedContentConcern
   #
   class AutoLinkTextFilter < HTMLPipeline::TextFilter
     include ActionView::Helpers::TextHelper
+    include ActionView::Helpers::UrlHelper
 
     def call(text, context: {}, result: {})
 
@@ -176,7 +177,7 @@ module WhiteListFormattedContentConcern
       # that via the HTML pipeline; Auto Link's variant is very aggressive..
       #
       html = auto_link(text, sanitize: false) do | link_text |
-        truncate(link_text, length: 55, omission: '&hellip;')
+        truncate(link_text, length: 55, omission: '…')
       end
 
       return html
