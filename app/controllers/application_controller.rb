@@ -3,27 +3,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_current!
 
-  # Used for the unusual range of ".foo" formats that 'routes.rb' supports for
-  # a family of XML-based responses; #on_error_rotate_and_raise needs to know
-  # what format it should render an error in.
-  #
-  XML_LIKE_MAP = {
-    xml:           'application/xml',
-    rss:           'application/rss+xml',
-    rss20:         'application/rss+xml',
-    atom:          'application/atom+xml',
-    atom10:        'application/atom+xml',
-    rsd:           'application/rsd+xml',
-    googlesitemap: 'application/xml',
-  }
-
-  XML_LIKE_MAP.each do | format, mime |
-    known_mime = Mime::Type.lookup_by_extension(format)
-    Mime::Type.register(mime, format) if known_mime.blank?
-  end
-
-  XML_LIKE_FORMATS = XML_LIKE_MAP.keys.freeze
-
   # Hub single sign-on support. Run the Hub filters for all actions to ensure
   # activity timeouts etc. work properly.
   #
@@ -128,6 +107,27 @@ class ApplicationController < ActionController::Base
       Current.blog    = self.this_blog()
       Current.request = self.request()
     end
+
+    # Used for the unusual range of ".foo" formats that might arise for a
+    # family of XML-based responses; #on_error_rotate_and_raise needs to
+    # know what the format in which to render an error.
+    #
+    XML_LIKE_MAP = {
+      xml:           'application/xml',
+      rss:           'application/rss+xml',
+      rss20:         'application/rss+xml',
+      atom:          'application/atom+xml',
+      atom10:        'application/atom+xml',
+      rsd:           'application/rsd+xml',
+      googlesitemap: 'application/xml',
+    }
+
+    XML_LIKE_MAP.each do | format, mime |
+      known_mime = Mime::Type.lookup_by_extension(format)
+      Mime::Type.register(mime, format) if known_mime.blank?
+    end
+
+    XML_LIKE_FORMATS = XML_LIKE_MAP.keys.freeze
 
     # Renders an exception, retaining Hub login. Regenerate any exception
     # within five seconds of a previous render to 'raise' to default Rails
