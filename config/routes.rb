@@ -118,7 +118,7 @@ Rails.application.routes.draw do
   #
   resources :articles, only: [:index]
 
-  get 'live#search', to: 'live#search'
+  post 'live#search', to: 'live#search'
 
   get 'plugins/filters/:filter/:public_action', to: 'textfilter#public_action'
 

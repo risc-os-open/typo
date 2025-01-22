@@ -33,6 +33,10 @@ module Typo
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
 
+    # Add the ROOL theme for the fixed header/footer fixed components.
+    #
+    config.paths['app/views'].unshift(Rails.root.join('app', 'views', 'themes', 'risc_os_open', 'views'))
+
     # Permitted hosts.
     #
     config.hosts << "epsilon.arachsys.com"
