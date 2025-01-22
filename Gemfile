@@ -1,24 +1,28 @@
 source "https://rubygems.org"
 
-ruby "3.3.5"
+gem 'rails', '~> 8.0'
 
-gem "rails", "~> 7.2"
-
-# Use PostgresSQL
+# Use PostgresSQL as the database for Active Record
 #
-gem 'pg', '~> 1.5.8'
+gem 'pg', '~> 1.5'
 
 # Use the Puma web server [https://github.com/puma/puma]
 #
-gem "puma", ">= 5.0"
+gem 'puma', '~> 6.0'
+
+# This isn't part of Ruby anymore.
+#
+gem 'ostruct', '~> 0.6'
 
 # Reduces boot times through caching; required in config/boot.rb
 #
-gem "bootsnap", require: false
-
 # For Windows or esoteric Unix/Linux-like distributions.
 #
 gem 'tzinfo-data'
+
+# Reduces boot times through caching; required in config/boot.rb
+#
+gem 'bootsnap', require: false
 
 # Use SCSS for stylesheets via a robust preprocessing step:
 # https://rubygems.org/gems/cssbundling-rails/
@@ -43,7 +47,7 @@ gem 'hubssolib', '~> 2.1', require: 'hub_sso_lib'
 
 # Easy pagination [https://rubygems.org/gems/pagy]
 #
-gem 'pagy', '~> 9.0'
+gem 'pagy', '~> 9.3'
 
 # Replace Rails <= 3.0 'auto_link' [https://rubygems.org/gems/rails_autolink]
 #
@@ -59,7 +63,7 @@ gem 'RedCloth', '~> 4.3'
 
 # Markdown with GFM extensions etc. [https://rubygems.org/gems/commonmarker]
 #
-gem 'commonmarker', '~> 1.1'
+gem 'commonmarker', '~> 2.0'
 
 # Wider support for markup formats [https://rubygems.org/gems/github-markup]
 #
@@ -76,11 +80,6 @@ gem 'rexml', '~> 3.4'
 # Observers (removed from Ruby core in 3.4.0) [https://rubygems.org/gems/observer]
 #
 gem 'observer', '~> 0.1'
-
-# Custom data structures (removed from Ruby core in 3.5.0)
-# [https://rubygems.org/gems/ostruct]
-#
-gem 'ostruct', '~> 0.6'
 
 group :development, :test do
 
@@ -101,6 +100,7 @@ group :development do
   gem 'web-console'
 
   # Be able to run 'bin/dev'
+  #
   gem "foreman"
 
 end
