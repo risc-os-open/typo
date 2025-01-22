@@ -70,6 +70,14 @@ div.lightboxplugin
     clear: both;
 }
 
+.post p[style*="float:left;"] {
+  margin-right: 10px;
+}
+
+.post p[style*="float:right;"] {
+  margin-leftt: 10px;
+}
+
 p.meta
 {
   font-size:  75%;

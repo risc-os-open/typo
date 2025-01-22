@@ -506,6 +506,14 @@ legend {
   font-size: 90%;
 }
 
+.form p[style*="float:left;"] {
+  margin-right: 10px;
+}
+
+.form p[style*="float:right;"] {
+  margin-leftt: 10px;
+}
+
 .r {
   text-align: right;
 }
