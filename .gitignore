@@ -39,4 +39,3 @@ public/files/*
 # Ignore NPM output.
 package-lock.json
 node_modules/
-
