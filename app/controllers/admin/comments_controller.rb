@@ -54,7 +54,7 @@ class Admin::CommentsController < Admin::BaseController
     @comment = @article.comments.find(params[:id])
     if request.post?
       @comment.destroy
-      redirect_to :action => 'list'
+      redirect_to :action => 'index'
     end
   end
 
