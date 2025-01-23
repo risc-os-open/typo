@@ -11,14 +11,6 @@
   --paragraph-bottom-margin: 1em;
 }
 
-/* Global - collapse paragraph breaks, except in the sidebar */
-
-p
-{
-  margin: 0 0 var(--paragraph-bottom-margin) 0;
-  padding: 0;
-}
-
 div.lightboxplugin
 {
   margin-bottom: var(--paragraph-bottom-margin);

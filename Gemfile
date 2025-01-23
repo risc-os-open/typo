@@ -82,18 +82,12 @@ gem 'rexml', '~> 3.4'
 gem 'observer', '~> 0.1'
 
 group :development, :test do
-
-  # Standard debugger
-  #
-  gem 'debug'
-
-  # E-mail inspection.
-  #
-  gem 'mailcatcher'
-
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'debug', platforms: %i[ mri windows ]
 end
 
 group :development do
+  gem 'error_highlight', '>= 0.4.0', platforms: [:ruby]
 
   # Use console on exceptions pages [https://github.com/rails/web-console]
   #
@@ -101,8 +95,11 @@ group :development do
 
   # Be able to run 'bin/dev'
   #
-  gem "foreman"
+  gem 'foreman'
 
+  # E-mail inspection.
+  #
+  gem 'mailcatcher'
 end
 
 group :test do
