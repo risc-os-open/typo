@@ -43,6 +43,16 @@ module Typo
     #
     config.paths['app/views'].unshift(Rails.root.join('app', 'views', 'themes', 'risc_os_open', 'views'))
 
+    # Legacy data run through YAML deserialisation includes classes (stated in
+    # the data itself) such as HashWithIndifferentAccess, usually prohibited.
+    #
+    config.active_record.yaml_column_permitted_classes = [
+      Array,
+      Hash,
+      'HashWithIndifferentAccess',              # A string, else true name "ActiveSupport::HashWithIndifferentAccess" is used and fails on *legacy* data...
+      ActiveSupport::HashWithIndifferentAccess, # ...but any saved, modern data will use this instead, so we need to permit that too.
+    ]
+
     # Add the shared ROOL view components.
     #
     shared_views_path = if ENV['SHARED_VIEWS_PATH'].blank?
