@@ -1,37 +1,10 @@
-# Typo (ROOL Edition)
-## What is it?
+# RISC OS Open Typo blog fork
 
-Typo is a weblog system written in Ruby using Ruby on Rails. Weblogs are cool,
-weblogs are "in" and everyone who writes code has an different opinion on how
-a weblog should be written. Typo is our take on it. Typo is designed to be
-usable by programmers and non-programmers, while being easy for programmers to
-extend.
+This is a Ruby On Rails 7+ fork of Typo, providing wiki facilities. For some historical context, please see:
 
-## Requirements
+* http://typosphere.org
+* https://github.com/publify/publify
 
-Currently you need all of those things to get typo to run:
+The application was built by starting with a new Rails 7 application shell, then copying over and modifying files from the original Typo code. This rewrite is specifically focused on the [RISC OS Open (ROOL)](https://www.riscosopen.org/) web site's use of Typo, primarily on what ROOL refer to as the Epsilon server (or later).
 
- * Ruby 1.8.4 or higher
- * Rails 1.2.x
- * A database.  Typo supports MySQL, PostgreSQL, and SQLite.
- * Ruby drivers for your database.
- * For best performance, you should have a web server running either Apache or Lighttpd along with FastCGI, although these aren't strictly required--you can use Ruby's built-in web server for low-volume testing.
-
-## Installation
-
-See `doc/Installer.text` and `doc/typo-4.0-release-notes.txt`.
-
-## Usage
-
-Typo's administrative interface is available at http://your.domain.com/admin. You can use this to post articles and change Typo's configuration settings. For posting new content, you can either use this administrative web interface or a desktop blog editor like MarsEdit or Ecto. For a short list of clients which are confirmed to work please visit http://typosphere.org/trac/wiki/DesktopClients.
-
-## Client setup
-
-Set your desktop client to Movable Type API and enter http://your.domain.com/backend/xmlrpc as endpoint address.
-
-## Tell me about your blog
-
-Add yourself to the list of typo blogs at http://typosphere.org/trac/wiki/TypoPowered and subscribe to the typo mailing list.
-
-Enjoy,
-Your typo team
+The ROOL fork is based on whatever version was in use by ROOL on the old web site at the time the fork was constructed. There were many later additions to the original software, not least the rename from "Typo" to "Publify" and subsequent development. These were not merged into to the old ROOL code base and are not present here either.
