@@ -81,6 +81,10 @@ gem 'rexml', '~> 3.4'
 #
 gem 'observer', '~> 0.1'
 
+# Monitoring and alerting [http://rubygems.org/gems/newrelic_rpm]
+#
+gem 'newrelic_rpm'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[ mri windows ]
