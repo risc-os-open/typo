@@ -32,7 +32,7 @@ class XmlController < ContentController
       return
     end
 
-    render action: "#{format}_feed", content_type: content_type
+    render action: "#{format}_feed", content_type: content_type, formats: [:xml]
   end
 
   def itunes
@@ -49,7 +49,6 @@ class XmlController < ContentController
   def articlerss
     redirect_to :action => 'feed', :format => 'rss20', :type => 'article', :id => params[:id]
   end
-
   def commentrss
     redirect_to :action => 'feed', :format => 'rss20', :type => 'comments'
   end
