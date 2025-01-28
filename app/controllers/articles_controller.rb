@@ -22,6 +22,7 @@ class ArticlesController < ContentController
   def index
     scope = this_blog
       .published_articles
+      .includes(:text_filter, :comments, :user)
       .where('contents.published_at < ?', Time.now)
 
     @articles_pages, @articles = pagy_with_params(scope: scope, default_limit: 5)

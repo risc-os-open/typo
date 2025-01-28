@@ -178,10 +178,7 @@ class Content < ApplicationRecord
   # Grab the text filter for this object.  It's either the filter specified by
   # self.text_filter_id, or the default specified in the blog object.
   def text_filter
-    filter_id = self.read_attribute(:text_filter_id)
-    filter    = TextFilter.find_by_id(filter_id) if filter_id.present? && ! filter_id.zero?
-
-    return filter || default_text_filter
+    super || default_text_filter
   end
 
   # Set the text filter for this object.
