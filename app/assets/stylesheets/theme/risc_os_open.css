@@ -176,11 +176,6 @@ div.comment-box table.frm-tbl td:first-child {
    |                  MISC                     |
    +-------------------------------------------+*/
 
-.template_sidebar_node li
-{
-  font-size: small;
-}
-
 .light-bg
 {
   background: #f7f7f7;

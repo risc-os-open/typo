@@ -29,8 +29,12 @@ module ArticlesHelper
 
   def onhover_show_admin_tools(type, id = nil)
     tag = ''
-    tag << %{ onmouseover="if (getCookie('typoapp_is_admin') == 'yes') { Element.show('admin_#{[type, id].compact.join('_')}'); }" }
-    tag << %{ onmouseout="Element.hide('admin_#{[type, id].compact.join('_')}');" }
+
+    if session[:typoapp_admin].present?
+      tag << %{ onmouseover="Element.show('admin_#{[type, id].compact.join('_')}');" }
+      tag << %{  onmouseout="Element.hide('admin_#{[type, id].compact.join('_')}');" }
+    end
+
     tag.html_safe()
   end
 

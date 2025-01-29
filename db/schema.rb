@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_16_023948) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_28_205454) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "articles_tags", id: false, force: :cascade do |t|
     t.integer "article_id"
@@ -135,14 +135,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_16_023948) do
     t.string "itunes_keywords", limit: 255
     t.string "itunes_category", limit: 255
     t.boolean "itunes_explicit"
-  end
-
-  create_table "sessions", id: :serial, force: :cascade do |t|
-    t.string "sessid", limit: 255
-    t.text "data"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-    t.index ["sessid"], name: "sessions_sessid_index"
   end
 
   create_table "sidebars", id: :serial, force: :cascade do |t|

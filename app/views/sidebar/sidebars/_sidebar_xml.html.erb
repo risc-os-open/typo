@@ -1,4 +1,5 @@
 <h3>RSS Feeds</h3>
+
 <ul>
   <% if ActiveModel::Type::Boolean.new.cast(articles) %>
   <li><a href="<%= url_for :controller=>'xml', :action=>'feed', :format => format, :type => 'feed' %>" title="Articles feed">Articles</a></li>

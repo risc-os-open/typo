@@ -32,13 +32,11 @@
         <div id="template_sidebar_content">
           <div class="template_sidebar_node" id="search">
             <%= render :partial => "shared/search" %>
-            <div class="template_sidebar_static"><div id="search-results"></div></div>
+            <p id="search-results"></p>
           </div>
 
-          <p />
           <%= render 'shared/fixed_sidebar' %>
 
-          <p />
           <div class="template_sidebar_node">
             <%= render_sidebars %>
           </div>

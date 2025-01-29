@@ -6,7 +6,7 @@ class AccountsController < ApplicationController
     if request.post?
       if session[:user] = User.authenticate(params[:user_login], params[:user_password])
         flash[:notice]  = "Login successful"
-        cookies[:typoapp_is_admin] = "yes"
+        session[:typoapp_admin] = "yes"
         redirect_back_or_default :controller => "admin/content", :action => "index"
       else
         flash.now[:notice]  = "Login unsuccessful"
@@ -17,7 +17,7 @@ class AccountsController < ApplicationController
 
   def logout
     session[:user] = nil
-    cookies.delete :typoapp_is_admin
+    session[:typoapp_admin] = nil
   end
 
   def signup
