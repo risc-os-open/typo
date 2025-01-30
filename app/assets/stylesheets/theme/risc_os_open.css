@@ -63,11 +63,11 @@ div.lightboxplugin
 }
 
 .post p[style*="float:left;"] {
-  margin-right: 10px;
+  margin: 0 10px 0 0;
 }
 
 .post p[style*="float:right;"] {
-  margin-leftt: 10px;
+  margin: 0 0 0 10px;
 }
 
 p.meta
