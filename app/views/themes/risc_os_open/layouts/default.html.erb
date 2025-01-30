@@ -1,10 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <%= csrf_meta_tag %>
+    <%= Sentry.get_trace_propagation_meta.html_safe %>
+    <%= page_header %>
+
     <title>RISC OS Open: News: <%=h page_title %></title>
 
-    <%= page_header %>
-    <%= csrf_meta_tag %>
     <%= stylesheet_link_tag 'theme/risc_os_open', media: 'all' %>
     <%= stylesheet_link_tag 'user-styles',        media: 'all' %>
   </head>
