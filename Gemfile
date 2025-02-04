@@ -92,18 +92,21 @@ end
 
 group :development do
 
-
   # Use console on exceptions pages [https://github.com/rails/web-console]
   #
   gem 'web-console'
 
-  # Be able to run 'bin/dev'
+  # Be able to run 'bin/dev' [https://github.com/ddollar/foreman]
   #
   gem 'foreman'
 
-  # E-mail inspection.
+  # E-mail inspection [https://rubygems.org/gems/mailcatcher]
   #
   gem 'mailcatcher'
+
+  # Database analytics [https://github.com/pawurb/rails-pg-extras]
+  #
+  gem "rails-pg-extras"
 
 end
 

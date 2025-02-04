@@ -207,6 +207,9 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails-pg-extras (5.6.1)
+      rails
+      ruby-pg-extras (= 5.6.1)
     rails_autolink (1.1.8)
       actionview (> 3.1)
       activesupport (> 3.1)
@@ -228,6 +231,9 @@ GEM
     reline (0.6.0)
       io-console (~> 0.5)
     rexml (3.4.0)
+    ruby-pg-extras (5.6.1)
+      pg
+      terminal-table
     ruby2_keywords (0.0.5)
     securerandom (0.4.1)
     selma (0.4.12)
@@ -248,6 +254,8 @@ GEM
       mini_portile2 (~> 2.8.0)
     stackprof (0.2.27)
     stringio (3.1.2)
+    terminal-table (4.0.0)
+      unicode-display_width (>= 1.1.1, < 4)
     thin (1.8.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -259,6 +267,9 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2025.1)
       tzinfo (>= 1.0.0)
+    unicode-display_width (3.1.4)
+      unicode-emoji (~> 4.0, >= 4.0.4)
+    unicode-emoji (4.0.4)
     uri (1.0.2)
     useragent (0.16.11)
     web-console (4.2.1)
@@ -296,6 +307,7 @@ DEPENDENCIES
   propshaft (~> 1.1)
   puma (~> 6.0)
   rails (~> 8.0)
+  rails-pg-extras
   rails_autolink (~> 1.1)
   rexml (~> 3.4)
   sentry-rails

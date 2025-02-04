@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_28_205454) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_04_041503) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "articles_tags", id: false, force: :cascade do |t|
     t.integer "article_id"
     t.integer "tag_id"
+    t.index ["article_id"], name: "index_articles_tags_on_article_id"
+    t.index ["tag_id"], name: "index_articles_tags_on_tag_id"
   end
 
   create_table "blacklist_patterns", id: :serial, force: :cascade do |t|
@@ -41,6 +43,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_205454) do
     t.integer "article_id"
     t.integer "category_id"
     t.boolean "is_primary"
+    t.index ["category_id"], name: "index_categorizations_on_category_id"
   end
 
   create_table "contents", id: :serial, force: :cascade do |t|
@@ -68,6 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_205454) do
     t.index ["blog_id"], name: "contents_blog_id_index"
     t.index ["published"], name: "index_contents_on_published"
     t.index ["text_filter_id"], name: "index_contents_on_text_filter_id"
+    t.index ["user_id"], name: "index_contents_on_user_id"
   end
 
   create_table "feedback", id: :serial, force: :cascade do |t|
@@ -94,6 +98,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_205454) do
     t.boolean "status_confirmed"
     t.index ["article_id"], name: "index_feedback_on_article_id"
     t.index ["text_filter_id"], name: "index_feedback_on_text_filter_id"
+    t.index ["type", "article_id"], name: "index_feedback_on_type_and_article_id"
   end
 
   create_table "notifications", id: :serial, force: :cascade do |t|
@@ -143,6 +148,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_205454) do
     t.integer "staged_position"
     t.string "type", limit: 255
     t.integer "blog_id"
+    t.index ["blog_id"], name: "index_sidebars_on_blog_id"
   end
 
   create_table "tags", id: :serial, force: :cascade do |t|
