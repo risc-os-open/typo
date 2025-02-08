@@ -39,9 +39,22 @@
 
           <%= render 'shared/fixed_sidebar' %>
 
-          <div class="template_sidebar_node">
-            <%= render_sidebars %>
-          </div>
+          <% if hubssolib_privileged? %>
+            <div class="template_sidebar_node">
+              <h3>Administration</h3>
+
+              <ul>
+                <li><%= current_user_notice() %></li>
+
+                <% if session[:user].present? %>
+                  <li><%= link_to 'Publish', new_admin_content_path() %>
+                  <li><%= link_to 'Manage articles', admin_content_index_path() %>
+                <% end %>
+              </ul>
+            </div>
+          <% end -%>
+
+          <%= render_sidebars %>
         </div>
       </div>
 

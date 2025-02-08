@@ -5,12 +5,12 @@ module SidebarHelper
     # Ruby-side sort to avoid an extra database query if 'this_blog.sidebars'
     # has already been loaded. Using ".order" would force a new query.
     #
-    this_blog.sidebars.sort { |a, b| a.id <=> b.id }.each do |sidebar|
+    this_blog.sidebars.sort { |a, b| a.active_position <=> b.active_position }.each do |sidebar|
       @sidebar = sidebar
       sidebar.parse_request(contents, params)
       controller.response.lifetime = sidebar.lifetime if sidebar.lifetime
 
-      html << render_sidebar(sidebar)
+      html << tag.div(render_sidebar(sidebar), class: 'template_sidebar_node')
     end
 
     return html
