@@ -30,6 +30,18 @@ div.lightboxplugin
   margin-top: 1em;
 }
 
+#search_results
+{
+  font-size: 100%;
+}
+
+#search_spinner
+{
+  position: absolute;
+  margin-top: 9px;
+  margin-left: 7px;
+}
+
 /*+-------------------------------------------+
   |         POST                              |
   +-------------------------------------------+*/
