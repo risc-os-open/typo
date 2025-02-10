@@ -167,6 +167,7 @@ div.citation cite
 td#frm-btns
 {
   text-align: right;
+  white-space: wrap;
 }
 
 div.comment-box table.frm-tbl {
@@ -178,10 +179,20 @@ div.comment-box table.frm-tbl td:first-child {
   width: 1px;
 }
 
+
+div.comment-box table.frm-tbl td p:first-child {
+  margin-top: 0;
+}
+
+div.comment-box table.frm-tbl td p:last-child {
+  margin-bottom: 0;
+}
+
 #comment_body
 {
   height: 140px;
   width: 100%;
+  box-sizing: border-box;
 }
 
  /*+-------------------------------------------+
