@@ -36,6 +36,7 @@ public/files/*
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/credentials.yml.enc
 
 # Ignore NPM output.
 package-lock.json
