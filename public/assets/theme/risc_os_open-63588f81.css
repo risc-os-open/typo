@@ -1,0 +1,336 @@
+/* RISC OS Open Typo theme.
+ *
+ * Originally based on Typo 4.1's old Azure theme.
+ */
+
+@import url("https://www.riscosopen.org/css/risc_os_open_2025.css");
+
+/* Some variables */
+
+:root {
+  --paragraph-bottom-margin: 1em;
+}
+
+div.lightboxplugin
+{
+  margin-bottom: var(--paragraph-bottom-margin);
+}
+
+/*+-------------------------------------------+
+  |         SEARCH                            |
+  +-------------------------------------------+*/
+
+#search
+{
+  font: bold 100% Arial, Verdana, Helvetica, sans-serif;
+}
+
+#search p
+{
+  margin-top: 1em;
+}
+
+#search_results
+{
+  font-size: 100%;
+}
+
+#search_spinner
+{
+  position: absolute;
+  margin-top: 9px;
+  margin-left: 7px;
+}
+
+/*+-------------------------------------------+
+  |         POST                              |
+  +-------------------------------------------+*/
+
+.post
+{
+  padding-bottom: 20px;
+  margin: 0 0 20px 0px;
+  border-bottom: 1px solid #c4ccd8;
+}
+
+/* Fairly new CSS feature to look ahead to a post which has the Pagy navigator
+ * after it - avoids need to add DIV soup just to use ":last-child" and isn't a
+ * vital style item on browsers that don't support it, so fails gracefully.
+ */
+.post:has(+ nav) {
+  border-bottom: none;
+}
+
+.post h1
+{
+  font: normal 125% Arial, Verdana, Helvetica, sans-serif;
+  margin-bottom: 11pt;
+  color: #61377a;
+}
+
+.post .content:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.post p[style*="float:left;"] {
+  margin: 0 10px 0 0;
+}
+
+.post p[style*="float:right;"] {
+  margin: 0 0 0 10px;
+}
+
+p.meta
+{
+  font-size:  75%;
+  margin:     0;
+  padding:    0;
+  text-align: right;
+}
+
+p.auth
+{
+  margin-top: 5px;
+  padding: 0 0 10px 10px;
+  font-size: 80%;
+  margin-left: 6px;
+  color: #9a9a9b;
+  background: url("/assets/bracket-d38192bb.gif") top left no-repeat;
+}
+
+ /*+-------------------------------------------+
+  |               COMMENTS                     |
+  +-------------------------------------------+*/
+
+h4.blueblk /* "Comments" title - make it look like <h3> elsewhere */
+{
+  font: normal 125% Homerton, Tahoma, Arial, Helvetica, sans-serif;
+  color: #61377a;
+  margin: 0 0px 15px 0px;
+}
+
+.comment-list > li, #preview
+{
+  background: #f0f0f0 url("/images/risc_os_open/top_fade.png") top left repeat-x;
+  margin-right: 5px; /* Else right hand shadow gets cropped off in WebKit - must be a "display: table-cell" quirk */
+  margin-bottom: var(--paragraph-bottom-margin);
+  clear: right;
+
+  /* border-radius: 8px; */ /* Valid, but the W3C CSS3 validator is buggy and complains - and has since 2006! */
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+
+  box-shadow: 0px 0px 5px #888;
+  -moz-box-shadow: #888 0 0 5px;
+  -webkit-box-shadow: #888 0 0 5px;
+}
+
+.comment-list > li > div.comment-content,
+div#preview        > div.comment-content {
+  padding: 15px;
+}
+
+.comment-list > li p:last-child,
+div#preview        p:last-child {
+  margin-bottom: 0;
+}
+
+div.citation
+{
+  font-size: small;
+  margin-bottom: var(--paragraph-bottom-margin);
+}
+
+div.citation cite
+{
+  color: #4e713e;
+  font-style: normal;
+}
+
+.gravatar
+{
+  float: right;
+  padding: 0 5px;
+}
+
+ /*+-------------------------------------------+
+   |               FORMS                       |
+   +-------------------------------------------+*/
+
+.frm-tbl td
+{
+  vertical-align: top; padding: 5px;
+}
+
+td#frm-btns
+{
+  text-align: right;
+  white-space: wrap;
+}
+
+div.comment-box table.frm-tbl {
+  width: 100%;
+}
+
+div.comment-box table.frm-tbl td:first-child {
+  white-space: nowrap;
+  width: 1px;
+}
+
+
+div.comment-box table.frm-tbl td p:first-child {
+  margin-top: 0;
+}
+
+div.comment-box table.frm-tbl td p:last-child {
+  margin-bottom: 0;
+}
+
+#comment_body
+{
+  height: 140px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+ /*+-------------------------------------------+
+   |                  MISC                     |
+   +-------------------------------------------+*/
+
+.light-bg
+{
+  background: #f7f7f7;
+  padding: 2px;
+}
+
+.clearfix:after
+{
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+#errors
+{
+  color: red;
+}
+
+.admintools
+{
+  float: right;
+  background-color: #fff;
+  font-size: smaller;
+  padding: 0 2px;
+  margin: 0 1px;
+  color: #ccc;
+  border: 1px solid #ccc;
+}
+
+.admintools:hover
+{
+  color: #c00;
+  border: 1px solid #c00;
+}
+
+a[name]
+{
+  border: none;
+}
+
+/* Hides from IE-mac \*/
+ * html .clearfix {height: 1%;}
+/* End hide from IE-mac */
+
+
+/* Syntax highlighting */
+
+.typocode_ruby .normal {}
+.typocode_ruby .comment { color: #005; font-style: italic; }
+.typocode_ruby .keyword { color: #A00; font-weight: bold; }
+.typocode_ruby .method { color: #077; }
+.typocode_ruby .class { color: #074; }
+.typocode_ruby .module { color: #050; }
+.typocode_ruby .punct { color: #447; font-weight: bold; }
+.typocode_ruby .symbol { color: #099; }
+.typocode_ruby .string { color: #944; background: #FFE; }
+.typocode_ruby .char { color: #F07; }
+.typocode_ruby .ident { color: #004; }
+.typocode_ruby .constant { color: #07F; }
+.typocode_ruby .regex { color: #B66; background: #FEF; }
+.typocode_ruby .number { color: #F99; }
+.typocode_ruby .attribute { color: #7BB; }
+.typocode_ruby .global { color: #7FB; }
+.typocode_ruby .expr { color: #227; }
+.typocode_ruby .escape { color: #277; }
+.typocode_xml .normal {}
+.typocode_xml .namespace { color: #B66; font-weight: bold; }
+.typocode_xml .tag { color: #F88; }
+.typocode_xml .comment { color: #005; font-style: italic; }
+.typocode_xml .punct { color: #447; font-weight: bold; }
+.typocode_xml .string { color: #944; }
+.typocode_xml .number { color: #F99; }
+.typocode_xml .attribute { color: #BB7; }
+.typocode_yaml .normal {}
+.typocode_yaml .document { font-weight: bold; color: #07F; }
+.typocode_yaml .type { font-weight: bold; color: #05C; }
+.typocode_yaml .key { color: #F88; }
+.typocode_yaml .comment { color: #005; font-style: italic; }
+.typocode_yaml .punct { color: #447; font-weight: bold; }
+.typocode_yaml .string { color: #944; }
+.typocode_yaml .number { color: #F99; }
+.typocode_yaml .time { color: #F99; }
+.typocode_yaml .date { color: #F99; }
+.typocode_yaml .ref { color: #944; }
+.typocode_yaml .anchor { color: #944; }
+
+.typocode
+{
+  background-color:#eee;
+  padding:2px;
+  margin:5px;
+  margin-left:1em;
+  margin-bottom:1em;
+}
+
+.typocode pre
+{
+  padding: 0px;
+  margin: 0px;
+  background: transparent;
+  font-family: monospace;
+  overflow:auto;
+}
+
+.typocode .lineno
+{
+  text-align: right;
+/*  color: #B00;*/
+  font-family: monospace;
+  padding-right: 1em;
+}
+
+/*+-------------------------------------------+
+  |                  TAGliST                  |
+  +-------------------------------------------+*/
+
+ul#taglist li
+{
+  display: inline;
+  line-height: 2em;
+}
+
+.tags .tags0  { font-size: 1.0em; }
+.tags .tags1  { font-size: 1.2em; }
+.tags .tags2  { font-size: 1.4em; }
+.tags .tags3  { font-size: 1.6em; }
+.tags .tags4  { font-size: 1.8em; }
+.tags .tags5  { font-size: 2.0em; }
+.tags .tags6  { font-size: 2.2em; }
+.tags .tags7  { font-size: 2.4em; }
+.tags .tags8  { font-size: 2.6em; }
+.tags .tags9  { font-size: 2.8em; }
+.tags .tags10 { font-size: 3.0em; }
