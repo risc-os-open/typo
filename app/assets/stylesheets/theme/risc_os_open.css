@@ -5,15 +5,9 @@
 
 @import url("https://www.riscosopen.org/css/risc_os_open_2025.css");
 
-/* Some variables */
-
-:root {
-  --paragraph-bottom-margin: 1em;
-}
-
 div.lightboxplugin
 {
-  margin-bottom: var(--paragraph-bottom-margin);
+  margin-bottom: 1em;
 }
 
 /*+-------------------------------------------+
@@ -115,7 +109,7 @@ h4.blueblk /* "Comments" title - make it look like <h3> elsewhere */
 {
   background: #f0f0f0 url(/images/risc_os_open/top_fade.png) top left repeat-x;
   margin-right: 5px; /* Else right hand shadow gets cropped off in WebKit - must be a "display: table-cell" quirk */
-  margin-bottom: var(--paragraph-bottom-margin);
+  margin-bottom: 1em;
   clear: right;
 
   /* border-radius: 8px; */ /* Valid, but the W3C CSS3 validator is buggy and complains - and has since 2006! */
@@ -140,7 +134,7 @@ div#preview        p:last-child {
 div.citation
 {
   font-size: small;
-  margin-bottom: var(--paragraph-bottom-margin);
+  margin-bottom: 1em;
 }
 
 div.citation cite
