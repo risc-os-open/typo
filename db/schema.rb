@@ -142,6 +142,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_04_041503) do
     t.boolean "itunes_explicit"
   end
 
+  create_table "schema_info", id: false, force: :cascade do |t|
+    t.integer "version"
+  end
+
   create_table "sidebars", id: :serial, force: :cascade do |t|
     t.integer "active_position"
     t.text "config"
